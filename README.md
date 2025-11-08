@@ -4,6 +4,17 @@ Kuiz Sifir interaktif (1-12) yang direka khas untuk anak-anak prasekolah/sekolah
 
 ## 📊 Sistem Penilaian Tahap Penguasaan (TP1-TP6)
 
+---
+
+## 🔑 Akses Kuiz & Kata Laluan
+
+Kuiz ini dilindungi kata laluan. **Sila ikuti (Follow) Channel WhatsApp kami** untuk mendapatkan maklumat terkini, panduan mendapatkan Kata Laluan, dan **Freebies Pendidikan (Ebook, Kuiz Tambahan, dsb.) di masa hadapan!**
+
+[**KLIK SINI UNTUK IKUTI CHANNEL WHATSAPP & DAPATKAN FREEBIES**](https://whatsapp.com/channel/0029VbCRzZO2ZjCeptDhah33) 
+---
+
+*Pemberian kata laluan dan pengumuman freebies akan dibuat secara eksklusif di dalam Channel.*
+
 Penilaian adalah berdasarkan **ketepatan jawapan** dan **purata masa tindak balas** (average time) setiap soalan.
 
 | TP | Label | Kriteria Utama (Ringkas) | Penerangan |
@@ -17,11 +28,4 @@ Penilaian adalah berdasarkan **ketepatan jawapan** dan **purata masa tindak bala
 
 ---
 
-## 🔑 Akses Kuiz & Kata Laluan
 
-Kuiz ini dilindungi kata laluan. **Sila ikuti (Follow) Channel WhatsApp kami** untuk mendapatkan maklumat terkini, panduan mendapatkan Kata Laluan, dan **Freebies Pendidikan (Ebook, Kuiz Tambahan, dsb.) di masa hadapan!**
-
-[**KLIK SINI UNTUK IKUTI CHANNEL WHATSAPP & DAPATKAN FREEBIES**](https://whatsapp.com/channel/0029VbCRzZO2ZjCeptDhah33) 
----
-
-*Pemberian kata laluan dan pengumuman freebies akan dibuat secara eksklusif di dalam Channel.*
