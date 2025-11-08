@@ -2,8 +2,6 @@
 
 Kuiz Sifir interaktif (1-12) yang direka khas untuk anak-anak prasekolah/sekolah rendah. Menampilkan mod latihan spesifik/campuran dan sistem penilaian Tahap Penguasaan (TP1-TP6).
 
-## 📊 Sistem Penilaian Tahap Penguasaan (TP1-TP6)
-
 ---
 
 ## 🔑 Akses Kuiz & Kata Laluan
@@ -14,6 +12,8 @@ Kuiz ini dilindungi kata laluan. **Sila ikuti (Follow) Channel WhatsApp kami** u
 ---
 
 *Pemberian kata laluan dan pengumuman freebies akan dibuat secara eksklusif di dalam Channel.*
+
+## 📊 Sistem Penilaian Tahap Penguasaan (TP1-TP6)
 
 Penilaian adalah berdasarkan **ketepatan jawapan** dan **purata masa tindak balas** (average time) setiap soalan.
 
