@@ -6,12 +6,14 @@ Kuiz Sifir interaktif (1-12) yang direka khas untuk anak-anak prasekolah/sekolah
 
 ## 🔑 Akses Kuiz & Kata Laluan
 
-Kuiz ini dilindungi kata laluan. **Sila ikuti (Follow) Channel WhatsApp kami** untuk mendapatkan maklumat terkini, panduan mendapatkan Kata Laluan, dan **Freebies Pendidikan (Ebook, Kuiz Tambahan, dsb.) di masa hadapan!**
+Kuiz ini dilindungi kata laluan untuk memastikan ia digunakan secara terancang.
 
-[**KLIK SINI UNTUK IKUTI CHANNEL WHATSAPP & DAPATKAN FREEBIES**](https://whatsapp.com/channel/0029VbCRzZO2ZjCeptDhah33) 
+*Sila hubungi Mizz melalui WhatsApp untuk mendapatkan Kata Laluan Kuiz:*
+
+[*KLIK SINI UNTUK MINTA KATA LALUAN (WHATSAPP ADMIN)*](https://wa.me/60198950339?text=Assalamualaikum.%20Saya%20memohon%20kata%20laluan%20untuk%20Kuiz%20Bijak%20Sifir.%20Nama%20saya%20[Nama%20Pelajar/Ibu%20Bapa].) 
 ---
 
-*Pemberian kata laluan dan pengumuman freebies akan dibuat secara eksklusif di dalam Channel.*
+Nota: Mizz akan membalas dengan kata laluan dan pautan penuh kuiz secepat mungkin.
 
 ## 📊 Sistem Penilaian Tahap Penguasaan (TP1-TP6)
 
