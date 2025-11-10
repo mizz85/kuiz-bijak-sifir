@@ -10,7 +10,7 @@ Kuiz ini dilindungi kata laluan untuk memastikan ia digunakan secara terancang.
 
 *Sila hubungi Mizz melalui WhatsApp untuk mendapatkan Kata Laluan Kuiz:*
 
-[*KLIK SINI UNTUK MINTA KATA LALUAN (WHATSAPP ADMIN)*](https://wa.me/60198950339?text=Assalamualaikum.%20Saya%20memohon%20kata%20laluan%20untuk%20Kuiz%20Bijak%20Sifir.%20Nama%20saya%20[Nama%20Pelajar/Ibu%20Bapa].) 
+[*KLIK SINI UNTUK MINTA KATA LALUAN (WHATSAPP MIZZ)*](https://wa.me/60198950339?text=Assalamualaikum.%20Saya%20memohon%20kata%20laluan%20untuk%20Kuiz%20Bijak%20Sifir.%20Nama%20saya%20[Nama%20Pelajar/Ibu%20Bapa].) 
 ---
 
 Nota: Mizz akan membalas dengan kata laluan dan pautan penuh kuiz secepat mungkin.
