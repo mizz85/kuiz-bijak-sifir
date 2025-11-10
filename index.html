@@ -133,6 +133,10 @@
                     Sila pilih jenis kuiz dan sifir yang ingin diuji (50 soalan).
                 </p>
 
+                <div class="p-2 bg-blue-100 border border-blue-400 rounded-lg text-xs text-blue-800 font-medium">
+    🔔 **Nota Audio:** Kualiti dan jantina suara TTS (Text-to-Speech) mungkin berbeza mengikut jenis telefon/komputer. Suara yang lebih mesra (wanita) akan didapati pada kebanyakan telefon pintar moden.
+</div>
+
                 <div class="space-y-2">
                     <label for="sifir-pilihan" class="block text-sm font-medium text-gray-700">Pilih Jenis Ujian:</label>
                     <select id="sifir-pilihan" class="w-full p-3 border-2 border-pink-400 rounded-lg shadow-md focus:ring-teal-500 focus:border-teal-500 bg-white text-teal-700 font-semibold text-sm">
@@ -327,7 +331,7 @@
         }
 
         // -----------------------------------------------------------------
-        // PERUBAHAN UTAMA: FUNGSI TTS YANG TELAH DIPERBAIKI (ms-MY)
+        // PERUBAHAN UTAMA: FUNGSI TTS DENGAN PENGUTAMAAN SUARA WANITA (ms-MY)
         // -----------------------------------------------------------------
         function speakMalay(textToRead) {
             if (!('speechSynthesis' in window)) {
@@ -342,19 +346,29 @@
                 // 1. TETAPKAN BAHASA KEPADA BAHASA MELAYU (ms-MY)
                 utterance.lang = 'ms-MY';
                 utterance.rate = 1.0; 
+                utterance.pitch = 1.0; // Boleh cuba 1.1 untuk suara lebih ceria, tetapi biar 1.0 standard
 
-                // 2. CUBA CARI SUARA MELAYU YANG PALING SESUAI (Native Speaker Voice)
+                // 2. CUBA CARI SUARA MELAYU YANG PALING SESUAI (Utamakan Suara Wanita)
                 const voices = window.speechSynthesis.getVoices();
-                let malayVoice = voices.find(voice => 
-                    voice.lang === 'ms-MY' || 
-                    voice.name.toLowerCase().includes('malay') || 
-                    voice.name.toLowerCase().includes('melayu')
+                let preferredVoice = null;
+
+                // Cuba cari suara ms-MY yang tidak mempunyai label lelaki/male (Potensi Suara Wanita/Neutral)
+                preferredVoice = voices.find(voice => 
+                    voice.lang === 'ms-MY' && 
+                    !voice.name.toLowerCase().includes('male') && 
+                    !voice.name.toLowerCase().includes('lelaki')
                 );
 
-                if (malayVoice) {
-                    utterance.voice = malayVoice;
+                // Jika tiada suara ms-MY yang disukai (bukan lelaki), guna mana-mana suara ms-MY yang ada
+                if (!preferredVoice) {
+                    preferredVoice = voices.find(voice => voice.lang === 'ms-MY');
+                }
+
+                // Jika suara ditemui, gunakannya
+                if (preferredVoice) {
+                    utterance.voice = preferredVoice;
                 } else {
-                    // Jika suara ms-MY tiada, sistem akan guna suara lalai tetapi dengan tetapan lang="ms-MY"
+                    // Jika suara ms-MY tiada langsung, sistem akan guna suara lalai tetapi dengan tetapan lang="ms-MY"
                     console.warn("Suara Bahasa Melayu (ms-MY) tidak ditemui. Menggunakan suara lalai sistem.");
                 }
 
@@ -783,7 +797,7 @@
         // --- Logik TP DSKP ---
         
         // -----------------------------------------------------------------
-        // PERUBAHAN UTAMA: FUNGSI PENGUMUMAN KEPUTUSAN KUIZ (Audio Sijil)
+        // FUNGSI PENGUMUMAN KEPUTUSAN KUIZ (Audio Sijil)
         // -----------------------------------------------------------------
         function announceResults(score, finalTP, tpLabel) {
             let resultMessage = "";
