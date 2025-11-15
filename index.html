@@ -132,6 +132,31 @@
             overflow-y: auto; 
         }
 
+/* --- Pembetulan Cetak Mudah Alih (Mobile Print Fix) --- */
+/* Sembunyikan butang "Cetak ke PDF" dan tunjukkan notis amaran pada skrin kecil */
+@media screen and (max-width: 767px) {
+    /* Butang "Cetak ke PDF" di dalam Sijil: Akan disembunyikan */
+    .mobile-print-button-hide { 
+        display: none !important;
+    }
+
+    /* Notis Amaran di dalam Sijil: Akan dipaparkan */
+    #mobile-print-warning {
+        display: block !important;
+        background-color: #fef08a; /* Kuning Lembut */
+        color: #854a04; /* Teks coklat gelap */
+        padding: 10px;
+        border-radius: 5px;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+}
+
+/* Sembunyikan notis amaran secara lalai (Desktop) */
+#mobile-print-warning {
+    display: none;
+}
+		
     </style>
 </head>
 <body class="bg-yellow-50 min-h-screen flex items-center justify-center p-4">
@@ -1048,15 +1073,21 @@
                         </div>
                     </div>
                     
-                    <div class="no-print text-center mt-8">
-                        <button onclick="window.print();" class="bg-pink-500 hover:bg-pink-600 text-white font-medium py-2 px-6 rounded-lg transition duration-150 shadow-md mr-4">
+<div class="no-print text-center mt-8">
+                        
+                        <div id="mobile-print-warning" style="display:none;">
+                            Sila gunakan **PC/Laptop** untuk Cetak ke PDF. Fungsi cetak di telefon bimbit sering bermasalah.
+                        </div>
+
+                        <button onclick="window.print();" class="mobile-print-button-hide bg-pink-500 hover:bg-pink-600 text-white font-medium py-2 px-6 rounded-lg transition duration-150 shadow-md mr-4">
                             Cetak ke PDF
                         </button>
+                        
                         <button onclick="returnFromCertificate()" class="bg-gray-700 hover:bg-gray-800 text-white font-medium py-2 px-6 rounded-lg transition duration-150 shadow-md">
                             Tutup Sijil & Buat Kuiz Baharu
                         </button>
-                    </div>
-                </div>
+                    </div>				
+				</div>
             `;
         }
 
@@ -1119,3 +1150,4 @@
 </body>
 
 </html>
+
