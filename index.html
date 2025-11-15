@@ -5,12 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kuiz Bijak Sifir</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    
+	
 <style>
-    /* Menggunakan font-family yang lebih sesuai untuk paparan sifar */
-    .font-sifir {
-        font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    }
+    /* ... CSS sedia ada anda di sini ... */
 
     /* --- PENTING: Pembetulan Cetak Sijil HP (Blank PDF Issue) --- */
     @media print {
@@ -37,473 +34,898 @@
         /* 3. Paksa Kontena Sijil untuk dipaparkan secara blok stabil */
         #certificate-screen {
             display: block !important;
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            padding: 0;
+            position: relative !important; 
+            width: 100% !important;
+            max-width: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            background-color: white !important; 
+            overflow: visible !important;
         }
 
-        /* 4. Sembunyikan elemen yang tidak diperlukan dalam cetakan sijil */
+        /* 4. Pastikan kandungan sijil mengisi ruang dan buang gaya yang tidak perlu */
+        .certificate-container {
+            width: 100% !important;
+            height: auto !important;
+            min-height: 100vh !important; 
+            box-shadow: none !important;
+            border: none !important; 
+            background-color: white !important; 
+        }
+        
+        /* 5. Sembunyikan butang di dalam sijil */
         .no-print {
             display: none !important;
         }
     }
-
-    /* --- Pembetulan Cetak Mudah Alih (Mobile Print Fix) --- */
-    /* Sembunyikan butang "Cetak ke PDF" dan tunjukkan notis amaran pada skrin kecil */
-    @media screen and (max-width: 767px) {
-        /* Butang "Cetak ke PDF" di dalam Sijil: Akan disembunyikan */
-        .mobile-print-button-hide { 
-            display: none !important;
-        }
-
-        /* Notis Amaran di dalam Sijil: Akan dipaparkan */
-        #mobile-print-warning {
-            display: block !important;
-            background-color: #fef08a; /* Kuning Lembut */
-            color: #854a04; /* Teks coklat gelap */
-            padding: 10px;
-            border-radius: 5px;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-    }
-
-    /* Sembunyikan notis amaran secara lalai (Desktop) */
-    #mobile-print-warning {
-        display: none;
-    }
 </style>
-</head>
-<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
-
-    <div id="quiz-container-wrapper" class="w-full max-w-2xl bg-white shadow-xl rounded-2xl p-6 md:p-8">
+			
+    <style>
+        /* Muatkan font 'Inter' */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        body { font-family: 'Inter', sans-serif; }
         
-        <header class="text-center mb-6">
-            <h1 class="text-3xl font-extrabold text-blue-600">Kuiz Bijak Sifir</h1>
-            <p class="text-gray-500">Uji kefahaman sifir anda.</p>
-        </header>
+        /* Gaya Font Standard untuk Jenama */
+        .brand-marykate {
+            font-family: 'Inter', sans-serif; 
+            color: #ec4899; /* Pink 500 */
+            font-size: 0.875rem; /* Saiz dikurangkan ke text-sm */
+            line-height: 1.5rem;
+            font-weight: 900; /* Extra Black */
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
 
-        <div id="selection-screen" class="space-y-6">
-            <div class="space-y-3">
-                <label for="student-name" class="block text-lg font-medium text-gray-700">Nama Pelajar:</label>
-                <input type="text" id="student-name" class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="Masukkan nama anda">
+        .result-score {
+            /* Warna bayangan diselaraskan dengan warna Merah Jambu (Pink) */
+            animation: pulse-score 1.5s infinite;
+        }
+        @keyframes pulse-score {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(236, 72, 153, 0.7); /* Pink 500 Shadow */ }
+            100% { transform: scale(1); }
+        }
+        /* Style untuk pemasa soalan yang mendesak (10s terakhir) */
+        .urgent-timer {
+            color: #fff; /* Teks putih */
+            background-color: #ef4444; /* Red 500 */
+            border-color: #fca5a5; /* Red 300 */
+            animation: urgent-pulse 0.5s infinite;
+        }
+        @keyframes urgent-pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* --- Gaya Sijil Cetak (Penting untuk Save as PDF) --- */
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            #quiz-container-wrapper {
+                display: none !important;
+            }
+            #certificate-screen {
+                display: flex !important;
+                position: ; 
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: auto; 
+                overflow: hidden !important; 
+                background-color: white;
+            }
+            .certificate-container {
+                width: 100%;
+                max-width: none;
+                height: auto; 
+                margin: 0;
+                padding: 1cm;
+                box-shadow: none;
+                border: none;
+            }
+        }
+        /* --- Akhir Gaya Sijil Cetak --- */
+
+        /* Benarkan scrolling pada skrin sijil jika kandungan panjang */
+        #certificate-screen {
+            overflow-y: auto; 
+        }
+
+/* --- Pembetulan Cetak Mudah Alih (Mobile Print Fix) --- */
+/* Sembunyikan butang "Cetak ke PDF" dan tunjukkan notis amaran pada skrin kecil */
+@media screen and (max-width: 767px) {
+    /* Butang "Cetak ke PDF" di dalam Sijil: Akan disembunyikan */
+    .mobile-print-button-hide { 
+        display: none !important;
+    }
+
+    /* Notis Amaran di dalam Sijil: Akan dipaparkan */
+    #mobile-print-warning {
+        display: block !important;
+        background-color: #fef08a; /* Kuning Lembut */
+        color: #854a04; /* Teks coklat gelap */
+        padding: 10px;
+        border-radius: 5px;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+}
+
+/* Sembunyikan notis amaran secara lalai (Desktop) */
+#mobile-print-warning {
+    display: none;
+}
+		
+    </style>
+</head>
+<body class="bg-yellow-50 min-h-screen flex items-center justify-center p-4">
+	<div id="quiz-container-wrapper" class="w-full max-w-md bg-white p-6 rounded-xl shadow-xl border-3 border-pink-300">
+		
+		<div class="flex flex-col items-center justify-center mb-5">
+            <img src="https://raw.githubusercontent.com/mizz85/nota-sifir/main/logo-mizzz.png" alt="Logo Edukids by Mizz" class="w-40 h-auto mb-2">
+            <h1 class="text-2xl font-extrabold text-teal-600 text-center">
+                Kuiz Bijak Sifir
+            </h1>
             </div>
 
-            <h2 class="text-xl font-bold text-gray-700">Pilih Sifir (1 hingga 12):</h2>
-            <div id="sifir-selection" class="grid grid-cols-4 sm:grid-cols-6 gap-3">
+        <div id="quiz-container">
+            
+            <div id="login-screen" class="space-y-4">
+                <p class="text-gray-600 text-center text-sm font-semibold">
+                    Akses terhad. Sila masukkan Kata Laluan untuk meneruskan.
+                </p>
+
+                <div class="space-y-2">
+                    <label for="password-input" class="block text-sm font-medium text-gray-700">Kata Laluan:</label>
+                    <input type="text" id="password-input" placeholder="Masukkan Kata Laluan" class="w-full p-3 text-center text-lg font-bold border-3 border-pink-400 rounded-lg focus:border-teal-500 focus:ring-4 focus:ring-teal-200" onkeydown="handleLoginKey(event)" autofocus>
+                    <p id="login-feedback" class="h-6 text-sm font-semibold text-red-600 text-center"></p>
                 </div>
-            <p class="text-sm text-gray-500 mt-2">Pilih satu atau lebih sifir untuk dimulakan.</p>
 
-            <h2 class="text-xl font-bold text-gray-700">Pilih Jenis Kuiz:</h2>
-            <div class="flex flex-col space-y-3 sm:flex-row sm:space-x-4 sm:space-y-0">
-                <button onclick="startQuiz('objective')" class="flex-1 p-4 bg-green-500 text-white font-bold rounded-lg shadow-md hover:bg-green-600 transition duration-150">
-                    Pilihan Jawapan (Objektif)
+                <button onclick="checkPassword()" id="login-button" class="w-full bg-pink-500 hover:bg-pink-600 text-white font-black text-base py-3 rounded-lg transition duration-150 shadow-lg hover:shadow-xl">
+                    Log Masuk
                 </button>
-                <button onclick="startQuiz('input')" class="flex-1 p-4 bg-purple-500 text-white font-bold rounded-lg shadow-md hover:bg-purple-600 transition duration-150">
-                    Input Jawapan
-                </button>
-            </div>
-        </div>
-
-        <div id="quiz-screen" class="hidden space-y-6">
-            <div class="flex justify-between items-center mb-4">
-                <p id="question-counter" class="text-xl font-bold text-blue-600">Soalan 1/50</p>
-                <p id="timer-display" class="text-xl font-bold text-red-500">Masa: 0.0s</p>
-            </div>
-
-            <div class="text-center bg-blue-50 p-6 rounded-xl border-4 border-blue-200">
-                <h2 id="question-text" class="text-4xl font-extrabold text-gray-800 font-sifir"></h2>
+               <p class="text-xs text-gray-500 text-center mt-3">
+    Lupa atau Tiada Kata Laluan?
+    <a href="https://wa.me/60198950339?text=Assalamualaikum.%20Saya%20memohon%20kata%20laluan%20untuk%20Kuiz%20Bijak%20Sifir.%20Nama%20saya%20[Nama%20Pelajar/Ibu%20Bapa]." target="_blank" class="font-bold text-pink-500 hover:text-pink-600 transition duration-150">
+        Minta Kata Laluan (WhatsApp Mizz).
+    </a>
+</p>
             </div>
             
-            <div id="objective-answers" class="grid grid-cols-2 gap-4 hidden">
-                </div>
-
-            <div id="input-answer" class="space-y-4 hidden">
-                <input type="number" id="answer-input" class="w-full p-4 text-center text-3xl border-4 border-gray-300 rounded-lg shadow-inner focus:ring-purple-500 focus:border-purple-500 font-sifir" placeholder="Jawapan" onkeydown="handleInputKey(event)">
-                <button onclick="submitAnswer()" class="w-full p-4 bg-purple-500 text-white text-xl font-bold rounded-lg shadow-md hover:bg-purple-600 transition duration-150">
-                    Sahkan Jawapan
-                </button>
-            </div>
-
-            <p id="feedback-message" class="text-center text-lg font-bold min-h-[1.5em]"></p>
-        </div>
-
-        <div id="result-screen" class="hidden text-center space-y-4">
-            <h2 id="main-tp-message" class="text-2xl font-extrabold text-green-700"></h2>
-            <p class="text-lg font-semibold text-gray-700">Nama: <span id="student-name-result" class="font-extrabold text-blue-600"></span></p>
-
-            <div class="grid grid-cols-2 gap-4 text-left">
-                <div class="bg-gray-50 p-3 rounded-lg border">
-                    <p class="text-sm text-gray-500">Markah</p>
-                    <p id="final-score" class="text-3xl font-extrabold text-red-500">0 / 50</p>
-                </div>
-                <div class="bg-gray-50 p-3 rounded-lg border">
-                    <p class="text-sm text-gray-500">Peratus</p>
-                    <p id="final-percentage" class="text-3xl font-extrabold text-red-500">0%</p>
-                </div>
-                <div class="bg-gray-50 p-3 rounded-lg border col-span-2">
-                    <p class="text-sm text-gray-500">Tahap Penguasaan (TP)</p>
-                    <p class="text-4xl font-extrabold text-yellow-600"><span id="final-tp">TP1</span>: <span id="tp-label">Tahu</span></p>
-                    <p id="tp-description" class="text-sm mt-1 italic text-gray-600"></p>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-3 gap-2 text-sm text-gray-700 font-semibold mt-4">
-                <p class="text-green-600">✅ Betul: <span id="correct-count">0</span></p>
-                <p class="text-red-600">❌ Salah: <span id="incorrect-count">0</span></p>
-                <p class="text-blue-600">⏱️ Purata Masa: <span id="average-time">0.00</span>s</p>
-            </div>
-            
-            <div class="p-4 bg-teal-50 rounded-xl border border-teal-300 mt-6">
-                <h3 class="text-xl font-bold text-teal-700 mb-4 text-center">Sejarah Kuiz</h3>
+            <div id="selection-screen" class="hidden space-y-4">
                 
-                <div id="history-container">
-                    </div>
+                <div class="space-y-2 p-3 bg-teal-50 rounded-lg border border-teal-300">
+                    <label for="student-name-input" class="block text-sm font-black text-teal-700">
+                        Masukkan Nama Pelajar (Untuk Sijil):
+                    </label>
+                    <input 
+                        type="text" 
+                        id="student-name-input" 
+                        placeholder="Cth: Ali Bin Abu" 
+                        class="w-full p-3 text-center text-base font-bold border-2 border-teal-500 rounded-lg focus:border-pink-500 focus:ring-2 focus:ring-pink-200" 
+                        oninput="updateAndSaveName(event)"
+                    >
+                    <p id="current-name-display" class="text-xs text-gray-600 italic mt-1 text-center"></p>
+                </div>
+                <p class="text-gray-600 text-center text-sm">
+                    Sila pilih jenis kuiz dan sifir yang ingin diuji (50 soalan).
+                </p>
+
+                <div class="space-y-2">
+                    <label for="sifir-pilihan" class="block text-sm font-medium text-gray-700">Pilih Jenis Ujian:</label>
+                    <select id="sifir-pilihan" class="w-full p-3 border-2 border-pink-400 rounded-lg shadow-md focus:ring-teal-500 focus:border-teal-500 bg-white text-teal-700 font-semibold text-sm">
+                        <option value="0-objective">🎯 Semua Sifir (1-12) - Objektif A/B/C/D</option>
+                        <option value="0-input">✍️ Semua Sifir (1-12) - Input Jawapan</option>
+                        <option value="2-input">✍️ Sifir 2 - Input Jawapan</option>
+                        <option value="3-input">✍️ Sifir 3 - Input Jawapan</option>
+                        <option value="4-input">✍️ Sifir 4 - Input Jawapan</option>
+                        <option value="5-input">✍️ Sifir 5 - Input Jawapan</option>
+                        <option value="6-input">✍️ Sifir 6 - Input Jawapan</option>
+                        <option value="7-input">✍️ Sifir 7 - Input Jawapan</option>
+                        <option value="8-input">✍️ Sifir 8 - Input Jawapan</option>
+                        <option value="9-input">✍️ Sifir 9 - Input Jawapan</option>
+                        <option value="10-input">✍️ Sifir 10 - Input Jawapan</option>
+                        <option value="11-input">✍️ Sifir 11 - Input Jawapan</option>
+                        <option value="12-input">✍️ Sifir 12 - Input Jawapan</option>
+                    </select>
+                </div>
+
+                <button onclick="startQuizFlow()" id="start-button" class="w-full bg-pink-500 hover:bg-pink-600 text-white font-black text-base py-3 rounded-lg transition duration-150 shadow-lg hover:shadow-xl">
+                    Mulakan Kuiz (50 Soalan)
+                </button>
             </div>
-            <div class="flex flex-col space-y-3 mt-6">
-                <button onclick="displayCertificateForPrint()" id="print-certificate-btn" class="p-3 bg-pink-500 text-white font-bold rounded-lg shadow-md hover:bg-pink-600 transition duration-150">
+
+            <div id="quiz-screen" class="hidden text-center space-y-4">
+                
+                <div class="w-full flex justify-between items-center mb-3">
+                    <div class="w-3/4 bg-gray-200 rounded-full h-3">
+                        <div id="progress-bar" class="bg-pink-500 h-3 rounded-full transition-all duration-300 ease-out" style="width: 0%"></div>
+                    </div>
+                    <div id="q-countdown-display" class="text-lg font-black text-teal-600 border-2 border-teal-300 px-3 py-0.5 rounded-full shadow-md transition-colors duration-300">
+                        60s
+                    </div>
+                </div>
+
+                <p class="text-xs text-gray-500">
+                    Soalan <span id="current-q-num">1</span> dari 50
+                </p>
+                <span id="total-time-tracker" class="hidden">0</span>
+
+                <div class="bg-yellow-200 p-6 rounded-xl shadow-lg border-2 border-yellow-500">
+                    <p class="text-lg text-gray-500 mb-1">Berapakah</p>
+                    <p id="question-text" class="text-4xl font-extrabold text-teal-800">
+                        7 x 8 ?
+                    </p>
+                </div>
+
+                <div id="input-mode" class="space-y-3">
+                    <input type="number" id="answer-input" placeholder="Jawab di sini" class="w-full p-3 text-center text-2xl font-bold border-3 border-pink-400 rounded-lg focus:border-teal-500 focus:ring-4 focus:ring-teal-200" onkeydown="handleInputKey(event)" autofocus>
+
+                    <button onclick="handleInputSubmission()" class="w-full bg-lime-500 hover:bg-lime-600 text-white font-black text-base py-3 rounded-lg transition duration-150 shadow-lg hover:shadow-xl">
+                        Hantar Jawapan
+                    </button>
+                </div>
+
+                <div id="objective-mode" class="hidden grid grid-cols-2 gap-3">
+                    <button id="option-A" onclick="handleObjectiveSubmission(this)" data-value="" class="objective-btn p-3 text-xl font-bold text-white bg-teal-500 rounded-lg hover:bg-teal-600 transition duration-150 shadow-md">
+                        A. <span></span>
+                    </button>
+                    <button id="option-B" onclick="handleObjectiveSubmission(this)" data-value="" class="objective-btn p-3 text-xl font-bold text-white bg-teal-500 rounded-lg hover:bg-teal-600 transition duration-150 shadow-md">
+                        B. <span></span>
+                    </button>
+                    <button id="option-C" onclick="handleObjectiveSubmission(this)" data-value="" class="objective-btn p-3 text-xl font-bold text-white bg-teal-500 rounded-lg hover:bg-teal-600 transition duration-150 shadow-md">
+                        C. <span></span>
+                    </button>
+                    <button id="option-D" onclick="handleObjectiveSubmission(this)" data-value="" class="objective-btn p-3 text-xl font-bold text-white bg-teal-500 rounded-lg hover:bg-teal-600 transition duration-150 shadow-md">
+                        D. <span></span>
+                    </button>
+                </div>
+
+
+                <div id="feedback" class="h-6 text-sm font-semibold"></div>
+
+                <button onclick="returnToSelection()" class="w-full bg-gray-200 text-gray-700 hover:bg-gray-300 font-semibold text-sm py-2 rounded-lg transition duration-150 shadow-sm mt-4">
+                    Kembali ke Pilihan Sifir
+                </button>
+            </div>
+
+            <div id="result-screen" class="hidden text-center space-y-4">
+                <h2 class="text-2xl font-bold text-teal-700">Keputusan Kuiz Anda!</h2>
+                
+                <p id="main-tp-message" class="text-base font-semibold text-gray-700"></p>
+
+                <div class="p-4 bg-yellow-100 rounded-xl border-3 border-yellow-500">
+                    <p class="text-base font-semibold text-gray-700">Tahap Penguasaan (TP) Dicapai:</p>
+                    <p id="final-tp" class="text-6xl font-black text-pink-600 result-score mt-1">TPX</p>
+                    <p id="tp-label" class="text-xl font-extrabold text-teal-600 mt-1">Label TP</p>
+                </div>
+
+                <div class="p-3 bg-pink-100 rounded-lg border border-pink-400 text-left">
+                    <p class="text-sm font-bold text-pink-700 mb-1">Penerangan Tahap:</p>
+                    <p id="tp-description" class="text-sm text-gray-800 italic">
+                        [Penerangan terperinci mengikut DSKP akan dipaparkan di sini.]
+                    </p>
+                </div>
+
+                <div class="text-left space-y-2 text-sm text-gray-700">
+                    <p>⭐ Skor Anda: <span id="final-score" class="font-bold text-teal-600"></span></p>
+                    <p>📈 Peratusan: <span id="final-percentage" class="font-bold text-teal-600"></span></p>
+                    <p>✅ Jawapan Betul: <span id="correct-count" class="font-bold text-lime-600"></span></p>
+                    <p>❌ Jawapan Salah: <span id="incorrect-count" class="font-bold text-red-600"></span></p>
+                    <p>⏱️ Purata Masa Tindak Balas: <span id="average-time" class="font-bold"></span> saat</p>
+                </div>
+                
+                <button onclick="displayCertificateForPrint()" id="print-certificate-btn" data-tp="" data-label="" data-score="" class="w-full bg-teal-500 hover:bg-teal-600 text-white font-black text-base py-3 rounded-lg transition duration-150 shadow-lg hover:shadow-xl mt-3">
                     Cetak / Simpan Sijil Pencapaian
                 </button>
-                <button onclick="startNewQuizSelection()" class="p-3 bg-gray-700 text-white font-bold rounded-lg shadow-md hover:bg-gray-800 transition duration-150">
+
+                <button onclick="startNewQuizSelection()" class="w-full bg-pink-500 hover:bg-pink-600 text-white font-black text-base py-3 rounded-lg transition duration-150 shadow-lg hover:shadow-xl mt-3">
                     Ulang Kuiz (Pilihan Sifir)
                 </button>
             </div>
         </div>
-
     </div>
-
-    <div id="certificate-screen" class="hidden fixed inset-0 bg-white z-50 overflow-auto p-4">
+    
+    <div id="certificate-screen" class="hidden fixed inset-0 z-50 bg-white items-center justify-center p-4 overflow-y-auto">
         </div>
 
     <script>
-        let selectedSifirs = [];
+        // Global State Variables
+        const QUIZ_DURATION = 250;     
+        const QUESTION_DURATION = 60;  
+        const CORRECT_PASSWORD = 'KuizSifir5973';
+        
+        let audioContext = null;
+        let currentSifir = 0;
+        let currentMode = 'input'; 
         let questions = [];
         let currentQIndex = 0;
         let score = 0;
-        let timer;
-        let startTime;
-        let currentMode = 'objective';
-        let totalTimeLimit = 250; // 250 saat untuk 50 soalan
+        let totalTimeElapsed = 0; 
+        
+        let totalTimeInterval = null; 
+        let qTimerInterval = null;    
+        let qTimeLeft = QUESTION_DURATION; 
+        let warningBeepInterval = null; 
+        
+        // KEMASKINI: Tambah pembolehubah untuk nama pelajar (Local Storage)
+        let studentName = '';
+        const STORAGE_KEY_NAME = 'student_name_sifir'; 
 
-        // --- GLOBAL FUNCTIONS AND INITIALIZATION ---
-
-        function initSifirSelection() {
-            const container = document.getElementById('sifir-selection');
-            container.innerHTML = '';
-            for (let i = 1; i <= 12; i++) {
-                const btn = document.createElement('button');
-                btn.textContent = i;
-                btn.className = 'p-3 bg-gray-200 text-gray-800 font-bold rounded-lg shadow-sm hover:bg-gray-300 transition duration-150';
-                btn.setAttribute('data-sifir', i);
-                btn.onclick = function() { toggleSifir(i, btn); };
-                container.appendChild(btn);
-            }
-        }
-
-        function toggleSifir(sifir, btn) {
-            const index = selectedSifirs.indexOf(sifir);
-            if (index > -1) {
-                selectedSifirs.splice(index, 1);
-                btn.classList.remove('bg-blue-500', 'text-white');
-                btn.classList.add('bg-gray-200', 'text-gray-800');
+        // --- Logik Local Storage ---
+        
+        // Muatkan nama dari localStorage semasa permulaan
+        function loadNameLocally() {
+            const storedName = localStorage.getItem(STORAGE_KEY_NAME);
+            if (storedName) {
+                studentName = storedName;
+                document.getElementById('student-name-input').value = studentName;
+                document.getElementById('current-name-display').textContent = `Nama yang disimpan: ${studentName}`;
             } else {
-                selectedSifirs.push(sifir);
-                btn.classList.remove('bg-gray-200', 'text-gray-800');
-                btn.classList.add('bg-blue-500', 'text-white');
+                 document.getElementById('current-name-display').textContent = `Nama belum disimpan.`;
             }
         }
 
+        // Kemas kini pembolehubah global dan localStorage apabila input berubah
+        function updateAndSaveName(event) {
+            const name = event.target.value.trim();
+            studentName = name;
+            localStorage.setItem(STORAGE_KEY_NAME, name);
+            
+            if (name) {
+                document.getElementById('current-name-display').textContent = `Nama yang disimpan: ${name}`;
+            } else {
+                 document.getElementById('current-name-display').textContent = `Nama belum disimpan.`;
+            }
+        }
+        
+        // Panggil semasa permulaan (sebelum skrin log masuk)
+        loadNameLocally(); 
+        
+        // --- Akhir Logik Local Storage ---
+
+
+        // Helper function untuk menukar paparan skrin
         function showScreen(screenId) {
-            document.getElementById('selection-screen').classList.add('hidden');
-            document.getElementById('quiz-screen').classList.add('hidden');
-            document.getElementById('result-screen').classList.add('hidden');
-            document.getElementById('certificate-screen').classList.add('hidden');
-
-            document.getElementById(screenId).classList.remove('hidden');
-            
-            // Jika masuk ke skrin keputusan, pastikan nama diisi.
-            if (screenId === 'result-screen') {
-                const studentName = document.getElementById('student-name').value || 'Pelajar Tanpa Nama';
-                document.getElementById('student-name-result').textContent = studentName;
-            }
-        }
-
-        // --- TIMER AND UI FUNCTIONS ---
-
-        function mulakanTimer() {
-            startTime = Date.now();
-            updateTimer();
-            timer = setInterval(updateTimer, 100);
-        }
-
-        function hentikanTimer() {
-            clearInterval(timer);
-        }
-
-        function updateTimer() {
-            const elapsedSeconds = (Date.now() - startTime) / 1000;
-            document.getElementById('timer-display').textContent = `Masa: ${elapsedSeconds.toFixed(1)}s`;
-            
-            if (elapsedSeconds >= totalTimeLimit && currentQIndex < 50) {
-                 hentikanTimer();
-                 tamatkanKuiz(true); // Masa tamat
-            }
-        }
-
-        function announceResults(score, tp, label) {
-            // (Kod TTS/Audio anda akan berada di sini. Dibiarkan kosong untuk keprluan GitHub)
-            // Cth: speakMalay(`Tahniah! Skor ${score} dengan Tahap Penguasaan ${label}.`);
-        }
-
-        // --- QUESTION GENERATION AND HANDLING ---
-
-        function generateQuestions() {
-            if (selectedSifirs.length === 0) {
-                alert("Sila pilih sekurang-kurangnya satu sifir (1-12) untuk dimulakan.");
-                return false;
-            }
-
-            questions = [];
-            let pool = [];
-
-            // Isi pool dengan semua soalan yang mungkin berdasarkan sifir yang dipilih (cth: 5x1 hingga 5x12)
-            selectedSifirs.forEach(sifir => {
-                for (let i = 1; i <= 12; i++) {
-                    pool.push({ num1: sifir, num2: i, answer: sifir * i });
-                }
+            const screens = ['login-screen', 'selection-screen', 'quiz-screen', 'result-screen'];
+            screens.forEach(id => {
+                document.getElementById(id).classList.add('hidden');
             });
+            document.getElementById(screenId).classList.remove('hidden');
+        }
 
-            // Randomly pilih 50 soalan dari pool (atau ulangi jika pool < 50)
-            for (let i = 0; i < 50; i++) {
-                const randomIndex = Math.floor(Math.random() * pool.length);
-                const question = { ...pool[randomIndex], startTime: null, time: 0 };
-                questions.push(question);
+        // Utility: Fisher-Yates shuffle
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                const temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
             }
+        }
 
-            // Jika objektif, sediakan pilihan jawapan
-            if (currentMode === 'objective') {
-                questions.forEach(q => {
-                    q.options = generateOptions(q.answer);
+        // -----------------------------------------------------------------
+        // PERUBAHAN UTAMA: FUNGSI TTS YANG TELAH DIPERBAIKI (ms-MY)
+        // -----------------------------------------------------------------
+        function speakMalay(textToRead) {
+            if (!('speechSynthesis' in window)) {
+                console.error("Pelayar tidak menyokong Web Speech API.");
+                return;
+            }
+            window.speechSynthesis.cancel();
+            
+            try {
+                const utterance = new SpeechSynthesisUtterance(textToRead);
+                
+                // 1. TETAPKAN BAHASA KEPADA BAHASA MELAYU (ms-MY)
+                utterance.lang = 'ms-MY';
+                utterance.rate = 1.0; 
+
+                // 2. CUBA CARI SUARA MELAYU YANG PALING SESUAI (Native Speaker Voice)
+                const voices = window.speechSynthesis.getVoices();
+                let malayVoice = voices.find(voice => 
+                    voice.lang === 'ms-MY' || 
+                    voice.name.toLowerCase().includes('malay') || 
+                    voice.name.toLowerCase().includes('melayu')
+                );
+
+                if (malayVoice) {
+                    utterance.voice = malayVoice;
+                } else {
+                    // Jika suara ms-MY tiada, sistem akan guna suara lalai tetapi dengan tetapan lang="ms-MY"
+                    console.warn("Suara Bahasa Melayu (ms-MY) tidak ditemui. Menggunakan suara lalai sistem.");
+                }
+
+                // MAIN AUDIO
+                window.speechSynthesis.speak(utterance);
+
+            } catch (error) {
+                 console.error("Ralat TTS: Audio gagal dimainkan.", error);
+            }
+        }
+        // --- Akhir Logik Native TTS (SpeechSynthesis API) ---
+
+        // --- Logik Web Audio API (Bunyi) ---
+        function initAudio() {
+            if (!audioContext) {
+                try {
+                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                } catch (e) {
+                    console.error("Web Audio API tidak boleh dimulakan:", e);
+                }
+            }
+        }
+        
+        // Nota: initAudio() hanya dipanggil selepas klik pertama. Ini adalah penyelesaian untuk Autoplay.
+        document.getElementById('login-button').addEventListener('click', initAudio, { once: true });
+        document.getElementById('password-input').addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') initAudio();
+        }, { once: true });
+
+
+        function playTone(frequency, duration, type = 'sine') {
+            initAudio();
+            if (!audioContext) return;
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.type = type;
+            gainNode.gain.setValueAtTime(0.5, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + duration);
+            
+            oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+            
+            oscillator.start();
+            oscillator.stop(audioContext.currentTime + duration);
+        }
+
+        function playCorrectSound() {
+            playTone(880, 0.15, 'sine'); 
+        }
+
+        function playIncorrectSound() {
+            playTone(220, 0.3, 'triangle'); 
+        }
+
+        function playWarningBeep() {
+            playTone(800, 0.1, 'square');
+        }
+
+        function startWarningBeeps() {
+            if (warningBeepInterval) return;
+            warningBeepInterval = setInterval(() => {
+                playWarningBeep();
+            }, 500);
+        }
+
+        function stopWarningBeeps() {
+            if (warningBeepInterval) {
+                clearInterval(warningBeepInterval);
+                warningBeepInterval = null;
+            }
+        }
+        // --- Akhir Logik Web Audio API ---
+
+        // --- Logik Akses Kata Laluan ---
+        function checkPassword() {
+            const input = document.getElementById('password-input').value.trim();
+            const feedback = document.getElementById('login-feedback');
+            
+            if (input === CORRECT_PASSWORD) {
+                feedback.textContent = 'Log Masuk Berjaya!';
+                feedback.classList.remove('text-red-600');
+                feedback.classList.add('text-lime-600');
+                
+                showScreen('selection-screen'); 
+                
+                // KEMASKINI: Muatkan semula nama pelajar dan fokus pada input nama
+                loadNameLocally(); 
+                document.getElementById('student-name-input').focus();
+                
+                // Audio Permulaan di sini (Selepas Log Masuk Berjaya)
+                speakMalay('Selamat Datang ke Kuiz Bijak Sifir! Sila masukkan nama anda dan pilih jenis kuiz.');
+
+            } else {
+                playIncorrectSound(); 
+                feedback.textContent = 'Kata Laluan Salah. Sila cuba lagi.';
+                feedback.classList.remove('text-lime-600');
+                feedback.classList.add('text-red-600');
+                document.getElementById('password-input').value = '';
+                document.getElementById('password-input').focus();
+            }
+        }
+        function handleLoginKey(event) {
+            if (event.key === 'Enter') {
+                checkPassword();
+            }
+        }
+        
+        // --- Logik Kuiz ---
+
+        function generateDistractors(correctAnswer) {
+            const distractors = new Set();
+            const maxAttempts = 10;
+            let attempts = 0;
+            
+            while (distractors.size < 3 && attempts < maxAttempts) {
+                attempts++;
+                let offset = Math.floor(Math.random() * 11) - 5; 
+                let distractor = correctAnswer + offset;
+
+                if (distractor > 0 && distractor !== correctAnswer && !distractors.has(distractor)) {
+                    distractors.add(distractor);
+                }
+            }
+            
+            if (distractors.size < 3) {
+                 [1, -1, 10, correctAnswer % 10 === 0 ? -10 : 0].forEach(offset => {
+                    let d = correctAnswer + offset;
+                    if (d > 0 && d !== correctAnswer && distractors.size < 3 && !distractors.has(d)) {
+                         distractors.add(d);
+                    }
                 });
             }
 
-            return true;
+            return Array.from(distractors).slice(0, 3);
         }
 
-        function generateOptions(correctAnswer) {
-            const options = new Set();
-            options.add(correctAnswer);
+        function generateQuestions(sifir, mode) {
+            questions = [];
+            
+            for (let i = 0; i < 50; i++) {
+                let multiplier;
+                let factor = Math.floor(Math.random() * 12) + 1; 
 
-            while (options.size < 4) {
-                let dist;
-                if (correctAnswer < 10) {
-                    dist = Math.floor(Math.random() * 5) + 1; // Jarak dekat
-                } else if (correctAnswer < 50) {
-                    dist = Math.floor(Math.random() * 10) + 1; // Jarak sederhana
+                if (sifir === 0) {
+                    multiplier = Math.floor(Math.random() * 12) + 1; 
                 } else {
-                    dist = Math.floor(Math.random() * 20) + 1; // Jarak jauh
-                }
-                
-                let randomAnswer;
-                if (Math.random() < 0.5) {
-                    randomAnswer = correctAnswer + dist;
-                } else {
-                    randomAnswer = correctAnswer - dist;
+                    multiplier = sifir;
                 }
 
-                if (randomAnswer > 0 && randomAnswer !== correctAnswer) {
-                    options.add(randomAnswer);
+                const correctAnswer = multiplier * factor;
+                const qText = `${multiplier} x ${factor}`;
+                const newQuestion = { q: qText, answer: correctAnswer, time: 0, answered: false }; 
+
+                if (mode === 'objective') {
+                    const distractors = generateDistractors(correctAnswer);
+                    let options = [...distractors, correctAnswer];
+                    shuffleArray(options); 
+
+                    newQuestion.options = options;
                 }
+
+                questions.push(newQuestion);
             }
-
-            return Array.from(options).sort(() => Math.random() - 0.5);
         }
-        
-        // --- START QUIZ ---
 
-        function startQuiz(mode) {
-            const studentName = document.getElementById('student-name').value;
-            if (!studentName || studentName.trim() === '') {
-                alert("Sila masukkan Nama Pelajar untuk memulakan kuiz.");
-                document.getElementById('student-name').focus();
+
+        function startQuizFlow() {
+            // Semak nama pelajar
+            if (!studentName.trim()) {
+                speakMalay('Sila masukkan nama pelajar terlebih dahulu.');
+                document.getElementById('student-name-input').focus();
+                // Tunjukkan mesej amaran ringkas di bawah butang start
+                const startButton = document.getElementById('start-button');
+                startButton.textContent = 'Sila masukkan nama pelajar!';
+                startButton.classList.remove('bg-pink-500', 'hover:bg-pink-600');
+                startButton.classList.add('bg-red-500', 'hover:bg-red-600');
+                setTimeout(() => {
+                    startButton.textContent = 'Mulakan Kuiz (50 Soalan)';
+                    startButton.classList.remove('bg-red-500', 'hover:bg-red-600');
+                    startButton.classList.add('bg-pink-500', 'hover:bg-pink-600');
+                }, 1500);
                 return;
             }
-            
-            currentMode = mode;
 
-            if (!generateQuestions()) return;
 
-            // Simpan nama pelajar semasa ke localStorage untuk kegunaan lain
-            localStorage.setItem('studentName', studentName.trim());
-            
-            // Reset state
+            const selection = document.getElementById('sifir-pilihan').value.split('-');
+            currentSifir = parseInt(selection[0]);
+            currentMode = selection[1];
+
+            generateQuestions(currentSifir, currentMode);
+
             currentQIndex = 0;
             score = 0;
+            totalTimeElapsed = 0;
             
-            // Sediakan UI berdasarkan mode
-            if (mode === 'objective') {
-                document.getElementById('objective-answers').classList.remove('hidden');
-                document.getElementById('input-answer').classList.add('hidden');
-            } else {
-                document.getElementById('objective-answers').classList.add('hidden');
-                document.getElementById('input-answer').classList.remove('hidden');
-            }
+            hentikanTimer(); 
+
+            document.getElementById('progress-bar').style.width = `0%`;
+            document.getElementById('q-countdown-display').textContent = `${QUESTION_DURATION}s`;
 
             showScreen('quiz-screen');
-            mulakanTimer();
-            displayQuestion();
+
+            const inputModeEl = document.getElementById('input-mode');
+            const objectiveModeEl = document.getElementById('objective-mode');
+
+            if (currentMode === 'input') {
+                inputModeEl.classList.remove('hidden');
+                objectiveModeEl.classList.add('hidden');
+                document.getElementById('answer-input').focus();
+            } else { 
+                inputModeEl.classList.add('hidden');
+                objectiveModeEl.classList.remove('hidden');
+                document.getElementById('option-A').focus();
+            }
+
+            mulakanTotalTimer();
+
+            // PANGGILAN AUDIO PERMULAAN YANG TELAH DIPERBAIKI
+            speakMalay(`Jom mulakan Kuiz Sifir. Anda ada ${QUESTION_DURATION} saat untuk setiap soalan.`);
+
+            paparSoalan();
+        }
+        
+        function returnToSelection() {
+            hentikanTimer();
+            currentQIndex = 0;
+            score = 0;
+            totalTimeElapsed = 0;
+
+            speakMalay('Kuiz ditamatkan. Sila buat pilihan baharu.');
+            showScreen('selection-screen');
         }
 
-        function displayQuestion() {
-            if (currentQIndex >= questions.length) {
-                tamatkanKuiz(false);
+        function startNewQuizSelection() {
+            speakMalay('Sila pilih jenis kuiz yang baru.');
+            showScreen('selection-screen'); 
+        }
+
+        function paparSoalan() {
+            hentikanQuestionTimer();
+
+            if (currentQIndex >= 50) {
+                tamatkanKuiz();
                 return;
             }
 
             const q = questions[currentQIndex];
-            q.startTime = Date.now();
-            document.getElementById('question-counter').textContent = `Soalan ${currentQIndex + 1}/50`;
-            document.getElementById('question-text').textContent = `${q.num1} X ${q.num2} = ?`;
-            document.getElementById('feedback-message').textContent = '';
+            document.getElementById('question-text').textContent = q.q + ' = ?';
+            document.getElementById('current-q-num').textContent = currentQIndex + 1;
+            document.getElementById('feedback').textContent = '';
 
-            if (currentMode === 'objective') {
-                displayObjectiveOptions(q.options, q.answer);
-            } else {
+            if (currentMode === 'input') {
                 document.getElementById('answer-input').value = '';
                 document.getElementById('answer-input').focus();
-            }
-        }
-
-        function displayObjectiveOptions(options, correctAnswer) {
-            const container = document.getElementById('objective-answers');
-            container.innerHTML = '';
-            options.forEach(option => {
-                const btn = document.createElement('button');
-                btn.textContent = option;
-                btn.className = 'p-4 bg-gray-200 text-gray-800 text-2xl font-bold rounded-lg shadow-md hover:bg-gray-300 transition duration-150 font-sifir';
-                btn.onclick = function() { submitAnswer(option, correctAnswer, btn); };
-                container.appendChild(btn);
-            });
-        }
-
-        // --- SUBMIT ANSWER ---
-
-        function submitAnswer(selectedOption, correctAnswer, btn) {
-            const q = questions[currentQIndex];
-            q.time = (Date.now() - q.startTime) / 1000;
-            
-            let isCorrect;
-            let userAnswer;
-            
-            if (currentMode === 'objective') {
-                userAnswer = selectedOption;
-                isCorrect = (userAnswer === correctAnswer);
-            } else {
-                userAnswer = parseInt(document.getElementById('answer-input').value);
-                isCorrect = (userAnswer === q.answer);
-            }
-
-            q.isCorrect = isCorrect;
-
-            if (isCorrect) {
-                score++;
-                document.getElementById('feedback-message').textContent = "✅ BETUL!";
-                document.getElementById('feedback-message').classList.remove('text-red-500');
-                document.getElementById('feedback-message').classList.add('text-green-500');
-            } else {
-                document.getElementById('feedback-message').textContent = `❌ SALAH. Jawapan yang betul: ${q.answer}`;
-                document.getElementById('feedback-message').classList.remove('text-green-500');
-                document.getElementById('feedback-message').classList.add('text-red-500');
-            }
-
-            // Disable buttons/input buat sementara waktu
-            if (currentMode === 'objective') {
-                document.querySelectorAll('#objective-answers button').forEach(b => b.disabled = true);
-                if (isCorrect) {
-                     btn.classList.add('bg-green-500', 'text-white');
-                } else {
-                     btn.classList.add('bg-red-500', 'text-white');
-                     // Highlight jawapan betul
-                     document.querySelectorAll('#objective-answers button').forEach(b => {
-                        if (parseInt(b.textContent) === correctAnswer) {
-                            b.classList.remove('bg-gray-200', 'hover:bg-gray-300');
-                            b.classList.add('bg-green-300');
-                        }
-                    });
-                }
-            } else {
-                document.getElementById('answer-input').disabled = true;
-                document.querySelector('#input-answer button').disabled = true;
-                if (isCorrect) {
-                    document.getElementById('answer-input').classList.add('bg-green-100');
-                } else {
-                    document.getElementById('answer-input').classList.add('bg-red-100');
-                }
+            } else { 
+                document.querySelectorAll('.objective-btn').forEach((btn, index) => {
+                    const optionValue = q.options[index];
+                    btn.classList.remove('bg-pink-600', 'bg-red-600', 'bg-teal-700');
+                    btn.classList.add('bg-teal-500', 'hover:bg-teal-600'); 
+                    
+                    btn.querySelector('span').textContent = optionValue;
+                    btn.setAttribute('data-value', optionValue);
+                    btn.disabled = false;
+                });
             }
             
-            // Bergerak ke soalan seterusnya selepas delay
-            setTimeout(() => {
-                if (currentMode === 'objective') {
-                    document.querySelectorAll('#objective-answers button').forEach(b => b.disabled = false);
-                } else {
-                    document.getElementById('answer-input').disabled = false;
-                    document.querySelector('#input-answer button').disabled = false;
-                    document.getElementById('answer-input').classList.remove('bg-green-100', 'bg-red-100');
-                }
-
-                currentQIndex++;
-                displayQuestion();
-            }, 1500);
+            mulakanQuestionTimer();
         }
         
+        // --- Pengurusan Masa Soalan (60s Countdown) ---
+
+        function mulakanQuestionTimer() {
+            qTimeLeft = QUESTION_DURATION;
+            const displayEl = document.getElementById('q-countdown-display');
+            displayEl.textContent = `${qTimeLeft}s`;
+            
+            displayEl.classList.remove('urgent-timer');
+            stopWarningBeeps();
+
+            qTimerInterval = setInterval(() => {
+                qTimeLeft--;
+                displayEl.textContent = `${qTimeLeft}s`;
+
+                if (qTimeLeft <= 10 && qTimeLeft > 0) {
+                    displayEl.classList.add('urgent-timer');
+                    startWarningBeeps();
+                } else if (qTimeLeft <= 0) {
+                    hentikanQuestionTimer();
+                    semakJawapan(null, null, true); 
+                } else if (qTimeLeft > 10) {
+                    displayEl.classList.remove('urgent-timer');
+                    stopWarningBeeps();
+                }
+            }, 1000); 
+        }
+
+        function hentikanQuestionTimer() {
+            clearInterval(qTimerInterval);
+            stopWarningBeeps();
+            qTimerInterval = null;
+        }
+        
+        // --- Pengurusan Masa Keseluruhan (250s Background Timer) ---
+        function mulakanTotalTimer() {
+            const initialTime = performance.now();
+            
+            clearInterval(totalTimeInterval);
+            
+            totalTimeInterval = setInterval(() => {
+                const now = performance.now();
+                totalTimeElapsed = (now - initialTime) / 1000;
+               
+                if (totalTimeElapsed >= QUIZ_DURATION) {
+                    tamatkanKuiz(true); 
+                }
+            }, 100); 
+        }
+
+        function hentikanTotalTimer() {
+            clearInterval(totalTimeInterval);
+        }
+
+        function hentikanTimer() {
+             hentikanQuestionTimer();
+             hentikanTotalTimer();
+        }
+
+        function handleInputSubmission() {
+            const inputElement = document.getElementById('answer-input');
+            const submitButton = document.querySelector('#input-mode button');
+            inputElement.disabled = true;
+            submitButton.disabled = true;
+
+            const userAnswer = parseInt(inputElement.value.trim());
+
+            if (isNaN(userAnswer)) {
+                inputElement.disabled = false;
+                submitButton.disabled = false;
+                const feedbackEl = document.getElementById('feedback');
+                feedbackEl.textContent = 'Sila masukkan nombor yang sah.';
+                feedbackEl.className = 'h-6 text-sm font-semibold text-red-600';
+                return;
+            }
+            semakJawapan(userAnswer);
+        }
+
         function handleInputKey(event) {
             if (event.key === 'Enter') {
-                submitAnswer();
+                const submitButton = document.querySelector('#input-mode button');
+                if (!submitButton.disabled) {
+                    handleInputSubmission();
+                }
             }
         }
 
-        // --- TAMAT KUIZ DAN KIRA TP ---
+        function handleObjectiveSubmission(button) {
+            const userAnswer = parseInt(button.getAttribute('data-value'));
 
-        function getTPDetails(accuracy, totalTimeTaken, totalAnswered) {
-            const avgTime = totalAnswered > 0 ? totalTimeTaken / totalAnswered : 0;
+            document.querySelectorAll('.objective-btn').forEach(btn => btn.disabled = true);
+            
+            semakJawapan(userAnswer, button);
+        }
+
+
+        function semakJawapan(userAnswer, selectedButton = null, isTimeout = false) {
+            
+            hentikanQuestionTimer(); 
+            
+            const q = questions[currentQIndex];
+            
+            const timeTaken = isTimeout ? QUESTION_DURATION : (QUESTION_DURATION - qTimeLeft);
+            q.time = timeTaken; 
+            q.answered = true;
+
+            const feedbackEl = document.getElementById('feedback');
+            const correctAnswer = q.answer;
+            let isCorrect = false;
+
+            if (isTimeout) {
+                feedbackEl.textContent = `⏳ Masa Tamat! Jawapan ialah ${correctAnswer}.`;
+                feedbackEl.className = 'h-6 text-sm font-semibold text-red-600';
+                playIncorrectSound();
+            } else if (userAnswer === correctAnswer) {
+                score++;
+                isCorrect = true;
+                feedbackEl.textContent = '✅ Betul!';
+                feedbackEl.className = 'h-6 text-sm font-semibold text-lime-600'; 
+                playCorrectSound(); 
+            } else {
+                feedbackEl.textContent = `❌ Salah. Jawapan ialah ${correctAnswer}.`;
+                feedbackEl.className = 'h-6 text-sm font-semibold text-red-600';
+                playIncorrectSound(); 
+            }
+
+            if (currentMode === 'objective') {
+                document.querySelectorAll('.objective-btn').forEach(btn => {
+                    const value = parseInt(btn.getAttribute('data-value'));
+                    btn.classList.remove('bg-teal-500', 'hover:bg-teal-600');
+                    if (value === correctAnswer) {
+                        btn.classList.add('bg-pink-600'); 
+                    } else if (btn === selectedButton && !isCorrect) {
+                        btn.classList.add('bg-red-600'); 
+                    } else {
+                         btn.classList.add('bg-teal-700'); 
+                    }
+                });
+            }
+
+
+            currentQIndex++;
+            
+            const progressPercent = (currentQIndex / 50) * 100;
+            document.getElementById('progress-bar').style.width = `${progressPercent}%`;
+
+            setTimeout(() => {
+                if (currentMode === 'input') {
+                    document.getElementById('answer-input').disabled = false;
+                    document.querySelector('#input-mode button').disabled = false;
+                }
+                paparSoalan();
+            }, 700);
+        }
+        
+        // --- Logik TP DSKP ---
+        
+        // -----------------------------------------------------------------
+        // PERUBAHAN UTAMA: FUNGSI PENGUMUMAN KEPUTUSAN KUIZ (Audio Sijil)
+        // -----------------------------------------------------------------
+        function announceResults(score, finalTP, tpLabel) {
+            let resultMessage = "";
+            
+            // Sesuaikan mesej berdasarkan Tahap Penguasaan (TP)
+            if (finalTP >= 5) {
+                resultMessage = "TAHNIAH! Keputusan cemerlang! Anda memang bijak sifir dan sangat pantas! Anda mencapai Tahap Penguasaan lima ke atas!";
+            } else if (finalTP >= 3) {
+                resultMessage = "Hebat! Anda telah menguasai sifir. Sila teruskan latihan untuk mencapai Tahap Penguasaan yang lebih tinggi.";
+            } else {
+                resultMessage = "Anda telah mencuba. Jangan putus asa, mari cuba kuiz ini sekali lagi untuk tingkatkan markah dan kepantasan anda!";
+            }
+            
+            // Mesej penuh yang akan dibaca oleh TTS
+            const fullAnnouncement = `${resultMessage} Tahap Penguasaan anda adalah TP ${finalTP}. ${tpLabel}.`;
+            
+            // Panggil fungsi TTS yang telah diperbaiki
+            speakMalay(fullAnnouncement);
+        }
+        // -----------------------------------------------------------------
+
+
+        function getTPDetails(accuracy, timeElapsed, totalAnswered) {
             let finalTP = 1;
             let tpLabel = "Tahu";
-            let tpDescription = "Anda perlu mengulangkaji fakta asas sifir dengan lebih mendalam dan teliti.";
+            let tpDescription = "Tahu fakta asas sifir.";
             
-            // TP 6
-            if (accuracy >= 0.95 && avgTime <= 2.5) {
+            const avgTime = totalAnswered > 0 ? timeElapsed / totalAnswered : 999;
+            const isAccurate = accuracy >= 0.8;
+            const isVeryAccurate = accuracy >= 0.9; 
+            const isNearPerfect = accuracy >= 0.96; 
+
+            const veryFast = 4.0; 
+            const fast = 7.0;    
+            const moderate = 15.0; 
+
+
+            if (isNearPerfect && avgTime <= veryFast) {
                 finalTP = 6;
-                tpLabel = "Cemerlang & Pantas";
-                tpDescription = "Tahniah! Anda menguasai semua sifir dengan sangat pantas dan tepat. Boleh membimbing rakan sebaya.";
-            } 
-            // TP 5
-            else if (accuracy >= 0.9 && avgTime <= 3.5) {
+                tpLabel = "Cemerlang";
+                tpDescription = "Menguasai sifir dengan cermat, tepat, cekap, dan **sangat pantas**, serta boleh menjadi teladan. Selesai kuiz dalam purata **< 4.0s** setiap soalan.";
+            } else if (isVeryAccurate && avgTime <= fast) {
                 finalTP = 5;
-                tpLabel = "Mahir";
-                tpDescription = "Sangat bagus! Anda menguasai sifir dengan baik. Teruskan latihan untuk kekalkan kelajuan dan ketepatan.";
-            }
-            // TP 4
-            else if (accuracy >= 0.8 && avgTime <= 5) {
+                tpLabel = "Sangat Mahir";
+                tpDescription = "Melaksanakan kemahiran sifir dengan cermat, tepat, cekap, dan **pantas**. Selesai kuiz dalam purata **< 7.0s** setiap soalan.";
+            } else if (isAccurate && avgTime <= moderate) {
                 finalTP = 4;
-                tpLabel = "Boleh Menganalisa";
-                tpDescription = "Baik! Anda tahu dan faham sifir. Tumpukan perhatian untuk meningkatkan kelajuan menjawab.";
-            }
-            // TP 3
-            else if (accuracy >= 0.7) {
+                tpLabel = "Mahir";
+                tpDescription = "Melaksanakan kemahiran sifir dengan cekap dan **tepat** dalam had masa yang berpatutan. Selesai kuiz dalam purata **< 15.0s** setiap soalan.";
+            } else if (accuracy >= 0.7) {
                 finalTP = 3;
                 tpLabel = "Boleh Mengaplikasi";
-                tpDescription = "Anda boleh mengaplikasi konsep sifir, tetapi masih ada ruang untuk meningkatkan ketepatan dan kelajuan.";
-            }
-            // TP 2
-            else if (accuracy >= 0.4) {
+                tpDescription = "Mengaplikasikan kefahaman sifir untuk melaksanakan kemahiran, tetapi perlukan latihan kepantasan dan ketepatan.";
+            } else if (accuracy >= 0.5) {
                 finalTP = 2;
                 tpLabel = "Faham";
-                tpDescription = "Anda faham konsep sifir, tetapi perlu mengulang kaji fakta asas untuk meningkatkan markah.";
+                tpDescription = "Memahami konsep sifir dan boleh menerangkan fakta asas, tetapi banyak jawapan salah.";
+            } else {
+                finalTP = 1;
+                tpLabel = "Tahu";
+                tpDescription = "Tahu fakta asas sifir (skor rendah), dan memerlukan banyak ulangkaji serta pengukuhan.";
             }
-            // TP 1 kekal jika < 0.4
-
+            
             return { finalTP, tpLabel, tpDescription, avgTime };
         }
 
@@ -526,12 +948,12 @@
             let modeText = currentMode === 'objective' ? 'Objektif' : 'Input';
             let totalScore = score;
             let avgTime = 0;
-            const studentName = document.getElementById('student-name').value; // Dapatkan nama di sini
+
 
             if (isTotalTimeout) {
-                tpMessage = `❌ Had Masa Keseluruhan (${totalTimeLimit}s) Kuiz ${modeText} Tamat! Kuiz terhenti pada soalan ${currentQIndex} dari 50.`;
+                tpMessage = `❌ Had Masa Keseluruhan (250s) Kuiz ${modeText} Tamat! Kuiz terhenti pada soalan ${currentQIndex} dari 50.`;
                 const partialAccuracy = score / totalAnswered;
-                    if (partialAccuracy >= 0.7) {
+                 if (partialAccuracy >= 0.7) {
                     finalTP = 3;
                     tpLabel = "Boleh Mengaplikasi";
                     tpDescription = "Kuiz terhenti kerana masa keseluruhan tamat. Anda boleh mengaplikasi, tetapi perlukan latihan fokus dan ketepatan masa.";
@@ -546,6 +968,7 @@
                 }
                 avgTime = totalAnswered > 0 ? totalTimeTaken / totalAnswered : 0;
                 
+                // Audio Keputusan apabila Masa Tamat
                 announceResults(totalScore, finalTP, tpLabel);
 
             } else {
@@ -556,16 +979,9 @@
                 tpMessage = `🎉 Tahniah! Anda menyelesaikan Kuiz ${modeText} ini dengan jayanya.`;
                 avgTime = tpDetails.avgTime;
                 
+                // Audio Keputusan Kuiz Tamat Biasa
                 announceResults(totalScore, finalTP, tpLabel);
-                
-                // --- SIMPAN SEJARAH SKOR (MENGIKUT NAMA PELAJAR) ---
-                saveQuizHistory(finalTP, tpLabel, totalScore, totalTimeTaken, studentName); 
-                // -----------------------------------------------------
             }
-            
-            // --- PAPARKAN SEJARAH SKOR ---
-            displayQuizHistory(); 
-            // ------------------------------
             
             showScreen('result-screen');
 
@@ -588,100 +1004,117 @@
 
         }
         
-        function startNewQuizSelection() {
-            // Reset sifir buttons di skrin pemilihan
-            const sifirButtons = document.querySelectorAll('#sifir-selection button');
-            sifirButtons.forEach(btn => {
-                btn.classList.remove('bg-blue-500', 'text-white');
-                btn.classList.add('bg-gray-200', 'text-gray-800');
-            });
-            selectedSifirs = [];
-            
-            showScreen('selection-screen');
-            speakMalay('Sila masukkan nama dan buat pilihan kuiz baharu.');
-        }
+        // --- Logik Sijil Pencapaian ---
 
-        // --- FUNGSI SIJIL DAN CETAK ---
-        
-        function generateCertificateHTML(name, tp, label, score) {
-            const date = new Date().toLocaleDateString('ms-MY', { day: '2-digit', month: 'long', year: 'numeric' });
-            
-            // Tentukan warna dan ikon berdasarkan TP
-            let colorClass, iconHtml;
-            if (tp >= 5) {
-                colorClass = 'border-yellow-500 bg-yellow-100 text-yellow-800';
-                iconHtml = '⭐';
-            } else if (tp >= 3) {
-                colorClass = 'border-green-500 bg-green-100 text-green-800';
-                iconHtml = '✅';
+        function generateCertificateHTML(finalTP, tpLabel, score) {
+            const date = new Date().toLocaleDateString('ms-MY', { year: 'numeric', month: 'long', day: 'numeric' });
+            // KEMASKINI: Gunakan nama pelajar dari localStorage/input
+            const studentDisplayName = studentName.trim() || 'PELAJAR CEMERLANG'; 
+
+            let colorClass, trophyIcon;
+            if (finalTP >= 5) {
+                colorClass = 'border-pink-600 text-pink-700 shadow-pink-300';
+                trophyIcon = '🏆';
+            } else if (finalTP >= 3) {
+                colorClass = 'border-teal-600 text-teal-700 shadow-teal-300';
+                trophyIcon = '🏅';
             } else {
-                colorClass = 'border-red-500 bg-red-100 text-red-800';
-                iconHtml = '📚';
+                colorClass = 'border-yellow-600 text-yellow-700 shadow-yellow-300';
+                trophyIcon = '✨';
             }
 
+
             return `
-                <div class="relative min-h-screen flex items-center justify-center p-8">
-                    <div class="w-full max-w-4xl border-8 ${colorClass} p-10 md:p-20 shadow-2xl bg-white">
-                        <div class="text-center space-y-8">
-                            <h1 class="text-5xl font-extrabold text-gray-800">Sijil Pencapaian</h1>
-                            <p class="text-xl text-gray-600">Dengan ini disahkan bahawa</p>
-                            
-                            <h2 class="text-7xl font-black text-blue-600 uppercase tracking-wider">${name}</h2>
-                            
-                            <p class="text-xl text-gray-600">telah berjaya menyelesaikan Kuiz Bijak Sifir dan mencapai</p>
-                            
-                            <div class="my-6">
-                                <span class="inline-block px-8 py-3 rounded-full text-5xl font-extrabold shadow-lg ${colorClass}">
-                                    ${iconHtml} TP${tp}: ${label} ${iconHtml}
-                                </span>
-                            </div>
+                <div class="certificate-container w-full max-w-4xl border-8 rounded-xl p-8 md:p-16 shadow-2xl ${colorClass} bg-white mx-auto my-auto" style="min-height: 80vh;">
+                    
+ <div class="flex justify-center mb-4">
+                        <img src="https://raw.githubusercontent.com/mizz85/nota-sifir/main/logo-mizzz.png" alt="Logo Edukids by Mizz" style="width: 100px; height: auto;" crossorigin="anonymous">
+                    </div>
+ 
+                    <div class="text-center space-y-4">
+                        <h1 class="text-4xl md:text-5xl font-black mb-6 mt-4 uppercase tracking-widest text-teal-600">
+                            Sijil Pencapaian
+                        </h1>
+                        
+                        <p class="text-xl font-semibold text-gray-700">
+                            Dengan sukacitanya dianugerahkan kepada:
+                        </p>
+                        
+                        <p class="text-4xl md:text-5xl font-extrabold border-b-2 border-solid mx-auto pb-2 max-w-sm ${colorClass}">
+                            ${studentDisplayName.toUpperCase()}
+                        </p>
+                        
+                        <p class="text-xl font-semibold pt-4 text-gray-700">
+                            Di atas kejayaan menamatkan 50 soalan Kuiz Bijak Sifir dengan
+                        </p>
+                        
+                        <div class="py-4 px-6 mx-auto max-w-xs rounded-xl shadow-lg ring-4 ${colorClass.replace('border-', 'bg-').replace('shadow-', 'ring-')}" style="background-color: ${finalTP >= 5 ? '#fbcfe8' : finalTP >= 3 ? '#99f6e4' : '#fef08a'}">
+                            <p class="text-2xl font-bold">Tahap Penguasaan</p>
+                            <p class="text-6xl font-black mt-2">${trophyIcon} TP${finalTP}</p>
+                            <p class="text-3xl font-extrabold mt-1 uppercase">${tpLabel}</p>
+                        </div>
 
-                            <p class="text-2xl font-bold text-gray-700">Markah Diperolehi: <span class="text-red-600">${score} / 50</span></p>
+                        <p class="text-xl font-semibold pt-4 text-gray-700">
+                            Skor Akhir: ${score} / 50
+                        </p>
+                    </div>
 
-                            <p class="text-xl text-gray-600 pt-4">Tarikh Sijil Dikeluarkan: ${date}</p>
-                            
-                            <div class="no-print text-center mt-8">
-                                
-                                <div id="mobile-print-warning" style="display:none;">
-                                    Sila gunakan **PC/Laptop** untuk Cetak ke PDF. Fungsi cetak di telefon bimbit sering bermasalah.
-                                </div>
-
-                                <button onclick="window.print();" class="mobile-print-button-hide bg-pink-500 hover:bg-pink-600 text-white font-medium py-2 px-6 rounded-lg transition duration-150 shadow-md mr-4">
-                                    Cetak ke PDF
-                                </button>
-                                
-                                <button onclick="returnFromCertificate()" class="bg-gray-700 hover:bg-gray-800 text-white font-medium py-2 px-6 rounded-lg transition duration-150 shadow-md">
-                                    Tutup Sijil & Buat Kuiz Baharu
-                                </button>
-                            </div>
+                    <div class="flex flex-col md:flex-row justify-around items-end mt-12 text-sm text-gray-700">
+                        <div class="text-center">
+                            <p class="border-t border-gray-500 pt-2 font-medium italic">
+                                Tarikh Dikeluarkan: ${date}
+                            </p>
+                        </div>
+                        <div class="text-center mt-6 md:mt-0">
+                            <p class="border-t border-gray-500 pt-2 font-medium">
+                                Guru Cemerlang Matematik
+                           </p>
+                            <p class="text-xs text-gray-500">(Tandatangan Digital)</p>
                         </div>
                     </div>
-                </div>
+                    
+<div class="no-print text-center mt-8">
+                        
+                        <div id="mobile-print-warning" style="display:none;">
+                            Sila gunakan **PC/Laptop** untuk Cetak ke PDF. Fungsi cetak di telefon bimbit sering bermasalah.
+                        </div>
+
+                        <button onclick="window.print();" class="mobile-print-button-hide bg-pink-500 hover:bg-pink-600 text-white font-medium py-2 px-6 rounded-lg transition duration-150 shadow-md mr-4">
+                            Cetak ke PDF
+                        </button>
+                        
+                        <button onclick="returnFromCertificate()" class="bg-gray-700 hover:bg-gray-800 text-white font-medium py-2 px-6 rounded-lg transition duration-150 shadow-md">
+                            Tutup Sijil & Buat Kuiz Baharu
+                        </button>
+                    </div>				
+				</div>
             `;
         }
-        
-        function returnFromCertificateLogic() {
-             // Sembunyikan sijil dan kembali ke skrin keputusan/kuiz
-             const certificateScreen = document.getElementById('certificate-screen');
-             certificateScreen.classList.add('hidden');
-             document.getElementById('quiz-container-wrapper').classList.remove('hidden');
-             // Ini akan memastikan ia kembali ke skrin yang paling sesuai (biasanya keputusan)
-             if (document.getElementById('result-screen').classList.contains('hidden')) {
-                 showScreen('selection-screen'); // Jika tiada keputusan, kembali ke pemilihan
-             } else {
-                 showScreen('result-screen');
-             }
-        }
 
+// ... (Fungsi generateCertificateHTML kekal sama di atas) ...
+
+        // FUNGSI BARU: Logik Kembali ke Skrin Keputusan (Digunakan selepas cubaan Cetak)
+        function returnFromCertificateLogic() {
+            const certificateScreen = document.getElementById('certificate-screen');
+            // Hanya jalankan jika skrin sijil masih dipaparkan
+            if (!certificateScreen.classList.contains('hidden')) {
+                certificateScreen.classList.add('hidden');
+                document.getElementById('quiz-container-wrapper').classList.remove('hidden');
+                certificateScreen.innerHTML = '';
+                
+                // Pastikan skrin Keputusan dipaparkan semula (Mesra HP/Batal Cetak)
+                showScreen('result-screen'); 
+                // Kita tidak panggil speakMalay di sini kerana ia akan mengganggu proses cetak
+            }
+        }
+        
         function displayCertificateForPrint() {
             const printBtn = document.getElementById('print-certificate-btn');
-            const name = document.getElementById('student-name-result').textContent;
-            const tp = printBtn.getAttribute('data-tp');
-            const label = printBtn.getAttribute('data-label');
-            const score = printBtn.getAttribute('data-score');
-            
-            const certificateHTML = generateCertificateHTML(name, tp, label, score);
-            
+            const finalTP = parseInt(printBtn.getAttribute('data-tp'));
+            const tpLabel = printBtn.getAttribute('data-label');
+            const score = parseInt(printBtn.getAttribute('data-score'));
+
+            const certificateHTML = generateCertificateHTML(finalTP, tpLabel, score);
             const certificateScreen = document.getElementById('certificate-screen');
             
             certificateScreen.innerHTML = certificateHTML;
@@ -689,7 +1122,7 @@
 
             document.getElementById('quiz-container-wrapper').classList.add('hidden');
             
-            // speakMalay(`Sijil anda telah sedia. Sila cetak atau simpan sebagai PDF.`);
+            speakMalay(`Sijil anda telah sedia. Sila cetak atau simpan sebagai PDF.`);
             
             // TRIK MUDAH ALIH:
             // Sediakan mekanisme untuk kembali ke skrin keputusan selepas 3 saat.
@@ -711,148 +1144,8 @@
             
             // Bawa terus ke skrin pemilihan kuiz yang baru
             showScreen('selection-screen');
-            // speakMalay('Sila buat pilihan kuiz baharu.');
+            speakMalay('Sila buat pilihan kuiz baharu.');
         }
-
-        // --- LOGIK SEJARAH SKOR PELAJAR ---
-
-        // Kunci utama untuk menyimpan SEMUA data (sejarah + nama pelajar)
-        const QUIZ_DATA_STORAGE_KEY = 'kuiz_sifir_all_users_data';
-        // MAX_HISTORY_RECORDS kekal 10
-
-        function saveQuizHistory(finalTP, tpLabel, score, totalTimeTaken, studentName) {
-            if (!studentName || studentName.trim() === '') return; // Jangan simpan jika tiada nama
-
-            // 1. Muatkan semua data pengguna
-            const allUsersDataJson = localStorage.getItem(QUIZ_DATA_STORAGE_KEY);
-            let allUsersData = allUsersDataJson ? JSON.parse(allUsersDataJson) : {};
-            
-            // Pastikan nama pelajar distandardkan (huruf kecil) sebagai kunci
-            const userKey = studentName.toLowerCase().trim();
-
-            // 2. Dapatkan sejarah pelajar semasa
-            let userHistory = allUsersData[userKey] || [];
-            
-            // 3. Bina objek rekod baru
-            const newRecord = {
-                date: new Date().toLocaleDateString('ms-MY', { year: 'numeric', month: '2-digit', day: '2-digit' }),
-                time: new Date().toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit' }),
-                tp: finalTP,
-                label: tpLabel,
-                score: score,
-                totalTime: totalTimeTaken.toFixed(2) + 's' 
-            };
-            
-            // 4. Tambah rekod baru, hadkan, dan simpan kembali
-            userHistory.unshift(newRecord);
-            if (userHistory.length > MAX_HISTORY_RECORDS) {
-                userHistory = userHistory.slice(0, MAX_HISTORY_RECORDS);
-            }
-            
-            // Kemas kini data pengguna dan simpan semula ke localStorage
-            allUsersData[userKey] = userHistory;
-            localStorage.setItem(QUIZ_DATA_STORAGE_KEY, JSON.stringify(allUsersData));
-        }
-
-        function displayQuizHistory(sortBy = 'date', sortOrder = 'desc') {
-            // 1. Dapatkan nama pelajar semasa dari input
-            const studentName = document.getElementById('student-name').value || 'Pelajar';
-            const userKey = studentName.toLowerCase().trim();
-            
-            // 2. Muatkan data dan dapatkan sejarah untuk pelajar semasa
-            const allUsersDataJson = localStorage.getItem(QUIZ_DATA_STORAGE_KEY);
-            const allUsersData = allUsersDataJson ? JSON.parse(allUsersDataJson) : {};
-            let history = allUsersData[userKey] || [];
-            
-            const historyContainer = document.getElementById('history-container');
-            
-            // Jika tiada rekod
-            if (history.length === 0) {
-                historyContainer.innerHTML = `
-                    <div class="flex space-x-2 mb-4 justify-center">
-                        <button class="py-1 px-3 text-sm rounded-full bg-gray-200 text-gray-700 disabled:opacity-50" disabled>Markah Tertinggi</button>
-                        <button class="py-1 px-3 text-sm rounded-full bg-gray-200 text-gray-700 disabled:opacity-50" disabled>Markah Terendah</button>
-                        <button class="py-1 px-3 text-sm rounded-full bg-gray-200 text-gray-700 disabled:opacity-50" disabled>Terkini</button>
-                    </div>
-                    <p class="text-sm text-gray-500 text-center italic">Tiada rekod kuiz untuk ${studentName}.</p>
-                `;
-                return;
-            }
-
-            // --- LOGIK PENGASINGAN (SORTING LOGIC) ---
-            history.sort((a, b) => {
-                let comparison = 0;
-                
-                if (sortBy === 'score') {
-                    comparison = a.score - b.score; 
-                } else if (sortBy === 'tp') {
-                    comparison = a.tp - b.tp;
-                } else {
-                    // Lalai: Mengasingkan berdasarkan tarikh/masa (Terkini)
-                    const dateA = new Date(a.date.split('/').reverse().join('-') + ' ' + a.time);
-                    const dateB = new Date(b.date.split('/').reverse().join('-') + ' ' + b.time);
-                    comparison = dateA - dateB;
-                }
-
-                // Balikkan susunan jika order adalah 'desc' (Tertinggi / Terkini dahulu)
-                if (sortOrder === 'desc') {
-                    comparison *= -1;
-                }
-                return comparison;
-            });
-            // --- AKHIR LOGIK PENGASINGAN ---
-
-            
-            let html = `
-                <div class="flex space-x-2 mb-4 justify-center">
-                    <button onclick="displayQuizHistory('score', 'desc')" class="py-1 px-3 text-sm rounded-full ${sortBy === 'score' && sortOrder === 'desc' ? 'bg-pink-500 text-white' : 'bg-gray-200 text-gray-700'} transition duration-150 shadow-sm">
-                        Markah Tertinggi
-                    </button>
-                    <button onclick="displayQuizHistory('score', 'asc')" class="py-1 px-3 text-sm rounded-full ${sortBy === 'score' && sortOrder === 'asc' ? 'bg-pink-500 text-white' : 'bg-gray-200 text-gray-700'} transition duration-150 shadow-sm">
-                        Markah Terendah
-                    </button>
-                    <button onclick="displayQuizHistory('date', 'desc')" class="py-1 px-3 text-sm rounded-full ${sortBy === 'date' ? 'bg-pink-500 text-white' : 'bg-gray-200 text-gray-700'} transition duration-150 shadow-sm">
-                        Terkini
-                    </button>
-                </div>
-                <div class="space-y-3">
-            `;
-            
-            history.forEach((record) => {
-                const bgClass = (record.tp >= 5) ? 'bg-yellow-100 border-yellow-500' : 'bg-gray-100 border-gray-300';
-                const textColor = (record.tp >= 5) ? 'text-yellow-800' : 'text-gray-700';
-                
-                html += `
-                    <div class="p-3 rounded-lg border-2 ${bgClass} shadow-sm">
-                        <p class="text-xs font-bold ${textColor} mb-1 flex justify-between items-center">
-                            <span>TP${record.tp}: ${record.label}</span>
-                            <span class="font-normal">${record.date} ${record.time} (${record.totalTime})</span>
-                        </p>
-                        <p class="text-lg font-extrabold ${textColor}">
-                            Markah: 
-                            <span class="float-right text-lg font-extrabold">${record.score} / 50</span>
-                        </p>
-                    </div>
-                `;
-            });
-            
-            html += '</div>';
-            historyContainer.innerHTML = html;
-        }
-
-        // --- INISIALISASI ---
-
-        document.addEventListener('DOMContentLoaded', () => {
-            initSifirSelection();
-            showScreen('selection-screen');
-
-            // Tetapkan nilai nama pelajar jika sudah ada dalam localStorage
-            const storedName = localStorage.getItem('studentName');
-            if (storedName) {
-                document.getElementById('student-name').value = storedName;
-            }
-        });
-
     </script>
 </body>
 
