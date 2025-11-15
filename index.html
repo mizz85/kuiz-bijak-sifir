@@ -1074,7 +1074,7 @@
 
 // ... (Fungsi generateCertificateHTML kekal sama di atas) ...
 
-        // FUNGSI BARU: Logik Kembali ke Skrin Keputusan (Digunakan selepas cubaan Cetak)
+       // FUNGSI BARU/DIPERBAIKI: Logik Kembali ke Skrin Keputusan (Digunakan selepas cubaan Cetak)
         function returnFromCertificateLogic() {
             const certificateScreen = document.getElementById('certificate-screen');
             // Hanya jalankan jika skrin sijil masih dipaparkan
@@ -1085,7 +1085,7 @@
                 
                 // Pastikan skrin Keputusan dipaparkan semula (Mesra HP/Batal Cetak)
                 showScreen('result-screen'); 
-                // Kita tidak panggil speakMalay di sini kerana ia akan mengganggu proses cetak
+                // Tidak perlu memanggil speakMalay di sini untuk mengelakkan gangguan
             }
         }
         
@@ -1105,12 +1105,19 @@
             
             speakMalay(`Sijil anda telah sedia. Sila cetak atau simpan sebagai PDF.`);
             
-            // TRIK MUDAH ALIH:
-            // Sediakan mekanisme untuk kembali ke skrin keputusan selepas 3 saat.
-            // Ini berfungsi jika pengguna menutup dialog cetak tanpa mencetak.
-             setTimeout(function () {
-                 returnFromCertificateLogic(); 
-             }, 3000); // Beri masa 3 saat untuk pengguna berinteraksi dengan dialog cetak sistem (Save as PDF)
+            // PANGGILAN BARU: Guna window.addEventListener('afterprint')
+            // Ini adalah cara paling selamat untuk mengesan sama ada cetakan/simpan PDF selesai atau dibatalkan.
+            window.onfocus = function () {
+                setTimeout(function () {
+                    // Semak jika sijil masih terbuka selepas pengguna kembali dari dialog cetak
+                    if (!certificateScreen.classList.contains('hidden')) {
+                        returnFromCertificateLogic(); 
+                    }
+                }, 500); // Masa tunda pendek untuk memastikan dialog cetak ditutup sepenuhnya
+            };
+            
+            // Panggil cetak selepas semua persiapan selesai
+            window.print();
         }
 
         function returnFromCertificate() {
@@ -1131,3 +1138,4 @@
 </body>
 
 </html>
+
