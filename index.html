@@ -101,7 +101,7 @@
                     <input 
                         type="text" 
                         id="student-name-input" 
-                        placeholder="Cth: Sofea Binti Shamsul" 
+                        placeholder="Cth: Ali Bin Abu" 
                         class="w-full p-3 text-center text-base font-bold border-2 border-teal-500 rounded-lg focus:border-pink-500 focus:ring-2 focus:ring-pink-200" 
                         oninput="updateAndSaveName(event)"
                     >
@@ -192,6 +192,9 @@
             <div id="result-screen" class="hidden text-center space-y-4">
                 <h2 class="text-2xl font-bold text-teal-700">Keputusan Kuiz Anda!</h2>
                 
+                <div id="student-result-name" class="text-xl font-extrabold text-pink-600 mb-3 -mt-2">
+                    [Nama Pelajar Akan Dipaparkan Di Sini]
+                </div>
                 <p id="main-tp-message" class="text-base font-semibold text-gray-700"></p>
 
                 <div class="p-4 bg-yellow-100 rounded-xl border-3 border-yellow-500">
@@ -301,7 +304,7 @@
         }
 
         // -----------------------------------------------------------------
-        // PERUBAHAN UTAMA: FUNGSI TTS YANG TELAH DIPERBAIKI (ms-MY)
+        // FUNGSI TTS YANG TELAH DIPERBAIKI (ms-MY)
         // -----------------------------------------------------------------
         function speakMalay(textToRead) {
             if (!('speechSynthesis' in window)) {
@@ -757,7 +760,7 @@
         // --- Logik TP DSKP ---
         
         // -----------------------------------------------------------------
-        // PERUBAHAN UTAMA: FUNGSI PENGUMUMAN KEPUTUSAN KUIZ (Audio Sijil)
+        // FUNGSI PENGUMUMAN KEPUTUSAN KUIZ (Audio Sijil)
         // -----------------------------------------------------------------
         function announceResults(score, finalTP, tpLabel) {
             let resultMessage = "";
@@ -879,6 +882,9 @@
             }
             
             showScreen('result-screen');
+            
+            // BARIS KEMASKINI YANG ANDA MINTA: Memaparkan nama pelajar
+            document.getElementById('student-result-name').textContent = studentName || 'PELAJAR'; 
 
             document.getElementById('final-tp').textContent = `TP${finalTP}`;
             document.getElementById('tp-label').textContent = tpLabel;
@@ -902,6 +908,3 @@
 </body>
 
 </html>
-
-
-
