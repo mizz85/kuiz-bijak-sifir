@@ -7,57 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
 	
 <style>
-    /* ... CSS sedia ada anda di sini ... */
-
-    /* --- PENTING: Pembetulan Cetak Sijil HP (Blank PDF Issue) --- */
-    @media print {
-        /* Memastikan warna latar belakang dan teks dicetak */
-        * {
-            -webkit-print-color-adjust: exact !important; /* Untuk Chrome/Android/iOS */
-            color-adjust: exact !important; /* Untuk Firefox */
-        }
-        
-        /* 1. Sembunyikan semua kecuali skrin sijil */
-        body > *:not(#certificate-screen) {
-            display: none !important;
-        }
-
-        /* 2. Tetapkan Body dan HTML untuk paparan penuh dan stabil */
-        html, body {
-            height: auto !important;
-            min-height: 100vh !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            display: block !important; 
-        }
-
-        /* 3. Paksa Kontena Sijil untuk dipaparkan secara blok stabil */
-        #certificate-screen {
-            display: block !important;
-            position: relative !important; 
-            width: 100% !important;
-            max-width: none !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            background-color: white !important; 
-            overflow: visible !important;
-        }
-
-        /* 4. Pastikan kandungan sijil mengisi ruang dan buang gaya yang tidak perlu */
-        .certificate-container {
-            width: 100% !important;
-            height: auto !important;
-            min-height: 100vh !important; 
-            box-shadow: none !important;
-            border: none !important; 
-            background-color: white !important; 
-        }
-        
-        /* 5. Sembunyikan butang di dalam sijil */
-        .no-print {
-            display: none !important;
-        }
-    }
+    /* --- Gaya Cetak Asal Dibuang: TIADA Sijil dicetak --- */
 </style>
 			
     <style>
@@ -97,65 +47,14 @@
             50% { opacity: 0.7; }
         }
 
-        /* --- Gaya Sijil Cetak (Penting untuk Save as PDF) --- */
-        @media print {
-            .no-print {
-                display: none !important;
-            }
-            #quiz-container-wrapper {
-                display: none !important;
-            }
-            #certificate-screen {
-                display: flex !important;
-                position: ; 
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: auto; 
-                overflow: hidden !important; 
-                background-color: white;
-            }
-            .certificate-container {
-                width: 100%;
-                max-width: none;
-                height: auto; 
-                margin: 0;
-                padding: 1cm;
-                box-shadow: none;
-                border: none;
-            }
-        }
-        /* --- Akhir Gaya Sijil Cetak --- */
+        /* --- Gaya Cetak Sijil Telah Dibuang --- */
 
         /* Benarkan scrolling pada skrin sijil jika kandungan panjang */
         #certificate-screen {
             overflow-y: auto; 
         }
 
-/* --- Pembetulan Cetak Mudah Alih (Mobile Print Fix) --- */
-/* Sembunyikan butang "Cetak ke PDF" dan tunjukkan notis amaran pada skrin kecil */
-@media screen and (max-width: 767px) {
-    /* Butang "Cetak ke PDF" di dalam Sijil: Akan disembunyikan */
-    .mobile-print-button-hide { 
-        display: none !important;
-    }
-
-    /* Notis Amaran di dalam Sijil: Akan dipaparkan */
-    #mobile-print-warning {
-        display: block !important;
-        background-color: #fef08a; /* Kuning Lembut */
-        color: #854a04; /* Teks coklat gelap */
-        padding: 10px;
-        border-radius: 5px;
-        font-weight: bold;
-        margin-bottom: 15px;
-    }
-}
-
-/* Sembunyikan notis amaran secara lalai (Desktop) */
-#mobile-print-warning {
-    display: none;
-}
+/* --- Pembetulan Cetak Mudah Alih (Mobile Print Fix) Dibuang --- */
 		
     </style>
 </head>
@@ -187,7 +86,7 @@
                 </button>
                <p class="text-xs text-gray-500 text-center mt-3">
     Lupa atau Tiada Kata Laluan?
-    <a href="https://wa.me/60198950339?text=Assalamualaikum/Hai.%0AMohon%20kata%20laluan%20untuk%20Kuiz%20Bijak%20Sifir.%0ANama%20saya%20(Nama%20Pelajar/Ibu%20Bapa)." target="_blank" class="font-bold text-pink-500 hover:text-pink-600 transition duration-150">
+    <a href="https://wa.me/60198950339?text=Assalamualaikum.%20Saya%20memohon%20kata%20laluan%20untuk%20Kuiz%20Bijak%20Sifir.%20Nama%20saya%20[Nama%20Pelajar/Ibu%20Bapa]." target="_blank" class="font-bold text-pink-500 hover:text-pink-600 transition duration-150">
         Minta Kata Laluan (WhatsApp Mizz).
     </a>
 </p>
@@ -197,7 +96,7 @@
                 
                 <div class="space-y-2 p-3 bg-teal-50 rounded-lg border border-teal-300">
                     <label for="student-name-input" class="block text-sm font-black text-teal-700">
-                        Masukkan Nama Pelajar (Untuk Sijil):
+                        Masukkan Nama Pelajar (Untuk Rujukan):
                     </label>
                     <input 
                         type="text" 
@@ -316,10 +215,6 @@
                     <p>⏱️ Purata Masa Tindak Balas: <span id="average-time" class="font-bold"></span> saat</p>
                 </div>
                 
-                <button onclick="displayCertificateForPrint()" id="print-certificate-btn" data-tp="" data-label="" data-score="" class="w-full bg-teal-500 hover:bg-teal-600 text-white font-black text-base py-3 rounded-lg transition duration-150 shadow-lg hover:shadow-xl mt-3">
-                    Cetak / Simpan Sijil Pencapaian
-                </button>
-
                 <button onclick="startNewQuizSelection()" class="w-full bg-pink-500 hover:bg-pink-600 text-white font-black text-base py-3 rounded-lg transition duration-150 shadow-lg hover:shadow-xl mt-3">
                     Ulang Kuiz (Pilihan Sifir)
                 </button>
@@ -997,157 +892,13 @@
             document.getElementById('incorrect-count').textContent = incorrectCount; 
             document.getElementById('average-time').textContent = avgTime.toFixed(2);
             
-            const printBtn = document.getElementById('print-certificate-btn');
-            printBtn.setAttribute('data-tp', finalTP);
-            printBtn.setAttribute('data-label', tpLabel);
-            printBtn.setAttribute('data-score', totalScore);
-
+            // BUTANG SIJIL TELAH DIBUANG DARI SINI
         }
         
-        // --- Logik Sijil Pencapaian ---
+        // --- Logik Sijil Pencapaian (Fungsi-fungsi telah DIBUANG) ---
+        // generateCertificateHTML(), displayCertificateForPrint(), returnFromCertificate(), returnFromCertificateLogic() telah dikeluarkan.
 
-        function generateCertificateHTML(finalTP, tpLabel, score) {
-            const date = new Date().toLocaleDateString('ms-MY', { year: 'numeric', month: 'long', day: 'numeric' });
-            // KEMASKINI: Gunakan nama pelajar dari localStorage/input
-            const studentDisplayName = studentName.trim() || 'PELAJAR CEMERLANG'; 
-
-            let colorClass, trophyIcon;
-            if (finalTP >= 5) {
-                colorClass = 'border-pink-600 text-pink-700 shadow-pink-300';
-                trophyIcon = '🏆';
-            } else if (finalTP >= 3) {
-                colorClass = 'border-teal-600 text-teal-700 shadow-teal-300';
-                trophyIcon = '🏅';
-            } else {
-                colorClass = 'border-yellow-600 text-yellow-700 shadow-yellow-300';
-                trophyIcon = '✨';
-            }
-
-
-            return `
-                <div class="certificate-container w-full max-w-4xl border-8 rounded-xl p-8 md:p-16 shadow-2xl ${colorClass} bg-white mx-auto my-auto" style="min-height: 80vh;">
-                    
- <div class="flex justify-center mb-4">
-                        <img src="https://raw.githubusercontent.com/mizz85/nota-sifir/main/logo-mizzz.png" alt="Logo Edukids by Mizz" style="width: 100px; height: auto;" crossorigin="anonymous">
-                    </div>
- 
-                    <div class="text-center space-y-4">
-                        <h1 class="text-4xl md:text-5xl font-black mb-6 mt-4 uppercase tracking-widest text-teal-600">
-                            Sijil Pencapaian
-                        </h1>
-                        
-                        <p class="text-xl font-semibold text-gray-700">
-                            Dengan sukacitanya dianugerahkan kepada:
-                        </p>
-                        
-                        <p class="text-4xl md:text-5xl font-extrabold border-b-2 border-solid mx-auto pb-2 max-w-sm ${colorClass}">
-                            ${studentDisplayName.toUpperCase()}
-                        </p>
-                        
-                        <p class="text-xl font-semibold pt-4 text-gray-700">
-                            Di atas kejayaan menamatkan 50 soalan Kuiz Bijak Sifir dengan
-                        </p>
-                        
-                        <div class="py-4 px-6 mx-auto max-w-xs rounded-xl shadow-lg ring-4 ${colorClass.replace('border-', 'bg-').replace('shadow-', 'ring-')}" style="background-color: ${finalTP >= 5 ? '#fbcfe8' : finalTP >= 3 ? '#99f6e4' : '#fef08a'}">
-                            <p class="text-2xl font-bold">Tahap Penguasaan</p>
-                            <p class="text-6xl font-black mt-2">${trophyIcon} TP${finalTP}</p>
-                            <p class="text-3xl font-extrabold mt-1 uppercase">${tpLabel}</p>
-                        </div>
-
-                        <p class="text-xl font-semibold pt-4 text-gray-700">
-                            Skor Akhir: ${score} / 50
-                        </p>
-                    </div>
-
-                    <div class="flex flex-col md:flex-row justify-around items-end mt-12 text-sm text-gray-700">
-                        <div class="text-center">
-                            <p class="border-t border-gray-500 pt-2 font-medium italic">
-                                Tarikh Dikeluarkan: ${date}
-                            </p>
-                        </div>
-                        <div class="text-center mt-6 md:mt-0">
-                            <p class="border-t border-gray-500 pt-2 font-medium">
-                                Guru Cemerlang Matematik
-                           </p>
-                            <p class="text-xs text-gray-500">(Tandatangan Digital)</p>
-                        </div>
-                    </div>
-                    
-<div class="no-print text-center mt-8">
-                        
-                        <div id="mobile-print-warning" style="display:none;">
-                            Sila gunakan **PC/Laptop** untuk Cetak ke PDF. Fungsi cetak di telefon bimbit sering bermasalah.
-                        </div>
-
-                        <button onclick="window.print();" class="mobile-print-button-hide bg-pink-500 hover:bg-pink-600 text-white font-medium py-2 px-6 rounded-lg transition duration-150 shadow-md mr-4">
-                            Cetak ke PDF
-                        </button>
-                        
-                        <button onclick="returnFromCertificate()" class="bg-gray-700 hover:bg-gray-800 text-white font-medium py-2 px-6 rounded-lg transition duration-150 shadow-md">
-                            Tutup Sijil & Buat Kuiz Baharu
-                        </button>
-                    </div>				
-				</div>
-            `;
-        }
-
-// ... (Fungsi generateCertificateHTML kekal sama di atas) ...
-
-        // FUNGSI BARU: Logik Kembali ke Skrin Keputusan (Digunakan selepas cubaan Cetak)
-        function returnFromCertificateLogic() {
-            const certificateScreen = document.getElementById('certificate-screen');
-            // Hanya jalankan jika skrin sijil masih dipaparkan
-            if (!certificateScreen.classList.contains('hidden')) {
-                certificateScreen.classList.add('hidden');
-                document.getElementById('quiz-container-wrapper').classList.remove('hidden');
-                certificateScreen.innerHTML = '';
-                
-                // Pastikan skrin Keputusan dipaparkan semula (Mesra HP/Batal Cetak)
-                showScreen('result-screen'); 
-                // Kita tidak panggil speakMalay di sini kerana ia akan mengganggu proses cetak
-            }
-        }
-        
-        function displayCertificateForPrint() {
-            const printBtn = document.getElementById('print-certificate-btn');
-            const finalTP = parseInt(printBtn.getAttribute('data-tp'));
-            const tpLabel = printBtn.getAttribute('data-label');
-            const score = parseInt(printBtn.getAttribute('data-score'));
-
-            const certificateHTML = generateCertificateHTML(finalTP, tpLabel, score);
-            const certificateScreen = document.getElementById('certificate-screen');
-            
-            certificateScreen.innerHTML = certificateHTML;
-            certificateScreen.classList.remove('hidden');
-
-            document.getElementById('quiz-container-wrapper').classList.add('hidden');
-            
-            speakMalay(`Sijil anda telah sedia. Sila cetak atau simpan sebagai PDF.`);
-            
-            // TRIK MUDAH ALIH:
-            // Sediakan mekanisme untuk kembali ke skrin keputusan selepas 3 saat.
-            // Ini berfungsi jika pengguna menutup dialog cetak tanpa mencetak.
-             setTimeout(function () {
-                 returnFromCertificateLogic(); 
-             }, 3000); // Beri masa 3 saat untuk pengguna berinteraksi dengan dialog cetak sistem (Save as PDF)
-        }
-
-        function returnFromCertificate() {
-            // Fungsi ini dipanggil apabila butang "Tutup Sijil & Buat Kuiz Baharu" diklik
-            const certificateScreen = document.getElementById('certificate-screen');
-            
-            certificateScreen.classList.add('hidden');
-            
-            document.getElementById('quiz-container-wrapper').classList.remove('hidden');
-            
-            certificateScreen.innerHTML = '';
-            
-            // Bawa terus ke skrin pemilihan kuiz yang baru
-            showScreen('selection-screen');
-            speakMalay('Sila buat pilihan kuiz baharu.');
-        }
     </script>
 </body>
 
 </html>
-
