@@ -54,7 +54,10 @@
             overflow-y: auto; 
         }
 
-/* --- Pembetulan Cetak Mudah Alih (Mobile Print Fix) Dibuang --- */
+        /* Gaya untuk Butang TTS yang baru ditambah */
+        .tts-guide-toggle {
+            cursor: pointer;
+        }
 		
     </style>
 </head>
@@ -96,7 +99,7 @@
                 
                 <div class="space-y-2 p-3 bg-teal-50 rounded-lg border border-teal-300">
                     <label for="student-name-input" class="block text-sm font-black text-teal-700">
-                        Masukkan Nama Pelajar (Untuk Rujukan):
+                        Masukkan Nama Pelajar:
                     </label>
                     <input 
                         type="text" 
@@ -116,7 +119,19 @@
                     <select id="sifir-pilihan" class="w-full p-3 border-2 border-pink-400 rounded-lg shadow-md focus:ring-teal-500 focus:border-teal-500 bg-white text-teal-700 font-semibold text-sm">
                         <option value="0-objective">🎯 Semua Sifir (1-12) - Objektif A/B/C/D</option>
                         <option value="0-input">✍️ Semua Sifir (1-12) - Input Jawapan</option>
-                        <option value="2-input">✍️ Sifir 2 - Input Jawapan</option>
+						
+						<option value="2-objective">🎯 Sifir 2 - Objektif</option>
+						<option value="3-objective">🎯 Sifir 3 - Objektif</option>
+						<option value="4-objective">🎯 Sifir 4 - Objektif</option>
+						<option value="5-objective">🎯 Sifir 5 - Objektif</option>
+						<option value="6-objective">🎯 Sifir 6 - Objektif</option>
+						<option value="7-objective">🎯 Sifir 7 - Objektif</option>
+						<option value="8-objective">🎯 Sifir 8 - Objektif</option>
+						<option value="9-objective">🎯 Sifir 9 - Objektif</option>
+						<option value="10-objective">🎯 Sifir 10 - Objektif</option>
+						<option value="11-objective">🎯 Sifir 11 - Objektif</option>
+						<option value="12-objective">🎯 Sifir 12 - Objektif</option>
+						<option value="2-input">✍️ Sifir 2 - Input Jawapan</option>
                         <option value="3-input">✍️ Sifir 3 - Input Jawapan</option>
                         <option value="4-input">✍️ Sifir 4 - Input Jawapan</option>
                         <option value="5-input">✍️ Sifir 5 - Input Jawapan</option>
@@ -133,7 +148,25 @@
                 <button onclick="startQuizFlow()" id="start-button" class="w-full bg-pink-500 hover:bg-pink-600 text-white font-black text-base py-3 rounded-lg transition duration-150 shadow-lg hover:shadow-xl">
                     Mulakan Kuiz (50 Soalan)
                 </button>
-            </div>
+				
+				<div class="mt-4 p-3 border border-gray-300 rounded-lg bg-gray-50">
+                    <div id="tts-guide-toggle" onclick="toggleTtsGuide()" class="tts-guide-toggle flex items-center justify-between text-sm font-semibold text-gray-700 hover:text-pink-500 transition duration-150">
+                        <p>🔊 <b>PENTING:</b> Suara kuiz berbeza; ikut tetapan sebutan peranti anda.</p>
+                        <span id="tts-toggle-icon" class="text-xl transform transition-transform duration-300">+</span>
+                    </div>
+                    
+                    <div id="tts-guide-content" class="hidden mt-3 pt-3 border-t border-gray-200">
+                         <h4 class="text-sm font-bold text-teal-600 mb-2">⚙️ Cara Betulkan Sebutan Suara Kuiz</h4>
+                         <p class="text-xs text-gray-600 mb-2">Jika suara kuiz berbunyi pelik, sila ikut langkah mudah ini untuk tukar kepada sebutan Melayu yang betul:</p>
+                        <ol class="list-decimal list-inside text-xs text-gray-700 space-y-1">
+                            <li>Buka <b>Tetapan</b> (Settings) telefon/peranti anda.</li>
+                            <li>Guna fungsi <b>Carian</b> (Search) dan taip: <span class="font-mono bg-yellow-100 p-0.5 rounded">Text-to-Speech</span>.</li>
+                            <li>Pilih hasil carian <b>"Output Teks-ke-Pertuturan"</b> tersebut.</li>
+                            <li>Pastikan tetapan <b>"Bahasa"</b> diubah kepada <b>"Bahasa Melayu"</b>.</li>
+                        </ol>
+                    </div>
+                </div>
+				</div>
 
             <div id="quiz-screen" class="hidden text-center space-y-4">
                 
@@ -250,6 +283,21 @@
         // KEMASKINI: Tambah pembolehubah untuk nama pelajar (Local Storage)
         let studentName = '';
         const STORAGE_KEY_NAME = 'student_name_sifir'; 
+		
+		// KEMASKINI: Fungsi untuk mengawal TTS Guide (Butang Baru)
+        function toggleTtsGuide() {
+            const content = document.getElementById('tts-guide-content');
+            const icon = document.getElementById('tts-toggle-icon');
+            
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.textContent = '-';
+            } else {
+                content.classList.add('hidden');
+                icon.textContent = '+';
+            }
+        }
+
 
         // --- Logik Local Storage ---
         
@@ -546,7 +594,8 @@
             } else { 
                 inputModeEl.classList.add('hidden');
                 objectiveModeEl.classList.remove('hidden');
-                document.getElementById('option-A').focus();
+                // Fokus pada butang A untuk permulaan bagi mod objektif
+                document.getElementById('option-A').focus(); 
             }
 
             mulakanTotalTimer();
