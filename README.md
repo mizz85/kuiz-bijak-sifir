@@ -1,6 +1,6 @@
 # 🏆 Kuiz Bijak Sifir
 
-Kuiz Sifir interaktif (1-12) yang direka khas untuk anak-anak prasekolah/sekolah rendah. Menampilkan mod latihan spesifik/campuran dan sistem penilaian Tahap Penguasaan (TP1-TP6).
+Kuiz Sifir interaktif (1-12) yang direka khas untuk murid sekolah rendah. Menampilkan mod latihan spesifik/campuran dan sistem penilaian Tahap Penguasaan (TP1-TP6).
 
 ---
 
