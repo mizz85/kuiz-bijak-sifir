@@ -330,10 +330,12 @@
                     Dikeluarkan pada <span id="cert-date">1 Januari 2024</span>
                 </p>
                 
-                <div class="flex justify-center mt-6">
-                    <img src="https://raw.githubusercontent.com/mizz85/kuiz-bijak-sifir/main/MizzSignature.png" alt="Tandatangan Mizz" class="w-48 h-auto"> 
-                    </div>
-            </div>
+                <div class="flex flex-col items-center mt-6">
+                    <img src="https://raw.githubusercontent.com/mizz85/kuiz-bijak-sifir/main/MizzSignature.png" alt="Tandatangan Mizz" class="w-48 h-auto mb-1"> 
+                    <p class="text-lg font-bold text-gray-800">Mizz</p>
+                    <p class="text-sm font-semibold text-teal-600">Ketua Projek Pembangunan Bijak Sifir</p>
+                </div>
+                </div>
         </div>
         <div id="cert-controls" class="w-full max-w-4xl p-4 mt-4 print:hidden flex flex-col space-y-2">
             <button onclick="window.print()" class="w-full bg-teal-500 hover:bg-teal-600 text-white font-black text-base py-3 rounded-lg transition duration-150 shadow-lg hover:shadow-xl">
@@ -697,7 +699,7 @@
 
             mulakanTotalTimer();
 
-            speakMalay(`Jom mulakan Kuiz Sifir. Anda ada ${questionDuration} saat untuk setiap soalan.`);
+            speakMalay(`Jom mulakan Kuiz Sifir! Anda ada ${questionDuration} saat untuk setiap soalan.`);
 
             paparSoalan();
         }
