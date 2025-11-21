@@ -83,9 +83,18 @@
             #certificate-content {
                 box-shadow: none !important;
                 border: none !important;
+                /* Pengurangan padding dan saiz font untuk memastikan ia muat satu halaman */
                 min-height: 280mm; 
-                padding: 1.5cm !important;
+                padding: 1cm !important; /* Kurangkan padding dari 1.5cm ke 1cm */
+                font-size: 0.9em; /* Kurangkan saiz font asas sedikit */
             }
+            
+            /* Saiz font yang lebih kecil untuk elemen utama sijil dalam mod cetak */
+            #certificate-content .text-5xl { font-size: 3rem !important; } /* Saiz TP/Skor */
+            #certificate-content .text-6xl { font-size: 4rem !important; } /* Saiz Nama */
+            #certificate-content .text-4xl { font-size: 2.5rem !important; } /* SIJIL PENGHARGAAN */
+            #certificate-content .text-2xl { font-size: 1.5rem !important; } /* Tajuk Kuiz */
+            #certificate-content .text-lg { font-size: 1.1rem !important; } /* teks biasa */
 
             .print\:hidden {
                 display: none !important;
@@ -912,6 +921,7 @@
         // FUNGSI PENGUMUMAN KEPUTUSAN KUIZ (Audio Sijil)
         // -----------------------------------------------------------------
         function announceResults(score, finalTP, tpLabel) {
+            if (!isAudioEnabled) return;
             let resultMessage = "";
             
             // Hanya umumkan TP untuk kuiz gabungan (TP > 0)
