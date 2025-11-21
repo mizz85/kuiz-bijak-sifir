@@ -723,9 +723,18 @@
             showScreen('selection-screen');
         }
 
+        // >>> PERUBAHAN DI SINI: Untuk membuang butang cetak lama bagi Kuiz seterusnya
         function startNewQuizSelection() {
             // NEW: Tutup skrin sijil jika ada
             closeCertificate(); 
+            
+            // ** PEMBETULAN: Buang butang cetak lama dari DOM agar boleh dijana semula **
+            const oldCertButton = document.getElementById('print-certificate-button');
+            if (oldCertButton) {
+                oldCertButton.remove();
+            }
+            // ************************************************
+
             speakMalay('Sila pilih jenis kuiz yang baru.');
             showScreen('selection-screen'); 
         }
