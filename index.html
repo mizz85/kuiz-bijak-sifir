@@ -57,8 +57,15 @@
              display: none;
         }
 
-        /* Gaya untuk Cetakan Sijil */
+        /* Gaya untuk Cetakan Sijil (Dikemas Kini untuk A4 PORTRAIT) */
         @media print {
+            
+            /* 1. KUNCI UTAMA: Tetapkan saiz halaman kepada A4 PORTRAIT */
+            @page {
+                size: A4 portrait; /* Menetapkan saiz kertas standard A4 tegak */
+                margin: 0.5cm;     /* Sedikit lebih margin untuk potrait */
+            }
+
             body {
                 margin: 0;
                 padding: 0;
@@ -75,26 +82,35 @@
                 display: block !important;
                 margin: auto;
                 padding: 0; 
-                max-width: 210mm; /* Lebar A4 */
-                max-height: 297mm; /* Tinggi A4 */
+                max-width: none; 
+                max-height: none; 
                 overflow: hidden; 
             }
             
             #certificate-content {
                 box-shadow: none !important;
                 border: none !important;
-                /* Pengurangan padding dan saiz font untuk memastikan ia muat satu halaman */
-                min-height: 280mm; 
-                padding: 1cm !important; /* Kurangkan padding dari 1.5cm ke 1cm */
-                font-size: 0.9em; /* Kurangkan saiz font asas sedikit */
+                /* Saiz untuk A4 Portrait (21cm x 29.7cm) */
+                min-height: 28.7cm; 
+                width: 20cm;     
+                padding: 1.5cm 1cm !important; /* Padding atas/bawah lebih luas */
+                font-size: 1em; /* Saiz font asas dikembalikan ke standard */
             }
             
-            /* Saiz font yang lebih kecil untuk elemen utama sijil dalam mod cetak */
-            #certificate-content .text-5xl { font-size: 3rem !important; } /* Saiz TP/Skor */
-            #certificate-content .text-6xl { font-size: 4rem !important; } /* Saiz Nama */
-            #certificate-content .text-4xl { font-size: 2.5rem !important; } /* SIJIL PENGHARGAAN */
+            /* Saiz font disesuaikan untuk muat pada kertas A4 Portrait */
+            #certificate-content .text-5xl { font-size: 2.5rem !important; } /* Saiz TP/Skor */
+            #certificate-content .text-6xl { font-size: 3.5rem !important; } /* Saiz Nama */
+            #certificate-content .text-4xl { font-size: 2rem !important; } /* SIJIL PENGHARGAAN */
             #certificate-content .text-2xl { font-size: 1.5rem !important; } /* Tajuk Kuiz */
             #certificate-content .text-lg { font-size: 1.1rem !important; } /* teks biasa */
+
+            /* Sesuaikan jarak elemen dalam sijil untuk format menegak */
+            #certificate-content .my-4 { margin-top: 1rem !important; margin-bottom: 1rem !important; }
+            #certificate-content .pt-4 { padding-top: 0.8rem !important; }
+            #certificate-content .pt-4 + div { padding-top: 0.8rem !important; } 
+            #certificate-content .mt-6 { margin-top: 1.5rem !important; }
+            .flex-col .space-y-3 { margin-top: 1rem !important; }
+
 
             .print\:hidden {
                 display: none !important;
