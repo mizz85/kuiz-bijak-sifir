@@ -723,7 +723,7 @@
             showScreen('selection-screen');
         }
 
-        // >>> KOD PEMBETULAN UNTUK BUTANG CETAK SEMENTARA <<<
+        // >>> KOD DIBETULKAN DI SINI <<<
         function startNewQuizSelection() {
             // NEW: Tutup skrin sijil jika ada
             closeCertificate(); 
@@ -987,12 +987,12 @@
             speakMalay(`Tahniah ${studentName}! Sijil anda sedia untuk dicetak. Anda mencapai Tahap Penguasaan ${finalTP} dengan skor ${finalPercentage.toFixed(0)} peratus.`);
         }
 
-        // >>> FUNGSI INI DIUBAH SUAI UNTUK MEMBUANG BUTANG CETAK SEMENTARA <<<
+        // >>> KOD DIBETULKAN DI SINI <<<
         function closeCertificate() {
             // Butang cetak sementara di skrin keputusan
             const oldCertButton = document.getElementById('print-certificate-button');
             if (oldCertButton) {
-                // Buang butang sepenuhnya dari DOM untuk membolehkan ia dijana semula
+                // ** PEMBETULAN: Buang butang sepenuhnya dari DOM untuk membolehkan ia dijana semula **
                 oldCertButton.remove(); 
             }
             
@@ -1186,12 +1186,8 @@
                     certButton.className = 'w-full bg-lime-500 hover:bg-lime-600 text-white font-black text-base py-3 rounded-lg transition duration-150 shadow-lg hover:shadow-xl mt-3';
                     const repeatButton = document.querySelector('#result-screen button:last-child');
                     document.getElementById('result-screen').insertBefore(certButton, repeatButton);
-                    
-                    // Kena set onclick di sini apabila butang baru dicipta
-                    certButton.onclick = () => displayCertificate(finalPercentage, finalTP, avgTime, certQuizTitle);
                 }
                 certButton.textContent = '🏅 Cetak Sijil Penghargaan';
-                // Jika butang sudah wujud, pastikan onclick diset semula (walaupun ia sepatutnya kekal)
                 certButton.onclick = () => displayCertificate(finalPercentage, finalTP, avgTime, certQuizTitle);
 
                 // Paparkan butang di sini
