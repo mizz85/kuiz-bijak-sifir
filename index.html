@@ -57,8 +57,15 @@
              display: none;
         }
 
-        /* Gaya untuk Cetakan Sijil */
+        /* Gaya untuk Cetakan Sijil (DIKEMASKINI: A4 PORTRAIT) */
         @media print {
+            
+            /* 1. KUNCI UTAMA: Tetapkan saiz halaman kepada A4 PORTRAIT */
+            @page {
+                size: A4 portrait; /* Kembali ke saiz kertas A4 tegak */
+                margin: 0.8cm;     /* Margin A4 standard */
+            }
+
             body {
                 margin: 0;
                 padding: 0;
@@ -75,26 +82,34 @@
                 display: block !important;
                 margin: auto;
                 padding: 0; 
-                max-width: 210mm; /* Lebar A4 */
-                max-height: 297mm; /* Tinggi A4 */
+                max-width: none; 
+                max-height: none; 
                 overflow: hidden; 
             }
             
             #certificate-content {
                 box-shadow: none !important;
                 border: none !important;
-                /* Pengurangan padding dan saiz font untuk memastikan ia muat satu halaman */
-                min-height: 280mm; 
-                padding: 1cm !important; /* Kurangkan padding dari 1.5cm ke 1cm */
-                font-size: 0.9em; /* Kurangkan saiz font asas sedikit */
+                /* Saiz untuk A4 Portrait (21.0cm x 29.7cm) */
+                min-height: 27.7cm; /* Tinggi penuh A4 */
+                width: 19.4cm;      /* Lebar penuh A4 */
+                padding: 2cm 1.5cm !important; /* Padding disesuaikan untuk A4 */
+                font-size: 1em; /* Saiz font asas kembali normal */
             }
             
-            /* Saiz font yang lebih kecil untuk elemen utama sijil dalam mod cetak */
-            #certificate-content .text-5xl { font-size: 3rem !important; } /* Saiz TP/Skor */
-            #certificate-content .text-6xl { font-size: 4rem !important; } /* Saiz Nama */
-            #certificate-content .text-4xl { font-size: 2.5rem !important; } /* SIJIL PENGHARGAAN */
+            /* Saiz font disesuaikan kembali untuk muat pada kertas A4 Portrait */
+            #certificate-content .text-5xl { font-size: 2.5rem !important; } /* Saiz TP/Skor */
+            #certificate-content .text-6xl { font-size: 3.5rem !important; } /* Saiz Nama */
+            #certificate-content .text-4xl { font-size: 2rem !important; } /* SIJIL PENGHARGAAN */
             #certificate-content .text-2xl { font-size: 1.5rem !important; } /* Tajuk Kuiz */
-            #certificate-content .text-lg { font-size: 1.1rem !important; } /* teks biasa */
+            #certificate-content .text-lg { font-size: 1rem !important; } /* teks biasa */
+
+            /* Sesuaikan jarak elemen dalam sijil kembali ke ukuran A4 */
+            #certificate-content .my-4 { margin-top: 1rem !important; margin-bottom: 1rem !important; }
+            #certificate-content .pt-4 { padding-top: 1rem !important; }
+            #certificate-content .pt-4 + div { padding-top: 1rem !important; } 
+            #certificate-content .mt-6 { margin-top: 1.5rem !important; }
+            .flex-col .space-y-3 { margin-top: 1.5rem !important; }
 
             .print\:hidden {
                 display: none !important;
@@ -546,6 +561,22 @@
             }
         }
         // -----------------------------------------------------------------
+        
+        // *** FUNGSI BARU: PENGESAN PELAYAR DALAMAN ***
+        function isMobileInAppBrowser() {
+            const ua = navigator.userAgent || navigator.vendor || window.opera;
+            
+            // Logik untuk mengesan In-App Browser (WhatsApp, Facebook, Line, dsb.)
+            const isInApp = /FB_IAB|FBAV|Instagram|Line|KAKAOTALK|CriOS|WebView|wv/i.test(ua);
+            
+            // Mengesan pelayar utama (Chrome, Safari, Firefox, Edge)
+            const isMajorBrowser = /Chrome|Safari|Firefox|Edg/i.test(ua) && !/wv/i.test(ua);
+            
+            // Anggap sebagai Pelayar Dalaman jika mengandungi tag In-App ATAU 
+            // jika ia peranti Mobile tetapi bukan pelayar utama yang dijangka.
+            return isInApp || (!isMajorBrowser && /Mobile/i.test(ua));
+        }
+        // **********************************************
 
 
         // --- Logik Akses Kata Laluan ---
@@ -723,7 +754,6 @@
             showScreen('selection-screen');
         }
 
-        // >>> KOD DIBETULKAN DI SINI <<<
         function startNewQuizSelection() {
             // NEW: Tutup skrin sijil jika ada
             closeCertificate(); 
@@ -965,6 +995,22 @@
                 return;
             }
             
+            // *** KOD AMARAN BARU DI SINI ***
+            if (isMobileInAppBrowser()) {
+                const message = 
+                    "⚠️ PERHATIAN: Anda mungkin menggunakan Pelayar Dalaman (seperti dalam WhatsApp, Facebook, dsb.). " +
+                    "Sila SALIN PAUTAN INI dan BUKA SECARA LANGSUNG di aplikasi Pelayar Penuh " +
+                    "(Contoh: CHROME, SAFARI, FIREFOX, EDGE) untuk " +
+                    "mencetak/menyimpan sijil sebagai PDF dengan lancar. " +
+                    "Jika anda teruskan, terdapat risiko sijil gagal dicetak/disimpan.";
+                    
+                // Guna 'confirm' untuk memberi pilihan kepada pengguna untuk teruskan
+                if (!confirm(message)) {
+                    return; // Hentikan proses cetakan jika pengguna memilih 'Cancel'
+                }
+            }
+            // *** AKHIR KOD AMARAN BARU ***
+
             // Isikan data ke template sijil
             document.getElementById('cert-student-name').textContent = studentName.toUpperCase();
             document.getElementById('cert-quiz-title').textContent = quizTitle;
@@ -987,7 +1033,6 @@
             speakMalay(`Tahniah ${studentName}! Sijil anda sedia untuk dicetak. Anda mencapai Tahap Penguasaan ${finalTP} dengan skor ${finalPercentage.toFixed(0)} peratus.`);
         }
 
-        // >>> KOD DIBETULKAN DI SINI <<<
         function closeCertificate() {
             // Butang cetak sementara di skrin keputusan
             const oldCertButton = document.getElementById('print-certificate-button');
