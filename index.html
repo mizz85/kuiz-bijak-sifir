@@ -400,6 +400,7 @@
         // STATE AUDIO BARU DIPISAHKAN
         let isToneEnabled = true; // Untuk nada (bunyi)
         let isTTSEnabled = true;  // Untuk suara (Teks-ke-Ucapan)
+        let malayVoice = null; // <<< BARU: Simpan Suara Melayu yang ditemui
 
         let questions = [];
         let currentQIndex = 0;
@@ -415,6 +416,36 @@
         const STORAGE_KEY_NAME = 'student_name_sifir'; 
         const STORAGE_KEY_TONE = 'is_tone_enabled';
         const STORAGE_KEY_TTS = 'is_tts_enabled';
+
+        // --- TTS Fix: Voice Loading Logic ---
+        function loadMalayVoice() {
+            if (!('speechSynthesis' in window)) return;
+            
+            const voices = window.speechSynthesis.getVoices();
+            if (voices.length > 0) {
+                // Cuba cari suara dengan lang 'ms-MY' atau nama yang berkaitan
+                malayVoice = voices.find(voice => 
+                    voice.lang === 'ms-MY' || 
+                    voice.name.toLowerCase().includes('malay') || 
+                    voice.name.toLowerCase().includes('melayu')
+                );
+                if (!malayVoice) {
+                    // Fallback: Jika tiada 'ms-MY', cuba suara yang disokong Melayu
+                    malayVoice = voices.find(voice => voice.lang.startsWith('en-') && voice.name.includes('Google') || voice.lang.startsWith('id-'));
+                }
+                if (!malayVoice) {
+                     console.warn("Tiada Suara Melayu yang diutamakan ditemui. Menggunakan suara lalai sistem.");
+                }
+            }
+        }
+
+        // Pastikan loadMalayVoice dipanggil apabila senarai suara berubah (ini adalah peristiwa yang paling boleh dipercayai)
+        if ('speechSynthesis' in window) {
+            loadMalayVoice(); 
+            window.speechSynthesis.onvoiceschanged = loadMalayVoice;
+        }
+        // --- End TTS Fix ---
+
 
         // --- Logik Local Storage ---
         
@@ -528,17 +559,11 @@
                 utterance.lang = 'ms-MY';
                 utterance.rate = 1.0; 
 
-                const voices = window.speechSynthesis.getVoices();
-                let malayVoice = voices.find(voice => 
-                    voice.lang === 'ms-MY' || 
-                    voice.name.toLowerCase().includes('malay') || 
-                    voice.name.toLowerCase().includes('melayu')
-                );
-
+                // MENGGUNAKAN malayVoice YANG TELAH DISET DI AWAL
                 if (malayVoice) {
                     utterance.voice = malayVoice;
                 } else {
-                    console.warn("Suara Bahasa Melayu (ms-MY) tidak ditemui. Menggunakan suara lalai sistem.");
+                    console.warn("Global Malay voice not found. Using system default.");
                 }
 
                 window.speechSynthesis.speak(utterance);
@@ -1297,5 +1322,4 @@
 </body>
 
 </html>
-
 
