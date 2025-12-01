@@ -157,7 +157,7 @@
                 </button>
                <p class="text-xs text-gray-500 text-center mt-3">
     Lupa atau Tiada Kata Laluan?
-    <a href="https://wa.me/60198950339?text=Assalamualaikum.%20Saya%20memohon%20kata%20laluan%20untuk%20Kuiz%20Bijak%20Sifir.%20Nama%20saya%20[Nama%20Pelajar/Ibu%20Bapa]." target="_blank" class="font-bold text-pink-500 hover:text-pink-600 transition duration-150">
+    <a href="https://wa.me/60198950339?text=Assalamualaikum/Hai.%20Saya%20memohon%20kata%20laluan%20untuk%20Kuiz%20Bijak%20Sifir.%20Nama%20saya%20[Nama%20Pelajar/Ibu%20Bapa]." target="_blank" class="font-bold text-pink-500 hover:text-pink-600 transition duration-150">
         Minta Kata Laluan (WhatsApp Mizz).
     </a>
 </p>
@@ -172,7 +172,7 @@
                     <input 
                         type="text" 
                         id="student-name-input" 
-                        placeholder="Cth: Sofea Binti Shamsul" 
+                        placeholder="Cth: Izzara Binti Shamsul" 
                         class="w-full p-3 text-center text-base font-bold border-2 border-teal-500 rounded-lg focus:border-pink-500 focus:ring-2 focus:ring-pink-200" 
                         oninput="updateAndSaveName(event)"
                     >
@@ -213,16 +213,33 @@
                 </div>
                 <!-- AKHIR KAWALAN SUIS AUDIO DIPISAHKAN -->
                 
-                <!-- NOTA MENGENAI TTS -->
-                <p class="text-xs italic text-red-700 p-2 text-center bg-red-100 rounded-lg border border-red-300 -mt-2">
-                    ⚠️ Nota Suara: Kualiti fungsi suara bergantung pada pelayar (Chrome, dsb.) dan peranti yang digunakan. Jika suara TTS tidak seperti penutur Melayu yang fasih, anda disyorkan untuk **MATIKAN SUARA** (Off) bagi mengelakkan gangguan konsentrasi atau fokus.
-                </p> 
+                <!-- NOTA MENGENAI TTS (DROPDOWN) - DIKEMASKINI -->
+                <div class="mt-2">
+                    <button 
+                        onclick="toggleNote('tts-note-content')" 
+                        class="w-full text-xs font-extrabold text-red-700 p-2 text-center bg-red-100 hover:bg-red-200 rounded-lg border border-red-300 flex items-center justify-center transition duration-150">
+                        ⚠️ Nota Suara 🗣️ (Klik untuk baca)
+                        <span id="tts-arrow" class="ml-2">▼</span>
+                    </button>
+                    <div id="tts-note-content" class="text-xs italic text-red-700 p-2 text-left bg-red-50 rounded-lg border-x border-b border-red-300 hidden -mt-2">
+                        Kualiti fungsi suara bergantung pada pelayar (Chrome, dsb.) dan peranti yang digunakan. Jika suara TTS tidak seperti penutur Melayu yang fasih, anda disyorkan untuk **MATIKAN SUARA** (Off) bagi mengelakkan gangguan konsentrasi atau fokus.
+                    </div>
+                </div>
+                <!-- AKHIR NOTA MENGENAI TTS (DROPDOWN) -->
                 
-                <!-- NOTA BARU MENGENAI CETAK SIJIL -->
-                <p class="text-xs italic text-blue-700 p-2 text-center bg-blue-100 rounded-lg border border-blue-300 -mt-2">
-                    📄 Nota Cetak Sijil: Untuk memastikan fungsi 'Cetak/Simpan PDF Sijil' berjaya, sila buka pautan kuiz ini **secara langsung** di Pelayar Penuh (Chrome/Safari) dan **BUKAN** Pelayar Dalaman (In-App Browser) seperti dalam WhatsApp atau Facebook.
-                </p>
-                <!-- AKHIR NOTA BARU -->
+                <!-- NOTA BARU MENGENAI CETAK SIJIL (DROPDOWN) - DIKEMASKINI -->
+                <div class="mt-2">
+                    <button 
+                        onclick="toggleNote('cert-note-content')" 
+                        class="w-full text-xs font-extrabold text-blue-700 p-2 text-center bg-blue-100 hover:bg-blue-200 rounded-lg border border-blue-300 flex items-center justify-center transition duration-150">
+                        📄 Nota Cetak Sijil (Klik untuk baca)
+                        <span id="cert-arrow" class="ml-2">▼</span>
+                    </button>
+                    <div id="cert-note-content" class="text-xs italic text-blue-700 p-2 text-left bg-blue-50 rounded-lg border-x border-b border-blue-300 hidden -mt-2">
+                        Untuk memastikan fungsi 'Cetak/Simpan PDF Sijil' berjaya, sila buka pautan kuiz ini **secara langsung** di Pelayar Penuh (Chrome/Safari) dan **BUKAN** Pelayar Dalaman (In-App Browser) seperti dalam WhatsApp atau Facebook.
+                    </div>
+                </div>
+                <!-- AKHIR NOTA BARU MENGENAI CETAK SIJIL (DROPDOWN) -->
                 
                 <p class="text-gray-600 text-center text-sm">
                     Sila pilih jenis kuiz dan sifir yang ingin diuji.
@@ -464,6 +481,22 @@
         const STORAGE_KEY_TIMER = 'is_timer_enabled'; // NEW: Kunci untuk status pemasa
         const STORAGE_KEY_TONE = 'is_tone_enabled';
         const STORAGE_KEY_TTS = 'is_tts_enabled';
+
+        // --- Utility function untuk menguruskan dropdown notis (BARU) ---
+        function toggleNote(contentId) {
+            const content = document.getElementById(contentId);
+            const arrowId = contentId.includes('tts') ? 'tts-arrow' : 'cert-arrow';
+            const arrow = document.getElementById(arrowId);
+
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                arrow.textContent = '▲';
+            } else {
+                content.classList.add('hidden');
+                arrow.textContent = '▼';
+            }
+        }
+        // --- Akhir Utility function untuk menguruskan dropdown notis ---
 
         // --- Logik Local Storage ---
         
