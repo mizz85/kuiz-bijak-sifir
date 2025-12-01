@@ -186,7 +186,8 @@
                         </label>
                     </div>
                     <p class="text-xs text-red-600 italic font-medium pt-1 border-t border-gray-300">
-                          ⚠️ Nota: Kualiti fungsi suara bergantung pada pelayar (Chrome, dsb.) dan peranti (HP/tablet/PC) yang digunakan.Jika suara TTS tidak seperti penutur Melayu yang fasih, anda disyorkan untuk <b>MATIKAN SUARA</b> (Off) bagi mengelakkan gangguan konsentrasi.</p>
+                          ⚠️ Nota: Kualiti fungsi suara kini lebih konsisten. Jika terdapat sedikit kelewatan dalam main balik suara, sila bersabar kerana audio sedang dijana secara langsung.
+                    </p>
                 </div>
                 <!-- AKHIR KAWALAN SUIS TTS DIPISAHKAN & NOTE AMARAN BARU -->
                 
@@ -442,10 +443,10 @@
             }
             document.getElementById('tts-toggle').checked = isTTSEnabled;
 
-            // Hentikan TTS jika dimatikan semasa muat (untuk mengelakkan suara TTS sedia ada)
-            if (!isTTSEnabled) {
-                window.speechSynthesis.cancel();
-            }
+            // Hentikan TTS jika dimatikan semasa muat (Untuk pelayar lama, kini diganti dengan cek isTTSEnabled)
+            // if (!isTTSEnabled) {
+            //     window.speechSynthesis.cancel();
+            // }
         }
 
         function updateAndSaveName(event) {
@@ -483,9 +484,8 @@
                  ttsToggle.addEventListener('change', (event) => {
                     isTTSEnabled = event.target.checked;
                     localStorage.setItem(STORAGE_KEY_TTS, isTTSEnabled);
-                    if (!isTTSEnabled) {
-                        window.speechSynthesis.cancel(); // Hentikan TTS sedia ada
-                    }
+                    // Jika TTS dimatikan, batalkan sebarang ucapan API yang sedang berjalan (walaupun API tidak menyokong pembatalan langsung, ini adalah amalan yang baik).
+                    // Dalam kes API, kita hanya akan menghalang panggilan baru.
                 });
             }
         });
@@ -511,40 +511,160 @@
         }
 
         // -----------------------------------------------------------------
-        // FUNGSI TTS & Audio
+        // FUNGSI TTS & Audio (Kini menggunakan API Gemini untuk suara yang konsisten)
         // -----------------------------------------------------------------
-        function speakMalay(textToRead) {
-            if (!isTTSEnabled) return; // SEMAKAN TTS
-            
-            if (!('speechSynthesis' in window)) {
-                console.error("Pelayar tidak menyokong Web Speech API.");
-                return;
+        const GEMINI_TTS_MODEL = "gemini-2.5-flash-preview-tts";
+        const TTS_VOICE_NAME = "Kore"; // Dipilih untuk suara yang jelas dan tegas
+        const MAX_RETRIES = 5;
+        const apiKey = ""; // Canvas menyediakan ini
+
+        function base64ToArrayBuffer(base64) {
+            const binaryString = atob(base64);
+            const len = binaryString.length;
+            const bytes = new Uint8Array(len);
+            for (let i = 0; i < len; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
             }
-            window.speechSynthesis.cancel();
+            return bytes.buffer;
+        }
+
+        function pcmToWav(pcm16, sampleRate) {
+            const numChannels = 1;
+            const bytesPerSample = 2; // 16-bit PCM
+
+            const buffer = new ArrayBuffer(44 + pcm16.length * bytesPerSample);
+            const view = new DataView(buffer);
+
+            let offset = 0;
+
+            // RIFF chunk descriptor
+            writeString('RIFF'); offset += 4; // Chunk ID
+            view.setUint32(offset, 36 + pcm16.length * bytesPerSample, true); offset += 4; // Chunk Size
+            writeString('WAVE'); offset += 4; // Format
+
+            // FMT sub-chunk
+            writeString('fmt '); offset += 4; // Sub-chunk 1 ID
+            view.setUint32(offset, 16, true); offset += 4; // Sub-chunk 1 Size (16 for PCM)
+            view.setUint16(offset, 1, true); offset += 2; // Audio Format (1 for PCM)
+            view.setUint16(offset, numChannels, true); offset += 2; // Num Channels
+            view.setUint32(offset, sampleRate, true); offset += 4; // Sample Rate
+            view.setUint32(offset, sampleRate * numChannels * bytesPerSample, true); offset += 4; // Byte Rate
+            view.setUint16(offset, numChannels * bytesPerSample, true); offset += 2; // Block Align
+            view.setUint16(offset, 16, true); offset += 2; // Bits per Sample
+
+            // DATA sub-chunk
+            writeString('data'); offset += 4; // Sub-chunk 2 ID
+            view.setUint32(offset, pcm16.length * bytesPerSample, true); offset += 4; // Sub-chunk 2 Size
+
+            // Write PCM data
+            for (let i = 0; i < pcm16.length; i++) {
+                view.setInt16(offset, pcm16[i], true);
+                offset += 2;
+            }
+
+            return new Blob([buffer], { type: 'audio/wav' });
+
+            function writeString(s) {
+                for (let i = 0; i < s.length; i++) {
+                    view.setUint8(offset + i, s.charCodeAt(i));
+                }
+            }
+        }
+
+        function playAudioFromWavBlob(wavBlob) {
+            return new Promise((resolve, reject) => {
+                const audio = new Audio();
+                audio.src = URL.createObjectURL(wavBlob);
+                
+                audio.onended = () => {
+                    URL.revokeObjectURL(audio.src);
+                    resolve();
+                };
+                audio.onerror = (e) => {
+                    URL.revokeObjectURL(audio.src);
+                    console.error("Audio playback error:", e);
+                    reject(e);
+                };
+                
+                audio.play().catch(e => {
+                     // Ini menangani isu Autoplay Policy, pengguna perlu berinteraksi dahulu.
+                     console.error("Audio play failed (perlu interaksi pengguna):", e); 
+                     resolve(); // Selesaikan janji supaya aplikasi tidak tergantung
+                });
+            });
+        }
+
+        async function speakWithGeminiTTS(textToRead, retries = 0) {
+            if (!isTTSEnabled) return;
+
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_TTS_MODEL}:generateContent?key=${apiKey}`;
             
+            const payload = {
+                contents: [{
+                    parts: [{ text: textToRead }]
+                }],
+                generationConfig: {
+                    responseModalities: ["AUDIO"],
+                    speechConfig: {
+                        voiceConfig: {
+                            prebuiltVoiceConfig: { voiceName: TTS_VOICE_NAME }
+                        }
+                    }
+                },
+                model: GEMINI_TTS_MODEL
+            };
+
+            const ttsToggle = document.getElementById('tts-toggle');
+            if (ttsToggle) ttsToggle.disabled = true; // Lumpuhkan toggle semasa menjana
+
             try {
-                const utterance = new SpeechSynthesisUtterance(textToRead);
-                utterance.lang = 'ms-MY';
-                utterance.rate = 1.0; 
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
 
-                const voices = window.speechSynthesis.getVoices();
-                let malayVoice = voices.find(voice => 
-                    voice.lang === 'ms-MY' || 
-                    voice.name.toLowerCase().includes('malay') || 
-                    voice.name.toLowerCase().includes('melayu')
-                );
-
-                if (malayVoice) {
-                    utterance.voice = malayVoice;
-                } else {
-                    console.warn("Suara Bahasa Melayu (ms-MY) tidak ditemui. Menggunakan suara lalai sistem.");
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
 
-                window.speechSynthesis.speak(utterance);
+                const result = await response.json();
+                
+                const part = result?.candidates?.[0]?.content?.parts?.[0];
+                const audioData = part?.inlineData?.data;
+                const mimeType = part?.inlineData?.mimeType;
+
+                if (audioData && mimeType && mimeType.startsWith("audio/L16")) {
+                    const sampleRateMatch = mimeType.match(/rate=(\d+)/);
+                    const sampleRate = sampleRateMatch ? parseInt(sampleRateMatch[1], 10) : 24000;
+                    
+                    const pcmData = base64ToArrayBuffer(audioData);
+                    const pcm16 = new Int16Array(pcmData);
+                    
+                    const wavBlob = pcmToWav(pcm16, sampleRate);
+                    await playAudioFromWavBlob(wavBlob);
+                    
+                } else {
+                    throw new Error("Invalid TTS response format or missing audio data.");
+                }
 
             } catch (error) {
-                 console.error("Ralat TTS: Audio gagal dimainkan.", error);
+                if (retries < MAX_RETRIES) {
+                    const delay = Math.pow(2, retries) * 1000;
+                    // console.log(`TTS failed. Retrying in ${delay / 1000}s... (Attempt ${retries + 1})`);
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                    return speakWithGeminiTTS(textToRead, retries + 1);
+                } else {
+                    console.error("TTS failed after multiple retries:", error);
+                }
+            } finally {
+                if (ttsToggle) ttsToggle.disabled = false; // Aktifkan semula toggle
             }
+        }
+
+        // Wrapper function: Gantikan fungsi lama speakMalay dengan fungsi API yang baru
+        function speakMalay(textToRead) {
+            speakWithGeminiTTS(textToRead);
         }
 
         function initAudio() {
@@ -643,6 +763,7 @@
                 loadSettingsLocally(); // Muatkan setting selepas login
                 document.getElementById('student-name-input').focus();
                 
+                // MENGGUNAKAN SUARA GEMINI TTS KINI
                 speakMalay(`Selamat Datang ke Kuiz Bijak Sifir! Sila masukkan nama anda dan pilih jenis kuiz.`);
 
             } else {
@@ -788,6 +909,7 @@
 
             mulakanTotalTimer();
 
+            // MENGGUNAKAN SUARA GEMINI TTS KINI
             speakMalay(`Jom mulakan Kuiz Sifir! Anda ada ${questionDuration} saat untuk setiap soalan.`);
 
             paparSoalan();
@@ -799,6 +921,7 @@
             score = 0;
             totalTimeElapsed = 0;
 
+            // MENGGUNAKAN SUARA GEMINI TTS KINI
             speakMalay('Kuiz ditamatkan. Sila buat pilihan baharu.');
             showScreen('selection-screen');
         }
@@ -813,6 +936,7 @@
                 oldCertButton.remove();
             }
 
+            // MENGGUNAKAN SUARA GEMINI TTS KINI
             speakMalay('Sila pilih jenis kuiz yang baru.');
             showScreen('selection-screen'); 
         }
@@ -829,6 +953,9 @@
             document.getElementById('question-text').textContent = q.q + ' = ?';
             document.getElementById('current-q-num').textContent = currentQIndex + 1;
             document.getElementById('feedback').textContent = '';
+            
+            // MENGGUNAKAN SUARA GEMINI TTS KINI (Baca soalan)
+            speakMalay(`${q.q} sama dengan berapa?`);
 
             if (currentMode === 'input') {
                 document.getElementById('answer-input').value = '';
@@ -963,16 +1090,22 @@
                 feedbackEl.textContent = `⏱️ Masa Tamat! Jawapan ialah ${correctAnswer}.`;
                 feedbackEl.className = 'h-6 text-sm font-semibold text-red-600';
                 playIncorrectSound();
+                // MENGGUNAKAN SUARA GEMINI TTS KINI
+                speakMalay(`Masa tamat! Jawapan ialah ${correctAnswer}.`);
             } else if (userAnswer === correctAnswer) {
                 score++;
                 isCorrect = true;
                 feedbackEl.textContent = '✅ Betul!';
                 feedbackEl.className = 'h-6 text-sm font-semibold text-lime-600'; 
                 playCorrectSound(); 
+                // MENGGUNAKAN SUARA GEMINI TTS KINI
+                speakMalay('Betul!');
             } else {
                 feedbackEl.textContent = `❌ Salah. Jawapan ialah ${correctAnswer}.`;
                 feedbackEl.className = 'h-6 text-sm font-semibold text-red-600';
                 playIncorrectSound(); 
+                // MENGGUNAKAN SUARA GEMINI TTS KINI
+                speakMalay(`Salah. Jawapan ialah ${correctAnswer}.`);
             }
 
             if (currentMode === 'objective') {
@@ -1039,8 +1172,8 @@
         // Fungsi Papar Sijil
         function displayCertificate(finalPercentage, finalTP, avgTime, quizTitle) {
             if (!studentName.trim()) {
-                // Gunakan alert() kerana ini adalah amaran UI kritikal dan pengguna sudah login
-                alert('Sila masukkan nama pelajar untuk menjana sijil.');
+                // Gantikan alert() dengan suara TTS (jika diaktifkan)
+                speakMalay('Sila masukkan nama pelajar untuk menjana sijil.');
                 return;
             }
             
@@ -1079,6 +1212,7 @@
             document.getElementById('certificate-screen').classList.add('flex'); // Untuk centering
             
             // Pilihan: Umumkan sijil
+            // MENGGUNAKAN SUARA GEMINI TTS KINI
             speakMalay(`Tahniah ${studentName}! Sijil anda sedia untuk dicetak. Anda mencapai Tahap Penguasaan ${finalTP} dengan skor ${finalPercentage.toFixed(0)} peratus.`);
         }
 
@@ -1296,5 +1430,4 @@
 </body>
 
 </html>
-
 
