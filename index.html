@@ -174,21 +174,22 @@
                     </label>
                 </div>
                 
-                <!-- KAWALAN SUIS TTS DIPISAHKAN & NOTE AMARAN BARU -->
-                <div class="p-3 bg-gray-100 rounded-lg border border-gray-300 space-y-2">
-                    <div class="flex items-center justify-between">
-                        <label for="tts-toggle" class="text-sm font-black text-gray-700">
-                            🗣️ Suara (Teks-ke-Ucapan / TTS)
-                        </label>
-                        <label class="relative inline-flex items-center cursor-pointer">
-                            <input type="checkbox" id="tts-toggle" class="sr-only peer" checked>
-                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-pink-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-pink-500"></div>
-                        </label>
-                    </div>
-                    <p class="text-xs text-red-600 italic font-medium pt-1 border-t border-gray-300">
-                          ⚠️ Nota: Kualiti fungsi suara bergantung pada pelayar (Chrome, dsb.) dan peranti (HP/tablet/PC) yang digunakan.Jika suara TTS tidak seperti penutur Melayu yang fasih, anda disyorkan untuk <b>MATIKAN SUARA</b> (Off) bagi mengelakkan gangguan konsentrasi.</p>
+                <div class="flex items-center justify-between p-3 bg-gray-100 rounded-lg border border-gray-300">
+                    <label for="tts-toggle" class="text-sm font-black text-gray-700">
+                        🗣️ Suara (Teks-ke-Ucapan / TTS)
+                    </label>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" id="tts-toggle" class="sr-only peer" checked>
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-pink-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-pink-500"></div>
+                    </label>
                 </div>
-                <!-- AKHIR KAWALAN SUIS TTS DIPISAHKAN & NOTE AMARAN BARU -->
+                <!-- AKHIR KAWALAN SUIS AUDIO DIPISAHKAN -->
+                
+                <!-- NOTA BARU MENGENAI TTS -->
+                <p class="text-xs italic text-red-700 p-2 text-center bg-red-100 rounded-lg border border-red-300 -mt-2">
+                    ⚠️ Nota: Kualiti fungsi suara bergantung pada pelayar (Chrome, dsb.) dan peranti (HP/tablet/PC) yang digunakan.Jika suara TTS tidak seperti penutur Melayu yang fasih, anda disyorkan untuk <b>MATIKAN SUARA</b> (Off) bagi mengelakkan gangguan konsentrasi atau fokus.
+                </p> 
+                <!-- AKHIR NOTA BARU -->
                 
                 <p class="text-gray-600 text-center text-sm">
                     Sila pilih jenis kuiz dan sifir yang ingin diuji.
@@ -643,11 +644,14 @@
                 loadSettingsLocally(); // Muatkan setting selepas login
                 document.getElementById('student-name-input').focus();
                 
+                // KECUALIAN TTS #1: Mesej Selamat Datang
                 speakMalay(`Selamat Datang ke Kuiz Bijak Sifir! Sila masukkan nama anda dan pilih jenis kuiz.`);
 
             } else {
                 playIncorrectSound(); 
                 feedback.textContent = 'Kata Laluan Salah. Sila cuba lagi.';
+                // KECUALIAN TTS #2: Mesej Kata Laluan Salah
+                speakMalay('Kata Laluan Salah. Sila cuba lagi.');
                 feedback.classList.remove('text-lime-600');
                 feedback.classList.add('text-red-600');
                 document.getElementById('password-input').value = '';
@@ -722,7 +726,7 @@
         function startQuizFlow() {
             // Semak nama pelajar
             if (!studentName.trim()) {
-                speakMalay('Sila masukkan nama pelajar terlebih dahulu.');
+                // Mesej amaran ini dikekalkan (tanpa TTS)
                 document.getElementById('student-name-input').focus();
                 
                 const startButton = document.getElementById('start-button');
@@ -788,7 +792,7 @@
 
             mulakanTotalTimer();
 
-            speakMalay(`Jom mulakan Kuiz Sifir! Anda ada ${questionDuration} saat untuk setiap soalan.`);
+            // TTS DIHAPUSKAN: speakMalay(`Jom mulakan Kuiz Sifir! Anda ada ${questionDuration} saat untuk setiap soalan.`);
 
             paparSoalan();
         }
@@ -799,7 +803,7 @@
             score = 0;
             totalTimeElapsed = 0;
 
-            speakMalay('Kuiz ditamatkan. Sila buat pilihan baharu.');
+            // TTS DIHAPUSKAN: speakMalay('Kuiz ditamatkan. Sila buat pilihan baharu.');
             showScreen('selection-screen');
         }
 
@@ -813,7 +817,7 @@
                 oldCertButton.remove();
             }
 
-            speakMalay('Sila pilih jenis kuiz yang baru.');
+            // TTS DIHAPUSKAN: speakMalay('Sila pilih jenis kuiz yang baru.');
             showScreen('selection-screen'); 
         }
 
@@ -1009,30 +1013,7 @@
         // -----------------------------------------------------------------
         function announceResults(score, finalTP, tpLabel) {
             if (!isTTSEnabled) return; // SEMAKAN TTS
-            let resultMessage = "";
-            
-            // Hanya umumkan TP untuk kuiz gabungan (TP > 0)
-            if (finalTP > 0) { 
-                if (finalTP >= 5) {
-                    resultMessage = "TAHNIAH! Keputusan cemerlang! Anda memang bijak sifir dan sangat pantas! Anda mencapai Tahap Penguasaan lima ke atas!";
-                } else if (finalTP >= 3) {
-                    resultMessage = "Hebat! Anda telah menguasai sifir. Sila teruskan latihan untuk mencapai Tahap Penguasaan yang lebih tinggi.";
-                } else {
-                    resultMessage = "Anda telah mencuba. Jangan putus asa, mari cuba kuiz ini sekali lagi untuk tingkatkan markah dan kepantasan anda!";
-                }
-                const fullAnnouncement = `${resultMessage} Tahap Penguasaan anda adalah TP ${finalTP}. ${tpLabel}.`;
-                speakMalay(fullAnnouncement);
-            } else {
-                // Untuk kuiz sifir tunggal (tanpa TP)
-                 if (score / totalQuestions >= 0.9) {
-                    resultMessage = "TAHNIAH! Sifir ini sudah dikuasai dengan cemerlang! Mari cuba sifir yang lain.";
-                 } else if (score / totalQuestions >= 0.7) {
-                    resultMessage = "Bagus! Anda hampir menguasai sifir ini. Sedikit lagi ulangkaji pasti akan menjadikan anda lebih mahir!";
-                 } else {
-                    resultMessage = "Teruskan latihan untuk sifir ini. Saya yakin anda boleh buat!";
-                 }
-                 speakMalay(resultMessage);
-            }
+            // Mesej TTS di sini telah DIHAPUSKAN untuk semua keputusan kuiz
         }
         // -----------------------------------------------------------------
 
@@ -1078,8 +1059,7 @@
             document.getElementById('certificate-screen').classList.remove('hidden');
             document.getElementById('certificate-screen').classList.add('flex'); // Untuk centering
             
-            // Pilihan: Umumkan sijil
-            speakMalay(`Tahniah ${studentName}! Sijil anda sedia untuk dicetak. Anda mencapai Tahap Penguasaan ${finalTP} dengan skor ${finalPercentage.toFixed(0)} peratus.`);
+            // TTS DIHAPUSKAN: speakMalay(`Tahniah ${studentName}! Sijil anda sedia untuk dicetak. Anda mencapai Tahap Penguasaan ${finalTP} dengan skor ${finalPercentage.toFixed(0)} peratus.`);
         }
 
         function closeCertificate() {
