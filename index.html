@@ -7,115 +7,110 @@
     <script src="https://cdn.tailwindcss.com"></script>
     
 <style>
-    /* --- Gaya Cetak Asal Dibuang: TIADA Sijil dicetak --- */
-</style>
-            
-    <style>
-        /* Muatkan font 'Inter' */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-        body { font-family: 'Inter', sans-serif; }
+    /* Muatkan font 'Inter' */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+    
+    /* Gaya Font Standard untuk Jenama - Dikekalkan sekiranya digunakan di tempat lain */
+    .brand-marykate {
+        font-family: 'Inter', sans-serif; 
+        color: #ec4899; /* Pink 500 */
+        font-size: 0.875rem; /* Saiz dikurangkan ke text-sm */
+        line-height: 1.5rem;
+        font-weight: 900; /* Extra Black */
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .result-score {
+        /* Warna bayangan diselaraskan dengan warna Merah Jambu (Pink) */
+        animation: pulse-score 1.5s infinite;
+    }
+    @keyframes pulse-score {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(236, 72, 153, 0.7); /* Pink 500 Shadow */ }
+        100% { transform: scale(1); }
+    }
+    /* Style untuk pemasa soalan yang mendesak (3s terakhir) */
+    .urgent-timer {
+        color: #fff; /* Teks putih */
+        background-color: #ef4444; /* Red 500 */
+        border-color: #fca5a5; /* Red 300 */
+        animation: urgent-pulse 0.5s infinite;
+    }
+    @keyframes urgent-pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.7; }
+    }
+
+    /* Benarkan scrolling pada skrin sijil jika kandungan panjang */
+    #certificate-screen {
+        overflow-y: auto; 
+    }
+
+    /* Gaya baru untuk menyembunyikan elemen TP secara visual */
+    .tp-hidden {
+         display: none;
+    }
+
+    /* Gaya untuk Cetakan Sijil (A4 PORTRAIT) */
+    @media print {
         
-        /* Gaya Font Standard untuk Jenama - Dikekalkan sekiranya digunakan di tempat lain */
-        .brand-marykate {
-            font-family: 'Inter', sans-serif; 
-            color: #ec4899; /* Pink 500 */
-            font-size: 0.875rem; /* Saiz dikurangkan ke text-sm */
-            line-height: 1.5rem;
-            font-weight: 900; /* Extra Black */
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+        /* 1. KUNCI UTAMA: Tetapkan saiz halaman kepada A4 PORTRAIT */
+        @page {
+            size: A4 portrait; /* Kembali ke saiz kertas A4 tegak */
+            margin: 0.8cm;     /* Margin A4 standard */
         }
 
-        .result-score {
-            /* Warna bayangan diselaraskan dengan warna Merah Jambu (Pink) */
-            animation: pulse-score 1.5s infinite;
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: white !important;
+            display: block; 
         }
-        @keyframes pulse-score {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(236, 72, 153, 0.7); /* Pink 500 Shadow */ }
-            100% { transform: scale(1); }
+        
+        #quiz-container-wrapper, #cert-controls {
+            display: none !important;
         }
-        /* Style untuk pemasa soalan yang mendesak (3s terakhir) */
-        .urgent-timer {
-            color: #fff; /* Teks putih */
-            background-color: #ef4444; /* Red 500 */
-            border-color: #fca5a5; /* Red 300 */
-            animation: urgent-pulse 0.5s infinite;
-        }
-        @keyframes urgent-pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-
-        /* Benarkan scrolling pada skrin sijil jika kandungan panjang */
+        
         #certificate-screen {
-            overflow-y: auto; 
+            position: static !important;
+            display: block !important;
+            margin: auto;
+            padding: 0; 
+            max-width: none; 
+            max-height: none; 
+            overflow: hidden; 
         }
-
-        /* Gaya baru untuk menyembunyikan elemen TP secara visual */
-        .tp-hidden {
-             display: none;
+        
+        #certificate-content {
+            box-shadow: none !important;
+            border: none !important;
+            /* Saiz untuk A4 Portrait (21.0cm x 29.7cm) */
+            min-height: 27.7cm; /* Tinggi penuh A4 */
+            width: 19.4cm;      /* Lebar penuh A4 */
+            padding: 2cm 1.5cm !important; /* Padding disesuaikan untuk A4 */
+            font-size: 1em; /* Saiz font asas kembali normal */
         }
+        
+        /* Saiz font disesuaikan kembali untuk muat pada kertas A4 Portrait */
+        #certificate-content .text-5xl { font-size: 2.5rem !important; } /* Saiz TP/Skor */
+        #certificate-content .text-6xl { font-size: 3.5rem !important; } /* Saiz Nama */
+        #certificate-content .text-4xl { font-size: 2rem !important; } /* SIJIL PENGHARGAAN */
+        #certificate-content .text-2xl { font-size: 1.5rem !important; } /* Tajuk Kuiz */
+        #certificate-content .text-lg { font-size: 1rem !important; } /* teks biasa */
 
-        /* Gaya untuk Cetakan Sijil (DIKEMASKINI: A4 PORTRAIT) */
-        @media print {
-            
-            /* 1. KUNCI UTAMA: Tetapkan saiz halaman kepada A4 PORTRAIT */
-            @page {
-                size: A4 portrait; /* Kembali ke saiz kertas A4 tegak */
-                margin: 0.8cm;     /* Margin A4 standard */
-            }
+        /* Sesuaikan jarak elemen dalam sijil kembali ke ukuran A4 */
+        #certificate-content .my-4 { margin-top: 1rem !important; margin-bottom: 1rem !important; }
+        #certificate-content .pt-4 { padding-top: 1rem !important; }
+        #certificate-content .pt-4 + div { padding-top: 1rem !important; } 
+        #certificate-content .mt-6 { margin-top: 1.5rem !important; }
+        .flex-col .space-y-3 { margin-top: 1.5rem !important; }
 
-            body {
-                margin: 0;
-                padding: 0;
-                background-color: white !important;
-                display: block; 
-            }
-            
-            #quiz-container-wrapper, #cert-controls {
-                display: none !important;
-            }
-            
-            #certificate-screen {
-                position: static !important;
-                display: block !important;
-                margin: auto;
-                padding: 0; 
-                max-width: none; 
-                max-height: none; 
-                overflow: hidden; 
-            }
-            
-            #certificate-content {
-                box-shadow: none !important;
-                border: none !important;
-                /* Saiz untuk A4 Portrait (21.0cm x 29.7cm) */
-                min-height: 27.7cm; /* Tinggi penuh A4 */
-                width: 19.4cm;      /* Lebar penuh A4 */
-                padding: 2cm 1.5cm !important; /* Padding disesuaikan untuk A4 */
-                font-size: 1em; /* Saiz font asas kembali normal */
-            }
-            
-            /* Saiz font disesuaikan kembali untuk muat pada kertas A4 Portrait */
-            #certificate-content .text-5xl { font-size: 2.5rem !important; } /* Saiz TP/Skor */
-            #certificate-content .text-6xl { font-size: 3.5rem !important; } /* Saiz Nama */
-            #certificate-content .text-4xl { font-size: 2rem !important; } /* SIJIL PENGHARGAAN */
-            #certificate-content .text-2xl { font-size: 1.5rem !important; } /* Tajuk Kuiz */
-            #certificate-content .text-lg { font-size: 1rem !important; } /* teks biasa */
-
-            /* Sesuaikan jarak elemen dalam sijil kembali ke ukuran A4 */
-            #certificate-content .my-4 { margin-top: 1rem !important; margin-bottom: 1rem !important; }
-            #certificate-content .pt-4 { padding-top: 1rem !important; }
-            #certificate-content .pt-4 + div { padding-top: 1rem !important; } 
-            #certificate-content .mt-6 { margin-top: 1.5rem !important; }
-            .flex-col .space-y-3 { margin-top: 1.5rem !important; }
-
-            .print\:hidden {
-                display: none !important;
-            }
+        .print\:hidden {
+            display: none !important;
         }
-		
+    }
     </style>
 </head>
 <body class="bg-yellow-50 min-h-screen flex items-center justify-center p-4">
@@ -168,15 +163,34 @@
                     <p id="current-name-display" class="text-xs text-gray-600 italic mt-1 text-center"></p>
                 </div>
 
+                <!-- KAWALAN SUIS AUDIO DIPISAHKAN -->
                 <div class="flex items-center justify-between p-3 bg-gray-100 rounded-lg border border-gray-300">
-                    <label for="audio-toggle" class="text-sm font-black text-gray-700">
-                        Bunyi & Suara (TTS)
+                    <label for="tone-toggle" class="text-sm font-black text-gray-700">
+                        🔔 Audio Bunyi (Nada Betul/Salah & Bip Amaran)
                     </label>
                     <label class="relative inline-flex items-center cursor-pointer">
-                        <input type="checkbox" id="audio-toggle" class="sr-only peer" checked>
+                        <input type="checkbox" id="tone-toggle" class="sr-only peer" checked>
                         <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-pink-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-pink-500"></div>
                     </label>
                 </div>
+                
+                <!-- KAWALAN SUIS TTS DIPISAHKAN & NOTE AMARAN BARU -->
+                <div class="p-3 bg-gray-100 rounded-lg border border-gray-300 space-y-2">
+                    <div class="flex items-center justify-between">
+                        <label for="tts-toggle" class="text-sm font-black text-gray-700">
+                            🗣️ Suara (Teks-ke-Ucapan / TTS)
+                        </label>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" id="tts-toggle" class="sr-only peer" checked>
+                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-pink-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-pink-500"></div>
+                        </label>
+                    </div>
+                    <p class="text-xs text-red-600 italic font-medium pt-1 border-t border-gray-300">
+                        *Nota: Jika suara TTS kedengaran kurang jelas atau tidak seperti suara Melayu, sila **matikan suis** untuk mengelakkan gangguan fokus dan konsentrasi.
+                    </p>
+                </div>
+                <!-- AKHIR KAWALAN SUIS TTS DIPISAHKAN & NOTE AMARAN BARU -->
+                
                 <p class="text-gray-600 text-center text-sm">
                     Sila pilih jenis kuiz dan sifir yang ingin diuji.
                 </p>
@@ -184,33 +198,33 @@
                 <div class="space-y-2">
                     <label for="sifir-pilihan" class="block text-sm font-medium text-gray-700">Pilih Jenis Ujian:</label>
                     <select id="sifir-pilihan" class="w-full p-3 border-2 border-pink-400 rounded-lg shadow-md focus:ring-teal-500 focus:border-teal-500 bg-white text-teal-700 font-semibold text-sm">
-                        <option value="0-objective-50">ð¯ Semua Sifir (1-12) - Objektif A/B/C/D (50 Soalan)</option>
-                        <option value="0-input-50">âï¸ Semua Sifir (1-12) - Input Jawapan (50 Soalan)</option>
+                        <option value="0-objective-50">🎯 Semua Sifir (1-12) - Objektif A/B/C/D (50 Soalan)</option>
+                        <option value="0-input-50">✍️ Semua Sifir (1-12) - Input Jawapan (50 Soalan)</option>
                         
                         <option disabled>--- Sifir Tunggal (30 Soalan) ---</option>
-                        <option value="2-objective-30">ð¯ Sifir 2 - Objektif (30 Soalan, 7s)</option>
-                        <option value="3-objective-30">ð¯ Sifir 3 - Objektif (30 Soalan, 7s)</option>
-                        <option value="4-objective-30">ð¯ Sifir 4 - Objektif (30 Soalan, 7s)</option>
-                        <option value="5-objective-30">ð¯ Sifir 5 - Objektif (30 Soalan, 7s)</option>
-                        <option value="6-objective-30">ð¯ Sifir 6 - Objektif (30 Soalan, 7s)</option>
-                        <option value="7-objective-30">ð¯ Sifir 7 - Objektif (30 Soalan, 7s)</option>
-                        <option value="8-objective-30">ð¯ Sifir 8 - Objektif (30 Soalan, 7s)</option>
-                        <option value="9-objective-30">ð¯ Sifir 9 - Objektif (30 Soalan, 7s)</option>
-                        <option value="10-objective-30">ð¯ Sifir 10 - Objektif (30 Soalan, 7s)</option>
-                        <option value="11-objective-30">ð¯ Sifir 11 - Objektif (30 Soalan, 7s)</option>
-                        <option value="12-objective-30">ð¯ Sifir 12 - Objektif (30 Soalan, 7s)</option>
+                        <option value="2-objective-30">🎯 Sifir 2 - Objektif (30 Soalan, 7s)</option>
+                        <option value="3-objective-30">🎯 Sifir 3 - Objektif (30 Soalan, 7s)</option>
+                        <option value="4-objective-30">🎯 Sifir 4 - Objektif (30 Soalan, 7s)</option>
+                        <option value="5-objective-30">🎯 Sifir 5 - Objektif (30 Soalan, 7s)</option>
+                        <option value="6-objective-30">🎯 Sifir 6 - Objektif (30 Soalan, 7s)</option>
+                        <option value="7-objective-30">🎯 Sifir 7 - Objektif (30 Soalan, 7s)</option>
+                        <option value="8-objective-30">🎯 Sifir 8 - Objektif (30 Soalan, 7s)</option>
+                        <option value="9-objective-30">🎯 Sifir 9 - Objektif (30 Soalan, 7s)</option>
+                        <option value="10-objective-30">🎯 Sifir 10 - Objektif (30 Soalan, 7s)</option>
+                        <option value="11-objective-30">🎯 Sifir 11 - Objektif (30 Soalan, 7s)</option>
+                        <option value="12-objective-30">🎯 Sifir 12 - Objektif (30 Soalan, 7s)</option>
                         
-                        <option value="2-input-30">âï¸ Sifir 2 (30 Soalan, 10s)</option>
-                        <option value="3-input-30">âï¸ Sifir 3 (30 Soalan, 10s)</option>
-                        <option value="4-input-30">âï¸ Sifir 4 (30 Soalan, 10s)</option>
-                        <option value="5-input-30">âï¸ Sifir 5 (30 Soalan, 10s)</option>
-                        <option value="6-input-30">âï¸ Sifir 6 (30 Soalan, 10s)</option>
-                        <option value="7-input-30">âï¸ Sifir 7 (30 Soalan, 10s)</option>
-                        <option value="8-input-30">âï¸ Sifir 8 (30 Soalan, 10s)</option>
-                        <option value="9-input-30">âï¸ Sifir 9 (30 Soalan, 10s)</option>
-                        <option value="10-input-30">âï¸ Sifir 10 (30 Soalan, 10s)</option>
-                        <option value="11-input-30">âï¸ Sifir 11 (30 Soalan, 10s)</option>
-                        <option value="12-input-30">âï¸ Sifir 12 (30 Soalan, 10s)</option>
+                        <option value="2-input-30">✍️ Sifir 2 (30 Soalan, 10s)</option>
+                        <option value="3-input-30">✍️ Sifir 3 (30 Soalan, 10s)</option>
+                        <option value="4-input-30">✍️ Sifir 4 (30 Soalan, 10s)</option>
+                        <option value="5-input-30">✍️ Sifir 5 (30 Soalan, 10s)</option>
+                        <option value="6-input-30">✍️ Sifir 6 (30 Soalan, 10s)</option>
+                        <option value="7-input-30">✍️ Sifir 7 (30 Soalan, 10s)</option>
+                        <option value="8-input-30">✍️ Sifir 8 (30 Soalan, 10s)</option>
+                        <option value="9-input-30">✍️ Sifir 9 (30 Soalan, 10s)</option>
+                        <option value="10-input-30">✍️ Sifir 10 (30 Soalan, 10s)</option>
+                        <option value="11-input-30">✍️ Sifir 11 (30 Soalan, 10s)</option>
+                        <option value="12-input-30">✍️ Sifir 12 (30 Soalan, 10s)</option>
                     </select>
                 </div>
 
@@ -301,11 +315,11 @@
                     </div>
                 </div>
                 <div class="text-left space-y-2 text-sm text-gray-700">
-                    <p>â­ Skor Anda: <span id="final-score" class="font-bold text-teal-600"></span></p>
-                    <p>ð Peratusan: <span id="final-percentage" class="font-bold text-teal-600"></span></p>
-                    <p>â Jawapan Betul: <span id="correct-count" class="font-bold text-lime-600"></span></p>
-                    <p>â Jawapan Salah: <span id="incorrect-count" class="font-bold text-red-600"></span></p>
-                    <p>â±ï¸ Purata Masa Tindak Balas: <span id="average-time" class="font-bold"></span> saat</p>
+                    <p>⭐ Skor Anda: <span id="final-score" class="font-bold text-teal-600"></span></p>
+                    <p>📊 Peratusan: <span id="final-percentage" class="font-bold text-teal-600"></span></p>
+                    <p>✅ Jawapan Betul: <span id="correct-count" class="font-bold text-lime-600"></span></p>
+                    <p>❌ Jawapan Salah: <span id="incorrect-count" class="font-bold text-red-600"></span></p>
+                    <p>⏱️ Purata Masa Tindak Balas: <span id="average-time" class="font-bold"></span> saat</p>
                 </div>
                 
                 <button onclick="startNewQuizSelection()" class="w-full bg-pink-500 hover:bg-pink-600 text-white font-black text-base py-3 rounded-lg transition duration-150 shadow-lg hover:shadow-xl mt-3">
@@ -363,7 +377,7 @@
         </div>
         <div id="cert-controls" class="w-full max-w-4xl p-4 mt-4 print:hidden flex flex-col space-y-2">
             <button onclick="window.print()" class="w-full bg-teal-500 hover:bg-teal-600 text-white font-black text-base py-3 rounded-lg transition duration-150 shadow-lg hover:shadow-xl">
-                ð¨ï¸ Cetak / Simpan PDF Sijil
+                🖨️ Cetak / Simpan PDF Sijil
             </button>
             <button onclick="closeCertificate()" class="w-full bg-gray-200 text-gray-700 hover:bg-gray-300 font-semibold text-sm py-2 rounded-lg transition duration-150 shadow-sm">
                 Kembali ke Keputusan
@@ -383,7 +397,9 @@
         let isCombinedQuiz = true; 
         let questionDuration = 7; 
 
-        let isAudioEnabled = true; // NEW: Status audio lalai: ON
+        // STATE AUDIO BARU DIPISAHKAN
+        let isToneEnabled = true; // Untuk nada (bunyi)
+        let isTTSEnabled = true;  // Untuk suara (Teks-ke-Ucapan)
 
         let questions = [];
         let currentQIndex = 0;
@@ -397,10 +413,13 @@
         
         let studentName = '';
         const STORAGE_KEY_NAME = 'student_name_sifir'; 
+        const STORAGE_KEY_TONE = 'is_tone_enabled';
+        const STORAGE_KEY_TTS = 'is_tts_enabled';
 
         // --- Logik Local Storage ---
         
-        function loadNameLocally() {
+        function loadSettingsLocally() {
+            // Muatkan Nama
             const storedName = localStorage.getItem(STORAGE_KEY_NAME);
             if (storedName) {
                 studentName = storedName;
@@ -408,6 +427,25 @@
                 document.getElementById('current-name-display').textContent = `Nama yang disimpan: ${studentName}`;
             } else {
                  document.getElementById('current-name-display').textContent = `Nama belum disimpan.`;
+            }
+            
+            // Muatkan State Tone/Bunyi
+            const storedTone = localStorage.getItem(STORAGE_KEY_TONE);
+            if (storedTone !== null) {
+                isToneEnabled = storedTone === 'true';
+            }
+            document.getElementById('tone-toggle').checked = isToneEnabled;
+
+            // Muatkan State TTS/Suara
+            const storedTTS = localStorage.getItem(STORAGE_KEY_TTS);
+            if (storedTTS !== null) {
+                isTTSEnabled = storedTTS === 'true';
+            }
+            document.getElementById('tts-toggle').checked = isTTSEnabled;
+
+            // Hentikan TTS jika dimatikan semasa muat (untuk mengelakkan suara TTS sedia ada)
+            if (!isTTSEnabled) {
+                window.speechSynthesis.cancel();
             }
         }
 
@@ -423,19 +461,31 @@
             }
         }
         
-        loadNameLocally(); 
+        loadSettingsLocally(); 
         
         // --- Akhir Logik Local Storage ---
 
         // NEW: Logik Togol Audio
         document.addEventListener('DOMContentLoaded', () => {
-            const audioToggle = document.getElementById('audio-toggle');
-            if (audioToggle) {
-                audioToggle.addEventListener('change', (event) => {
-                    isAudioEnabled = event.target.checked;
-                    if (!isAudioEnabled) {
+            const toneToggle = document.getElementById('tone-toggle');
+            const ttsToggle = document.getElementById('tts-toggle');
+
+            if (toneToggle) {
+                toneToggle.addEventListener('change', (event) => {
+                    isToneEnabled = event.target.checked;
+                    localStorage.setItem(STORAGE_KEY_TONE, isToneEnabled);
+                    if (!isToneEnabled) {
+                        stopWarningBeeps(); // Hentikan bip amaran jika bunyi dimatikan
+                    }
+                });
+            }
+            
+            if (ttsToggle) {
+                 ttsToggle.addEventListener('change', (event) => {
+                    isTTSEnabled = event.target.checked;
+                    localStorage.setItem(STORAGE_KEY_TTS, isTTSEnabled);
+                    if (!isTTSEnabled) {
                         window.speechSynthesis.cancel(); // Hentikan TTS sedia ada
-                        stopWarningBeeps();             // Hentikan bip amaran
                     }
                 });
             }
@@ -465,7 +515,7 @@
         // FUNGSI TTS & Audio
         // -----------------------------------------------------------------
         function speakMalay(textToRead) {
-            if (!isAudioEnabled) return; // SEMAKAN BUNYI
+            if (!isTTSEnabled) return; // SEMAKAN TTS
             
             if (!('speechSynthesis' in window)) {
                 console.error("Pelayar tidak menyokong Web Speech API.");
@@ -516,7 +566,7 @@
 
         function playTone(frequency, duration, type = 'sine') {
             initAudio();
-            if (!audioContext || !isAudioEnabled) return; // SEMAKAN BUNYI
+            if (!audioContext || !isToneEnabled) return; // SEMAKAN TONE/BUNYI
             const oscillator = audioContext.createOscillator();
             const gainNode = audioContext.createGain();
             oscillator.connect(gainNode);
@@ -545,7 +595,7 @@
         }
 
         function startWarningBeeps() {
-            if (!isAudioEnabled) return; // SEMAKAN BUNYI
+            if (!isToneEnabled) return; // SEMAKAN TONE/BUNYI
             if (warningBeepInterval) return;
             warningBeepInterval = setInterval(() => {
                 if (qTimeLeft <= 3 && qTimeLeft > 0) { 
@@ -591,7 +641,7 @@
                 
                 showScreen('selection-screen'); 
                 
-                loadNameLocally(); 
+                loadSettingsLocally(); // Muatkan setting selepas login
                 document.getElementById('student-name-input').focus();
                 
                 speakMalay(`Selamat Datang ke Kuiz Bijak Sifir! Sila masukkan nama anda dan pilih jenis kuiz.`);
@@ -755,15 +805,14 @@
         }
 
         function startNewQuizSelection() {
-            // NEW: Tutup skrin sijil jika ada
+            // Tutup skrin sijil jika ada
             closeCertificate(); 
             
-            // ** PEMBETULAN: Buang butang cetak lama dari DOM agar boleh dijana semula **
+            // Buang butang cetak lama dari DOM agar boleh dijana semula
             const oldCertButton = document.getElementById('print-certificate-button');
             if (oldCertButton) {
                 oldCertButton.remove();
             }
-            // ************************************************
 
             speakMalay('Sila pilih jenis kuiz yang baru.');
             showScreen('selection-screen'); 
@@ -817,7 +866,7 @@
                 if (qTimeLeft <= 3 && qTimeLeft > 0) {
                     displayEl.classList.add('urgent-timer');
                     if (!warningBeepInterval) { 
-                        startWarningBeeps(); // Mula bip amaran
+                        startWarningBeeps(); // Mula bip amaran (jika dibenarkan)
                     }
                 } else if (qTimeLeft <= 0) {
                     hentikanQuestionTimer();
@@ -912,17 +961,17 @@
             let isCorrect = false;
 
             if (isTimeout) {
-                feedbackEl.textContent = `â±ï¸ Masa Tamat! Jawapan ialah ${correctAnswer}.`;
+                feedbackEl.textContent = `⏱️ Masa Tamat! Jawapan ialah ${correctAnswer}.`;
                 feedbackEl.className = 'h-6 text-sm font-semibold text-red-600';
                 playIncorrectSound();
             } else if (userAnswer === correctAnswer) {
                 score++;
                 isCorrect = true;
-                feedbackEl.textContent = 'â Betul!';
+                feedbackEl.textContent = '✅ Betul!';
                 feedbackEl.className = 'h-6 text-sm font-semibold text-lime-600'; 
                 playCorrectSound(); 
             } else {
-                feedbackEl.textContent = `â Salah. Jawapan ialah ${correctAnswer}.`;
+                feedbackEl.textContent = `❌ Salah. Jawapan ialah ${correctAnswer}.`;
                 feedbackEl.className = 'h-6 text-sm font-semibold text-red-600';
                 playIncorrectSound(); 
             }
@@ -960,7 +1009,7 @@
         // FUNGSI PENGUMUMAN KEPUTUSAN KUIZ (Audio Sijil)
         // -----------------------------------------------------------------
         function announceResults(score, finalTP, tpLabel) {
-            if (!isAudioEnabled) return;
+            if (!isTTSEnabled) return; // SEMAKAN TTS
             let resultMessage = "";
             
             // Hanya umumkan TP untuk kuiz gabungan (TP > 0)
@@ -988,9 +1037,10 @@
         }
         // -----------------------------------------------------------------
 
-        // NEW: Fungsi Papar Sijil
+        // Fungsi Papar Sijil
         function displayCertificate(finalPercentage, finalTP, avgTime, quizTitle) {
             if (!studentName.trim()) {
+                // Gunakan alert() kerana ini adalah amaran UI kritikal dan pengguna sudah login
                 alert('Sila masukkan nama pelajar untuk menjana sijil.');
                 return;
             }
@@ -998,7 +1048,7 @@
             // *** KOD AMARAN BARU DI SINI ***
             if (isMobileInAppBrowser()) {
                 const message = 
-                    "â ï¸ PERHATIAN: Anda mungkin menggunakan Pelayar Dalaman (seperti dalam WhatsApp, Facebook, dsb.). " +
+                    "⚠️ PERHATIAN: Anda mungkin menggunakan Pelayar Dalaman (seperti dalam WhatsApp, Facebook, dsb.). " +
                     "Sila SALIN PAUTAN INI dan BUKA SECARA LANGSUNG di aplikasi Pelayar Penuh " +
                     "(Contoh: CHROME, SAFARI, FIREFOX, EDGE) untuk " +
                     "mencetak/menyimpan sijil sebagai PDF dengan lancar. " +
@@ -1138,7 +1188,7 @@
 
             // --- Logik Tajuk Kuiz Di Skrin Keputusan ---
             let quizTitleDisplay = '';
-            let certQuizTitle = ''; // NEW: Tajuk untuk Sijil
+            let certQuizTitle = ''; // Tajuk untuk Sijil
             if (currentSifir === 0) {
                  document.getElementById('quiz-result-title').querySelector('h2').textContent = 'Kuiz Bijak Sifir';
                  quizTitleDisplay = `(1-12) Gabungan - ${modeText}`;
@@ -1162,7 +1212,7 @@
 
 
             if (isTotalTimeout) {
-                tpMessage = `â Had Masa Keseluruhan (250s) Kuiz ${modeText} Tamat! Kuiz terhenti pada soalan ${currentQIndex} dari ${totalQuestions}.`;
+                tpMessage = `❌ Had Masa Keseluruhan (250s) Kuiz ${modeText} Tamat! Kuiz terhenti pada soalan ${currentQIndex} dari ${totalQuestions}.`;
                 
                 if (isCombinedQuiz) {
                     // Gunakan logik TP asas untuk kuiz gabungan yang terhenti
@@ -1175,7 +1225,7 @@
                         finalTP = 1; tpLabel = "Tahu (Terhenti)"; tpDescription = "Kuiz terhenti kerana masa keseluruhan tamat. Perlu ulangkaji fakta sifir anda dengan lebih tekun.";
                     }
                 } else {
-                    tpMessage = `â Had Masa Kuiz ${modeText} Tamat.`;
+                    tpMessage = `❌ Had Masa Kuiz ${modeText} Tamat.`;
                 }
                 
                 announceResults(totalScore, finalTP, tpLabel);
@@ -1187,9 +1237,9 @@
                 tpDescription = tpDetails.tpDescription;
                 
                 if (isCombinedQuiz) {
-                    tpMessage = `ð Tahniah! Anda menyelesaikan Kuiz ${modeText} ini dengan jayanya.`;
+                    tpMessage = `🎉 Tahniah! Anda menyelesaikan Kuiz ${modeText} ini dengan jayanya.`;
                 } else {
-                    tpMessage = `ð Kuiz Sifir ${currentSifir} Selesai!`;
+                    tpMessage = `🎉 Kuiz Sifir ${currentSifir} Selesai!`;
                 }
                 
                 avgTime = tpDetails.avgTime;
@@ -1219,7 +1269,7 @@
             document.getElementById('incorrect-count').textContent = incorrectCount; 
             document.getElementById('average-time').textContent = avgTime.toFixed(2);
             
-            // NEW: Logik Butang Cetak Sijil
+            // Logik Butang Cetak Sijil
             const certButtonId = 'print-certificate-button';
             let certButton = document.getElementById(certButtonId);
             
@@ -1232,7 +1282,7 @@
                     const repeatButton = document.querySelector('#result-screen button:last-child');
                     document.getElementById('result-screen').insertBefore(certButton, repeatButton);
                 }
-                certButton.textContent = 'ð Cetak Sijil Penghargaan';
+                certButton.textContent = '🏅 Cetak Sijil Penghargaan';
                 certButton.onclick = () => displayCertificate(finalPercentage, finalTP, avgTime, certQuizTitle);
 
                 // Paparkan butang di sini
