@@ -53,13 +53,13 @@
          display: none;
     }
 
-    /* Gaya untuk Cetakan Sijil (A4 PORTRAIT) */
+    /* Gaya untuk Cetakan Sijil (A4 PORTRAIT) - TELAH DIOPTIMALKAN */
     @media print {
         
-        /* 1. KUNCI UTAMA: Tetapkan saiz halaman kepada A4 PORTRAIT */
+        /* 1. KUNCI UTAMA: Tetapkan saiz halaman kepada A4 PORTRAIT dengan margin yang lebih ketat */
         @page {
-            size: A4 portrait; /* Kembali ke saiz kertas A4 tegak */
-            margin: 0.8cm;     /* Margin A4 standard */
+            size: A4 portrait; 
+            margin: 0.5cm;     /* Margin diperketat kepada 0.5cm */
         }
 
         body {
@@ -86,26 +86,32 @@
         #certificate-content {
             box-shadow: none !important;
             border: none !important;
-            /* Saiz untuk A4 Portrait (21.0cm x 29.7cm) */
-            min-height: 27.7cm; /* Tinggi penuh A4 */
-            width: 19.4cm;      /* Lebar penuh A4 */
-            padding: 2cm 1.5cm !important; /* Padding disesuaikan untuk A4 */
-            font-size: 1em; /* Saiz font asas kembali normal */
+            /* Saiz untuk A4 Portrait (21.0cm x 29.7cm) - padding diperketat */
+            min-height: 28.7cm; /* Tinggi penuh A4 (29.7cm - 2*0.5cm margin) */
+            width: 20.0cm;      /* Lebar penuh A4 (21.0cm - 2*0.5cm margin) */
+            padding: 1.5cm 1cm !important; /* Padding dikurangkan */
+            font-size: 0.9em; /* Saiz font asas dikurangkan sedikit */
         }
         
-        /* Saiz font disesuaikan kembali untuk muat pada kertas A4 Portrait */
-        #certificate-content .text-5xl { font-size: 2.5rem !important; } /* Saiz TP/Skor */
-        #certificate-content .text-6xl { font-size: 3.5rem !important; } /* Saiz Nama */
-        #certificate-content .text-4xl { font-size: 2rem !important; } /* SIJIL PENGHARGAAN */
-        #certificate-content .text-2xl { font-size: 1.5rem !important; } /* Tajuk Kuiz */
-        #certificate-content .text-lg { font-size: 1rem !important; } /* teks biasa */
+        /* Saiz font diselaraskan untuk muat pada satu halaman A4 Portrait */
+        #certificate-content .mx-auto.w-48 { 
+            width: 4cm !important; /* Logo dikurangkan */
+        } 
+        #certificate-content .text-5xl { font-size: 2rem !important; } /* Saiz TP/Skor dikurangkan */
+        #certificate-content .text-6xl { font-size: 3rem !important; } /* Saiz Nama dikurangkan */
+        #certificate-content .text-4xl { font-size: 1.75rem !important; } /* SIJIL PENGHARGAAN dikurangkan */
+        #certificate-content .text-2xl { font-size: 1.2rem !important; } /* Tajuk Kuiz dikurangkan */
+        #certificate-content .text-lg { font-size: 0.85rem !important; } /* teks biasa dikurangkan */
+        #certificate-content .text-sm { font-size: 0.75rem !important; } /* teks kecil dikurangkan */
+        
+        /* Sesuaikan jarak elemen dalam sijil kembali ke ukuran A4 (Jarak Dikurangkan) */
+        #certificate-content .my-4 { margin-top: 0.8rem !important; margin-bottom: 0.8rem !important; }
+        #certificate-content .py-2 { padding-top: 0.5rem !important; padding-bottom: 0.5rem !important; }
+        #certificate-content .pt-4 { padding-top: 0.75rem !important; }
+        #certificate-content .mt-6 { margin-top: 1.2rem !important; }
+        .flex-col .space-y-3 { margin-top: 1.2rem !important; }
+        #certificate-content .w-48.h-auto.mb-1 { width: 3cm !important; } /* Tandatangan dikurangkan */
 
-        /* Sesuaikan jarak elemen dalam sijil kembali ke ukuran A4 */
-        #certificate-content .my-4 { margin-top: 1rem !important; margin-bottom: 1rem !important; }
-        #certificate-content .pt-4 { padding-top: 1rem !important; }
-        #certificate-content .pt-4 + div { padding-top: 1rem !important; } 
-        #certificate-content .mt-6 { margin-top: 1.5rem !important; }
-        .flex-col .space-y-3 { margin-top: 1.5rem !important; }
 
         .print\:hidden {
             display: none !important;
@@ -185,10 +191,15 @@
                 </div>
                 <!-- AKHIR KAWALAN SUIS AUDIO DIPISAHKAN -->
                 
-                <!-- NOTA BARU MENGENAI TTS -->
+                <!-- NOTA MENGENAI TTS -->
                 <p class="text-xs italic text-red-700 p-2 text-center bg-red-100 rounded-lg border border-red-300 -mt-2">
-                    ⚠️ Nota: Kualiti fungsi suara bergantung pada pelayar (Chrome, dsb.) dan peranti (HP/tablet/PC) yang digunakan.Jika suara TTS tidak seperti penutur Melayu yang fasih, anda disyorkan untuk <b>MATIKAN SUARA</b> (Off) bagi mengelakkan gangguan konsentrasi atau fokus.
+                    ⚠️ Nota Suara: Kualiti fungsi suara bergantung pada pelayar (Chrome, dsb.) dan peranti yang digunakan. Jika suara TTS tidak seperti penutur Melayu yang fasih, anda disyorkan untuk **MATIKAN SUARA** (Off) bagi mengelakkan gangguan konsentrasi atau fokus.
                 </p> 
+                
+                <!-- NOTA BARU MENGENAI CETAK SIJIL -->
+                <p class="text-xs italic text-blue-700 p-2 text-center bg-blue-100 rounded-lg border border-blue-300 -mt-2">
+                    📄 Nota Cetak Sijil: Untuk memastikan fungsi 'Cetak/Simpan PDF Sijil' berjaya, sila buka pautan kuiz ini **secara langsung** di Pelayar Penuh (Chrome/Safari) dan **BUKAN** Pelayar Dalaman (In-App Browser) seperti dalam WhatsApp atau Facebook.
+                </p>
                 <!-- AKHIR NOTA BARU -->
                 
                 <p class="text-gray-600 text-center text-sm">
@@ -408,7 +419,7 @@
         let isCombinedQuiz = true; 
         let questionDuration = 7; 
 
-        // STATE AUDIO BARU DIPISAHKAN
+        // STATE AUDIO DIPISAHKAN
         let isToneEnabled = true; // Untuk nada (bunyi)
         let isTTSEnabled = true;  // Untuk suara (Teks-ke-Ucapan)
 
@@ -476,7 +487,7 @@
         
         // --- Akhir Logik Local Storage ---
 
-        // NEW: Logik Togol Audio
+        // Logik Togol Audio
         document.addEventListener('DOMContentLoaded', () => {
             const toneToggle = document.getElementById('tone-toggle');
             const ttsToggle = document.getElementById('tts-toggle');
@@ -501,7 +512,6 @@
                 });
             }
         });
-        // END NEW: Logik Togol Audio
 
         // Helper function untuk menukar paparan skrin
         function showScreen(screenId) {
@@ -623,7 +633,7 @@
         }
         // -----------------------------------------------------------------
         
-        // *** FUNGSI BARU: PENGESAN PELAYAR DALAMAN ***
+        // FUNGSI BARU: PENGESAN PELAYAR DALAMAN
         function isMobileInAppBrowser() {
             const ua = navigator.userAgent || navigator.vendor || window.opera;
             
@@ -637,7 +647,6 @@
             // jika ia peranti Mobile tetapi bukan pelayar utama yang dijangka.
             return isInApp || (!isMajorBrowser && /Mobile/i.test(ua));
         }
-        // **********************************************
 
 
         // --- Logik Akses Kata Laluan ---
@@ -1051,12 +1060,13 @@
         // Fungsi Papar Sijil
         function displayCertificate(finalPercentage, finalTP, avgTime, quizTitle) {
             if (!studentName.trim()) {
-                // Gunakan alert() kerana ini adalah amaran UI kritikal dan pengguna sudah login
+                // Guna alert() kerana ini adalah amaran UI kritikal dan pengguna sudah login
+                // NOTA: Dalam konteks Immersive ini tidak akan kelihatan, tetapi dikekalkan sebagai fallback
                 alert('Sila masukkan nama pelajar untuk menjana sijil.');
                 return;
             }
             
-            // *** KOD AMARAN BARU DI SINI ***
+            // *** KOD AMARAN BARU DI SINI (In-App Browser Check) ***
             if (isMobileInAppBrowser()) {
                 const message = 
                     "⚠️ PERHATIAN PENTING: Anda mungkin menggunakan Pelayar Dalaman (seperti dalam WhatsApp, Facebook, dsb.).\n\n" +
@@ -1067,6 +1077,8 @@
                     "Tekan 'OK' untuk teruskan dengan risiko gagal, atau 'Cancel' untuk buka di pelayar penuh dahulu.";
                     
                 // Guna 'confirm' untuk memberi pilihan kepada pengguna untuk teruskan
+                // Peringatan: confirm() dan alert() disarankan diganti dengan custom modal UI dalam konteks iframe
+                // Tetapi di sini, ia dikekalkan berdasarkan kod sedia ada
                 if (!confirm(message)) {
                     return; // Hentikan proses cetakan jika pengguna memilih 'Cancel'
                 }
