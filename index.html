@@ -53,7 +53,7 @@
          display: none;
     }
 
-    /* Gaya untuk Cetakan Sijil (A4 PORTRAIT) - TELAH DIOPTIMALKAN */
+    /* Gaya untuk Cetakan Sijil (A4 PORTRAIT) - TELAH DIOPTIMALKAN UNTUK MUAT SATU HALAMAN */
     @media print {
         
         /* 1. KUNCI UTAMA: Tetapkan saiz halaman kepada A4 PORTRAIT dengan margin yang lebih ketat */
@@ -86,31 +86,35 @@
         #certificate-content {
             box-shadow: none !important;
             border: none !important;
-            /* Saiz untuk A4 Portrait (21.0cm x 29.7cm) - padding diperketat */
+            /* Saiz untuk A4 Portrait (21.0cm x 29.7cm) - padding diperketat lagi */
             min-height: 28.7cm; /* Tinggi penuh A4 (29.7cm - 2*0.5cm margin) */
             width: 20.0cm;      /* Lebar penuh A4 (21.0cm - 2*0.5cm margin) */
-            padding: 1.5cm 1cm !important; /* Padding dikurangkan */
-            font-size: 0.9em; /* Saiz font asas dikurangkan sedikit */
+            padding: 1.0cm 1cm !important; /* Padding dikurangkan lagi dari 1.5cm 1cm */
+            font-size: 0.85em; /* Saiz font asas dikurangkan sedikit lagi */
         }
         
         /* Saiz font diselaraskan untuk muat pada satu halaman A4 Portrait */
         #certificate-content .mx-auto.w-48 { 
-            width: 4cm !important; /* Logo dikurangkan */
+            width: 3.5cm !important; /* Logo dikurangkan */
         } 
         #certificate-content .text-5xl { font-size: 2rem !important; } /* Saiz TP/Skor dikurangkan */
         #certificate-content .text-6xl { font-size: 3rem !important; } /* Saiz Nama dikurangkan */
         #certificate-content .text-4xl { font-size: 1.75rem !important; } /* SIJIL PENGHARGAAN dikurangkan */
-        #certificate-content .text-2xl { font-size: 1.2rem !important; } /* Tajuk Kuiz dikurangkan */
-        #certificate-content .text-lg { font-size: 0.85rem !important; } /* teks biasa dikurangkan */
+        #certificate-content .text-2xl { font-size: 1.1rem !important; } /* Tajuk Kuiz dikurangkan */
+        #certificate-content .text-lg { font-size: 0.8rem !important; } /* teks biasa dikurangkan */
         #certificate-content .text-sm { font-size: 0.75rem !important; } /* teks kecil dikurangkan */
         
         /* Sesuaikan jarak elemen dalam sijil kembali ke ukuran A4 (Jarak Dikurangkan) */
-        #certificate-content .my-4 { margin-top: 0.8rem !important; margin-bottom: 0.8rem !important; }
-        #certificate-content .py-2 { padding-top: 0.5rem !important; padding-bottom: 0.5rem !important; }
-        #certificate-content .pt-4 { padding-top: 0.75rem !important; }
-        #certificate-content .mt-6 { margin-top: 1.2rem !important; }
-        .flex-col .space-y-3 { margin-top: 1.2rem !important; }
-        #certificate-content .w-48.h-auto.mb-1 { width: 3cm !important; } /* Tandatangan dikurangkan */
+        #certificate-content .my-4 { margin-top: 0.6rem !important; margin-bottom: 0.6rem !important; }
+        #certificate-content .py-2 { padding-top: 0.3rem !important; padding-bottom: 0.3rem !important; }
+        #certificate-content .pt-4 { padding-top: 0.5rem !important; }
+        
+        /* TARGET SPACING TANDATANGAN */
+        #certificate-content .mt-4 { margin-top: 0.75rem !important; } /* Override untuk kontena tandatangan */
+        .flex-col .space-y-3 { margin-top: 0.8rem !important; } /* Jarak blok skor/TP dikurangkan */
+        #certificate-content .w-48.h-auto { width: 3cm !important; } /* Tandatangan dikurangkan (mb-1 dikeluarkan dari HTML) */
+        #certificate-content .text-lg.font-bold { margin-top: -0.2rem !important; } /* Tarik nama Mizz ke atas */
+        #certificate-content .text-sm.font-semibold { margin-top: 0.1rem !important; } /* Jarak jawatan */
 
 
         .print\:hidden {
@@ -390,11 +394,13 @@
                     Dikeluarkan pada <span id="cert-date">1 Januari 2024</span>
                 </p>
                 
-                <div class="flex flex-col items-center mt-6">
-                    <img src="https://raw.githubusercontent.com/mizz85/kuiz-bijak-sifir/main/MizzSignature.png" alt="Tandatangan Mizz" class="w-48 h-auto mb-1"> 
-                    <p class="text-lg font-bold text-gray-800">Mizz</p>
+                <!-- BLOK TANDATANGAN - mt-6 ditukar ke mt-4 dan mb-1 dibuang dari imej, dan -mt-1 ditambah pada nama -->
+                <div class="flex flex-col items-center mt-4"> 
+                    <img src="https://raw.githubusercontent.com/mizz85/kuiz-bijak-sifir/main/MizzSignature.png" alt="Tandatangan Mizz" class="w-48 h-auto"> 
+                    <p class="text-lg font-bold text-gray-800 -mt-1">Mizz</p>
                     <p class="text-sm font-semibold text-teal-600">Ketua Projek Pembangunan Bijak Sifir</p>
                 </div>
+                <!-- AKHIR BLOK TANDATANGAN -->
                 </div>
         </div>
         <div id="cert-controls" class="w-full max-w-4xl p-4 mt-4 print:hidden flex flex-col space-y-2">
@@ -1321,4 +1327,7 @@
 </body>
 
 </html>
+
+
+
 
