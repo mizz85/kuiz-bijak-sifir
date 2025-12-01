@@ -104,17 +104,23 @@
         #certificate-content .text-lg { font-size: 0.8rem !important; } /* teks biasa dikurangkan */
         #certificate-content .text-sm { font-size: 0.75rem !important; } /* teks kecil dikurangkan */
         
-        /* Sesuaikan jarak elemen dalam sijil kembali ke ukuran A4 (Jarak Dikurangkan) */
-        #certificate-content .my-4 { margin-top: 0.6rem !important; margin-bottom: 0.6rem !important; }
-        #certificate-content .py-2 { padding-top: 0.3rem !important; padding-bottom: 0.3rem !important; }
-        #certificate-content .pt-4 { padding-top: 0.5rem !important; }
-        
+        /* KAWALAN JARAK MENEGAK YANG LEBIH AGGRESIF */
+        #certificate-content .pt-4 { padding-top: 0.4rem !important; } /* Dikurangkan lagi */
+        #certificate-content .my-4 { margin-top: 0.4rem !important; margin-bottom: 0.4rem !important; } /* Dikurangkan lagi */
+        #certificate-content .py-2 { padding-top: 0.2rem !important; padding-bottom: 0.2rem !important; } /* Dikurangkan lagi */
+        #certificate-content .mt-2 { margin-top: 0.4rem !important; }
+
+        /* TARGET SPACING KELOMPOK SKOR/TP */
+        .flex-col .space-y-3 { 
+            margin-top: 0.6rem !important; /* Dikurangkan dari 0.8rem */
+        } 
+        #certificate-content .mt-6 { margin-top: 1rem !important; } /* Jarak antara tajuk sijil dan skor */
+
         /* TARGET SPACING TANDATANGAN */
-        #certificate-content .mt-4 { margin-top: 0.75rem !important; } /* Override untuk kontena tandatangan */
-        .flex-col .space-y-3 { margin-top: 0.8rem !important; } /* Jarak blok skor/TP dikurangkan */
-        #certificate-content .w-48.h-auto { width: 3cm !important; } /* Tandatangan dikurangkan (mb-1 dikeluarkan dari HTML) */
-        #certificate-content .text-lg.font-bold { margin-top: -0.2rem !important; } /* Tarik nama Mizz ke atas */
-        #certificate-content .text-sm.font-semibold { margin-top: 0.1rem !important; } /* Jarak jawatan */
+        #certificate-content .mt-4 { margin-top: 0.5rem !important; } /* Dikurangkan dari 0.75rem */
+        #certificate-content .w-48.h-auto { width: 3cm !important; } 
+        #certificate-content .text-lg.font-bold { margin-top: -0.2rem !important; } 
+        #certificate-content .text-sm.font-semibold { margin-top: 0.1rem !important; } 
 
 
         .print\:hidden {
@@ -1005,7 +1011,7 @@
             if (currentMode === 'objective') {
                 document.querySelectorAll('.objective-btn').forEach(btn => {
                     const value = parseInt(btn.getAttribute('data-value'));
-                    btn.classList.remove('bg-teal-500', 'hover:bg-teal-600');
+                    btn.classList.remove('bg-teal-500', 'hover:-bg-teal-600');
                     if (value === correctAnswer) {
                         btn.classList.add('bg-pink-600'); 
                     } else if (btn === selectedButton && !isCorrect) {
@@ -1327,7 +1333,4 @@
 </body>
 
 </html>
-
-
-
 
