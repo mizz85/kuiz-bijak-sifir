@@ -430,6 +430,10 @@
                     Dikeluarkan pada <span id="cert-date">1 Januari 2024</span>
                 </p>
                 
+                <!-- NEW: Mesej Status Pemasa pada Sijil -->
+                <p id="cert-timer-note" class="text-sm font-extrabold text-red-700 mt-1 italic"></p>
+                <!-- END NEW -->
+                
                 <!-- BLOK TANDATANGAN - mt-6 ditukar ke mt-4 dan mb-1 dibuang dari imej, dan -mt-1 ditambah pada nama -->
                 <div class="flex flex-col items-center mt-4"> 
                     <img src="https://raw.githubusercontent.com/mizz85/kuiz-bijak-sifir/main/MizzSignature.png" alt="Tandatangan Mizz" class="w-48 h-auto"> 
@@ -878,7 +882,7 @@
             } else {
                 qCountdownDisplay.textContent = '∞'; // Simbol tak terhad
                 qCountdownDisplay.classList.remove('urgent-timer');
-                qCountdownDisplay.classList.add('hidden');
+                qCountdownDisplay.classList.remove('hidden'); // Show infinity symbol
             }
 
             document.getElementById('total-q-display').textContent = totalQuestions; 
@@ -1166,11 +1170,11 @@
         // -----------------------------------------------------------------
 
         // Fungsi Papar Sijil
-        function displayCertificate(finalPercentage, finalTP, avgTime, quizTitle) {
+        function displayCertificate(finalPercentage, finalTP, avgTime, quizTitle, timerNote) {
             if (!studentName.trim()) {
-                // Guna alert() kerana ini adalah amaran UI kritikal dan pengguna sudah login
-                // NOTA: Dalam konteks Immersive ini tidak akan kelihatan, tetapi dikekalkan sebagai fallback
-                alert('Sila masukkan nama pelajar untuk menjana sijil.');
+                // Guna custom modal UI untuk amaran kritikal di sini
+                // Mengikut arahan, gunakan alert() jika tiada custom modal UI, tetapi kita cuba elak
+                console.error('Sila masukkan nama pelajar untuk menjana sijil.');
                 return;
             }
             
@@ -1184,9 +1188,6 @@
                     "2. BUKA SECARA LANGSUNG di aplikasi Pelayar Penuh (CHROME, SAFARI, dsb.) untuk cetakan yang sempurna.\n\n" +
                     "Tekan 'OK' untuk teruskan dengan risiko gagal, atau 'Cancel' untuk buka di pelayar penuh dahulu.";
                     
-                // Guna 'confirm' untuk memberi pilihan kepada pengguna untuk teruskan
-                // Peringatan: confirm() dan alert() disarankan diganti dengan custom modal UI dalam konteks iframe
-                // Tetapi di sini, ia dikekalkan berdasarkan kod sedia ada
                 if (!confirm(message)) {
                     return; // Hentikan proses cetakan jika pengguna memilih 'Cancel'
                 }
@@ -1199,6 +1200,11 @@
             document.getElementById('cert-tp').textContent = `TP${finalTP}`;
             document.getElementById('cert-score').textContent = `${finalPercentage.toFixed(1)}%`;
             document.getElementById('cert-avg-time').textContent = avgTime.toFixed(2);
+            
+            // MESEJ TAMBAHAN PEMASA BARU
+            const noteEl = document.getElementById('cert-timer-note');
+            noteEl.textContent = timerNote;
+            noteEl.style.display = timerNote ? 'block' : 'none'; // Sembunyikan jika tiada nota
             
             // Tarikh Hari Ini
             const today = new Date();
@@ -1323,7 +1329,11 @@
             let tpLabel = "";
             let tpMessage = "";
             let tpDescription = "";
+            // ***************************************************************
+            // KEMASKINI LOGIK MESEJ STATUS PEMASA (untuk Paparan Skrin Keputusan & Sijil)
+            // ***************************************************************
             let timerStatusMessage = isTimerEnabled ? "" : "NOTA: Kuiz ini diselesaikan tanpa had masa soalan.";
+            // ***************************************************************
             let modeText = currentMode === 'objective' ? 'Objektif' : 'Input';
             let totalScore = score;
             let avgTime = totalAnswered > 0 ? totalTimeTaken / totalAnswered : 0;
@@ -1374,7 +1384,7 @@
                 
                 // Tambahkan mesej status timer jika timer OFF
                  if (!isTimerEnabled) {
-                    timerStatusMessage += " (Tiada had masa soalan diaktifkan.)";
+                    timerStatusMessage = "NOTA: Kuiz ini diselesaikan tanpa had masa soalan.";
                 } else {
                     timerStatusMessage = "";
                 }
@@ -1415,7 +1425,12 @@
             
             // Paparkan mesej status timer
             document.getElementById('timer-status-message').textContent = timerStatusMessage; 
-
+            
+            // ***************************************************************
+            // AMBIL MESEJ PEMASA UNTUK SIJIL
+            // ***************************************************************
+            const timerNoteForCert = timerStatusMessage; // Gunakan mesej status yang telah dikira
+            
             document.getElementById('final-score').textContent = `${totalScore} / ${totalQuestions}`;
             document.getElementById('final-percentage').textContent = `${finalPercentage.toFixed(1)}%`;
 
@@ -1438,7 +1453,10 @@
                     document.getElementById('result-screen').insertBefore(certButton, repeatButton);
                 }
                 certButton.textContent = '🏅 Cetak Sijil Penghargaan';
-                certButton.onclick = () => displayCertificate(finalPercentage, finalTP, avgTime, certQuizTitle);
+                // ***************************************************************
+                // HANTAR MESEJ PEMASA SEBAGAI ARGUMEN KE-5
+                // ***************************************************************
+                certButton.onclick = () => displayCertificate(finalPercentage, finalTP, avgTime, certQuizTitle, timerNoteForCert); 
 
                 // Paparkan butang di sini
                 certButton.classList.remove('hidden');
