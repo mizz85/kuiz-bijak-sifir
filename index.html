@@ -1059,11 +1059,12 @@
             // *** KOD AMARAN BARU DI SINI ***
             if (isMobileInAppBrowser()) {
                 const message = 
-                    "⚠️ PERHATIAN: Anda mungkin menggunakan Pelayar Dalaman (seperti dalam WhatsApp, Facebook, dsb.). " +
-                    "Sila SALIN PAUTAN INI dan BUKA SECARA LANGSUNG di aplikasi Pelayar Penuh " +
-                    "(Contoh: CHROME, SAFARI, FIREFOX, EDGE) untuk " +
-                    "mencetak/menyimpan sijil sebagai PDF dengan lancar. " +
-                    "Jika anda teruskan, terdapat risiko sijil gagal dicetak/disimpan.";
+                    "⚠️ PERHATIAN PENTING: Anda mungkin menggunakan Pelayar Dalaman (seperti dalam WhatsApp, Facebook, dsb.).\n\n" +
+                    "Proses mencetak atau menyimpan sijil sebagai PDF sering GAGAL dalam pelayar ini.\n\n" +
+                    "TINDAKAN DISYORKAN:\n" +
+                    "1. Sila SALIN pautan kuiz ini.\n" +
+                    "2. BUKA SECARA LANGSUNG di aplikasi Pelayar Penuh (CHROME, SAFARI, dsb.) untuk cetakan yang sempurna.\n\n" +
+                    "Tekan 'OK' untuk teruskan dengan risiko gagal, atau 'Cancel' untuk buka di pelayar penuh dahulu.";
                     
                 // Guna 'confirm' untuk memberi pilihan kepada pengguna untuk teruskan
                 if (!confirm(message)) {
