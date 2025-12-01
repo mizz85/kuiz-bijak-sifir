@@ -179,6 +179,18 @@
                     <p id="current-name-display" class="text-xs text-gray-600 italic mt-1 text-center"></p>
                 </div>
 
+                <!-- KAWALAN SUIS MASA BARU -->
+                <div class="flex items-center justify-between p-3 bg-gray-100 rounded-lg border border-gray-300">
+                    <label for="timer-toggle" class="text-sm font-black text-gray-700">
+                        ⏱️ Pemasa Soalan (Hidup/Mati)
+                    </label>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" id="timer-toggle" class="sr-only peer" checked>
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-pink-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-pink-500"></div>
+                    </label>
+                </div>
+                <!-- AKHIR KAWALAN SUIS MASA BARU -->
+                
                 <!-- KAWALAN SUIS AUDIO DIPISAHKAN -->
                 <div class="flex items-center justify-between p-3 bg-gray-100 rounded-lg border border-gray-300">
                     <label for="tone-toggle" class="text-sm font-black text-gray-700">
@@ -352,6 +364,7 @@
                     <p>✅ Jawapan Betul: <span id="correct-count" class="font-bold text-lime-600"></span></p>
                     <p>❌ Jawapan Salah: <span id="incorrect-count" class="font-bold text-red-600"></span></p>
                     <p>⏱️ Purata Masa Tindak Balas: <span id="average-time" class="font-bold"></span> saat</p>
+                    <p id="timer-status-message" class="text-xs italic text-gray-500"></p>
                 </div>
                 
                 <button onclick="startNewQuizSelection()" class="w-full bg-pink-500 hover:bg-pink-600 text-white font-black text-base py-3 rounded-lg transition duration-150 shadow-lg hover:shadow-xl mt-3">
@@ -421,7 +434,7 @@
 
     <script>
         // Global State Variables
-        const QUIZ_DURATION = 250;     
+        const QUIZ_DURATION = 999999; // Set ke nilai yang sangat tinggi (praktikalnya 'infinite')
         const CORRECT_PASSWORD = 'KuizSifir5973';
         
         let audioContext = null;
@@ -431,9 +444,10 @@
         let isCombinedQuiz = true; 
         let questionDuration = 7; 
 
-        // STATE AUDIO DIPISAHKAN
-        let isToneEnabled = true; // Untuk nada (bunyi)
-        let isTTSEnabled = true;  // Untuk suara (Teks-ke-Ucapan)
+        // STATE BARU UNTUK MASA & AUDIO DIPISAHKAN
+        let isTimerEnabled = true; // NEW: Untuk pemasa soalan (default: ON)
+        let isToneEnabled = true;  // Untuk nada (bunyi)
+        let isTTSEnabled = true;   // Untuk suara (Teks-ke-Ucapan)
 
         let questions = [];
         let currentQIndex = 0;
@@ -447,6 +461,7 @@
         
         let studentName = '';
         const STORAGE_KEY_NAME = 'student_name_sifir'; 
+        const STORAGE_KEY_TIMER = 'is_timer_enabled'; // NEW: Kunci untuk status pemasa
         const STORAGE_KEY_TONE = 'is_tone_enabled';
         const STORAGE_KEY_TTS = 'is_tts_enabled';
 
@@ -463,6 +478,13 @@
                  document.getElementById('current-name-display').textContent = `Nama belum disimpan.`;
             }
             
+            // Muatkan State Timer (Masa)
+            const storedTimer = localStorage.getItem(STORAGE_KEY_TIMER);
+            if (storedTimer !== null) {
+                isTimerEnabled = storedTimer === 'true';
+            }
+            document.getElementById('timer-toggle').checked = isTimerEnabled; // NEW: Set toggle state
+
             // Muatkan State Tone/Bunyi
             const storedTone = localStorage.getItem(STORAGE_KEY_TONE);
             if (storedTone !== null) {
@@ -499,10 +521,19 @@
         
         // --- Akhir Logik Local Storage ---
 
-        // Logik Togol Audio
+        // Logik Togol Audio & Timer
         document.addEventListener('DOMContentLoaded', () => {
             const toneToggle = document.getElementById('tone-toggle');
             const ttsToggle = document.getElementById('tts-toggle');
+            const timerToggle = document.getElementById('timer-toggle'); // NEW: Timer toggle
+
+            // NEW: Listener untuk Timer Toggle
+            if (timerToggle) {
+                 timerToggle.addEventListener('change', (event) => {
+                    isTimerEnabled = event.target.checked;
+                    localStorage.setItem(STORAGE_KEY_TIMER, isTimerEnabled);
+                });
+            }
 
             if (toneToggle) {
                 toneToggle.addEventListener('change', (event) => {
@@ -631,7 +662,8 @@
             if (!isToneEnabled) return; // SEMAKAN TONE/BUNYI
             if (warningBeepInterval) return;
             warningBeepInterval = setInterval(() => {
-                if (qTimeLeft <= 3 && qTimeLeft > 0) { 
+                // Hanya bip jika pemasa dihidupkan
+                if (isTimerEnabled && qTimeLeft <= 3 && qTimeLeft > 0) { 
                    playWarningBeep();
                 }
             }, 500);
@@ -779,8 +811,11 @@
             // Tentukan jenis kuiz untuk logik TP
             isCombinedQuiz = (currentSifir === 0);
             
-            // Tentukan Masa Soalan
-            if (isCombinedQuiz) {
+            // Tentukan Masa Soalan berdasarkan pilihan togol
+            if (!isTimerEnabled) {
+                // Jika timer dimatikan, tetapkan masa yang sangat panjang
+                questionDuration = 9999; 
+            } else if (isCombinedQuiz) {
                 // Kuiz Gabungan 50 soalan (Objektif 7s / Input 10s)
                 questionDuration = (currentMode === 'input') ? 10 : 7; 
             } else if (currentMode === 'input') {
@@ -801,7 +836,18 @@
             hentikanTimer(); 
 
             document.getElementById('progress-bar').style.width = `0%`;
-            document.getElementById('q-countdown-display').textContent = `${questionDuration}s`; 
+            
+            // NEW: Hide timer display if timer is disabled
+            const qCountdownDisplay = document.getElementById('q-countdown-display');
+            if (isTimerEnabled) {
+                qCountdownDisplay.textContent = `${questionDuration}s`; 
+                qCountdownDisplay.classList.remove('hidden');
+            } else {
+                qCountdownDisplay.textContent = '∞'; // Simbol tak terhad
+                qCountdownDisplay.classList.remove('urgent-timer');
+                qCountdownDisplay.classList.add('hidden');
+            }
+
             document.getElementById('total-q-display').textContent = totalQuestions; 
 
             showScreen('quiz-screen');
@@ -821,8 +867,12 @@
 
             mulakanTotalTimer();
 
-            speakMalay(`Jom mulakan Kuiz Sifir! Anda ada ${questionDuration} saat untuk setiap soalan.`);
-
+            if (isTimerEnabled) {
+                speakMalay(`Jom mulakan Kuiz Sifir! Anda ada ${questionDuration} saat untuk setiap soalan.`);
+            } else {
+                 speakMalay(`Jom mulakan Kuiz Sifir tanpa had masa!`);
+            }
+            
             paparSoalan();
         }
         
@@ -884,6 +934,12 @@
         // --- Pengurusan Masa Soalan (Countdown) ---
 
         function mulakanQuestionTimer() {
+            if (!isTimerEnabled) {
+                // Jangan mulakan timer jika dimatikan
+                return; 
+            }
+            
+            // Logik Timer asal jika dihidupkan
             qTimeLeft = questionDuration; 
             const displayEl = document.getElementById('q-countdown-display');
             displayEl.textContent = `${qTimeLeft}s`;
@@ -926,7 +982,13 @@
                 const now = performance.now();
                 totalTimeElapsed = (now - initialTime) / 1000;
                
-                if (totalTimeElapsed >= QUIZ_DURATION) {
+                // Jika isTimerEnabled, gunakan QUIZ_DURATION asal, jika tidak, guna had yang sangat tinggi
+                const maxDuration = isTimerEnabled ? QUIZ_DURATION : 999999;
+                
+                if (totalTimeElapsed >= maxDuration) {
+                    // Hanya tamatkan kuiz jika had masa keseluruhan (jika ditetapkan) tercapai.
+                    // Dalam kes ini, QUIZ_DURATION diubah kepada 999999 jadi ia tidak akan tamat.
+                    // Namun logik ini dikekalkan untuk keselamatan.
                     tamatkanKuiz(true); 
                 }
             }, 100); 
@@ -984,7 +1046,8 @@
             
             const q = questions[currentQIndex];
             
-            const timeTaken = isTimeout ? questionDuration : (questionDuration - qTimeLeft); 
+            // Jika timer OFF, masa diambil adalah 0 (atau sangat kecil, diabaikan)
+            const timeTaken = isTimeout || !isTimerEnabled ? (isTimerEnabled ? questionDuration : 0.01) : (questionDuration - qTimeLeft); 
             q.time = timeTaken; 
             q.answered = true;
 
@@ -1146,8 +1209,11 @@
             let tpDescription = "Tahu fakta asas sifir, tetapi peratusan jawapan betul kurang daripada 60%. Murid memerlukan bimbingan intensif dan ulangkaji konsep.";
             
             const finalPercentage = (accuracy * 100);
-            const avgTime = totalAnswered > 0 ? timeElapsed / totalAnswered : 999;
-            const durationLimit = currentMode === 'input' ? 10 : 7; // Had masa soalan 7s/10s
+            
+            // Jika timer dimatikan, purata masa ditetapkan kepada 0.01s (untuk logik pengiraan)
+            const avgTime = totalAnswered > 0 ? timeElapsed / totalAnswered : 999; 
+            
+            const durationLimit = currentMode === 'input' ? 10 : 7; // Had masa soalan 7s/10s (standard)
             
             // Kriteria Kelajuan (Berbanding had 7s/10s)
             const veryFast = durationLimit * 0.5; // Contoh: 3.5s (Objektif) atau 5.0s (Input)
@@ -1175,26 +1241,34 @@
                  finalTP = 1;
                  // Penerangan TP1 sudah ditetapkan di atas
             }
-
-            // === Penyesuaian TP 4, 5, 6 (Berpandukan TP3 Tepat/Asas dan Kelajuan) ===
-            if (finalPercentage >= 90) { // Hanya tingkatkan TP jika TP3 Tepat dicapai
-                 if (avgTime <= veryFast && finalPercentage >= 98) { // Sangat Pantas & Hampir Sempurna (49-50 Betul)
-                    finalTP = 6;
-                    tpLabel = "Cemerlang & Sangat Pantas (Fluent)";
-                    tpDescription = `Menguasai sifir dengan cermat, tepat (skor 98%+), cekap, dan **sangat pantas** (Purata Masa **< ${veryFast.toFixed(1)}s**). SANGAT DISYORKAN UNTUK LATIHAN LANJUTAN!`;
-                } else if (avgTime <= veryFast) { // Pantas & Tepat
-                    finalTP = 5;
-                    tpLabel = "Sangat Mahir & Pantas";
-                    tpDescription = `Melaksanakan kemahiran sifir dengan cermat, tepat (skor 90%+), cekap, dan **pantas** (Purata Masa **< ${veryFast.toFixed(1)}s**). Boleh beralih ke kuiz yang lebih kompleks.`;
-                } else if (avgTime <= fast) { // Cekap Masa (Selesai dalam had)
-                    finalTP = 4;
-                    tpLabel = "Mahir & Cekap Masa";
-                    tpDescription = `Melaksanakan kemahiran sifir dengan cekap dan tepat dalam had masa kuiz (Purata Masa **< ${fast.toFixed(1)}s**).`;
+            
+            // Jika pemasa dimatikan, maks TP adalah TP3, tanpa kira kelajuan.
+            if (isTimerEnabled) {
+                // === Penyesuaian TP 4, 5, 6 (Berpandukan TP3 Tepat/Asas dan Kelajuan) ===
+                if (finalPercentage >= 90) { // Hanya tingkatkan TP jika TP3 Tepat dicapai
+                     if (avgTime <= veryFast && finalPercentage >= 98) { // Sangat Pantas & Hampir Sempurna (49-50 Betul)
+                        finalTP = 6;
+                        tpLabel = "Cemerlang & Sangat Pantas (Fluent)";
+                        tpDescription = `Menguasai sifir dengan cermat, tepat (skor 98%+), cekap, dan **sangat pantas** (Purata Masa **< ${veryFast.toFixed(1)}s**). SANGAT DISYORKAN UNTUK LATIHAN LANJUTAN!`;
+                    } else if (avgTime <= veryFast) { // Pantas & Tepat
+                        finalTP = 5;
+                        tpLabel = "Sangat Mahir & Pantas";
+                        tpDescription = `Melaksanakan kemahiran sifir dengan cermat, tepat (skor 90%+), cekap, dan **pantas** (Purata Masa **< ${veryFast.toFixed(1)}s**). Boleh beralih ke kuiz yang lebih kompleks.`;
+                    } else if (avgTime <= fast) { // Cekap Masa (Selesai dalam had)
+                        finalTP = 4;
+                        tpLabel = "Mahir & Cekap Masa";
+                        tpDescription = `Melaksanakan kemahiran sifir dengan cekap dan tepat dalam had masa kuiz (Purata Masa **< ${fast.toFixed(1)}s**).`;
+                    }
+                    // Jika peratusan 90%+ tetapi masa purata > fast, ia kekal di TP3 Tepat.
+                } else if (finalPercentage >= 80 && avgTime <= fast) {
+                     // Jika 80-89% dan cekap masa, ia kekal di TP3 Asas.
+                     finalTP = 3; 
                 }
-                // Jika peratusan 90%+ tetapi masa purata > fast, ia kekal di TP3 Tepat.
-            } else if (finalPercentage >= 80 && avgTime <= fast) {
-                 // Jika 80-89% dan cekap masa, ia kekal di TP3 Asas.
-                 finalTP = 3; 
+            } else if (finalTP > 3) {
+                 // Jika timer OFF, hadkan TP maksimum kepada 3, tanpa mengira markah 100%
+                 finalTP = 3;
+                 tpLabel = "Boleh Buat (Tepat, Tanpa Masa)";
+                 tpDescription = `Skor 90% ke atas. Murid boleh mengira fakta sifir dengan **tepat** dan **konsisten** tetapi kuiz dijalankan **tanpa had masa** soalan.`;
             }
             
             return { finalTP, tpLabel, tpDescription, avgTime };
@@ -1216,6 +1290,7 @@
             let tpLabel = "";
             let tpMessage = "";
             let tpDescription = "";
+            let timerStatusMessage = isTimerEnabled ? "" : "NOTA: Kuiz ini diselesaikan tanpa had masa soalan.";
             let modeText = currentMode === 'objective' ? 'Objektif' : 'Input';
             let totalScore = score;
             let avgTime = totalAnswered > 0 ? totalTimeTaken / totalAnswered : 0;
@@ -1264,6 +1339,13 @@
                     tpMessage = `❌ Had Masa Kuiz ${modeText} Tamat.`;
                 }
                 
+                // Tambahkan mesej status timer jika timer OFF
+                 if (!isTimerEnabled) {
+                    timerStatusMessage += " (Tiada had masa soalan diaktifkan.)";
+                } else {
+                    timerStatusMessage = "";
+                }
+                
                 announceResults(totalScore, finalTP, tpLabel);
 
             } else {
@@ -1297,6 +1379,9 @@
             } else {
                  document.getElementById('main-tp-message').textContent = tpMessage; // Mesej keputusan sahaja untuk sifir tunggal
             }
+            
+            // Paparkan mesej status timer
+            document.getElementById('timer-status-message').textContent = timerStatusMessage; 
 
             document.getElementById('final-score').textContent = `${totalScore} / ${totalQuestions}`;
             document.getElementById('final-percentage').textContent = `${finalPercentage.toFixed(1)}%`;
@@ -1309,7 +1394,8 @@
             const certButtonId = 'print-certificate-button';
             let certButton = document.getElementById(certButtonId);
             
-            if (isCombinedQuiz && !isTotalTimeout) { 
+            // Hanya benarkan sijil jika kuiz gabungan, bukan tamat masa, dan TP > 0
+            if (isCombinedQuiz && !isTotalTimeout && finalTP > 0) { 
                 if (!certButton) {
                     // Tambah butang jika belum wujud (diletakkan sebelum butang Ulang Kuiz)
                     certButton = document.createElement('button');
@@ -1324,7 +1410,7 @@
                 // Paparkan butang di sini
                 certButton.classList.remove('hidden');
             } else if (certButton) {
-                // Sembunyikan butang jika bukan kuiz gabungan atau tamat masa
+                // Sembunyikan butang jika tidak layak
                  certButton.classList.add('hidden');
             }
             // END NEW: Logik Butang Cetak Sijil
