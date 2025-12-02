@@ -222,7 +222,7 @@
                         <span id="tts-arrow" class="ml-2">▼</span>
                     </button>
                     <div id="tts-note-content" class="text-xs italic text-red-700 p-2 text-left bg-red-50 rounded-lg border-x border-b border-red-300 hidden -mt-2">
-                        Kualiti fungsi suara bergantung pada pelayar (Chrome, dsb.) dan peranti yang digunakan. Jika suara TTS tidak seperti penutur Melayu yang fasih, anda disyorkan untuk <b>MATIKAN SUARA</b> (Off) bagi mengelakkan gangguan konsentrasi atau fokus.
+                        Kualiti fungsi suara bergantung pada pelayar (Chrome, dsb.) dan peranti yang digunakan. Jika suara TTS tidak seperti penutur Melayu yang fasih, anda disyorkan untuk **MATIKAN SUARA** (Off) bagi mengelakkan gangguan konsentrasi atau fokus.
                     </div>
                 </div>
                 <!-- AKHIR NOTA MENGENAI TTS (DROPDOWN) -->
@@ -236,7 +236,7 @@
                         <span id="cert-arrow" class="ml-2">▼</span>
                     </button>
                     <div id="cert-note-content" class="text-xs italic text-blue-700 p-2 text-left bg-blue-50 rounded-lg border-x border-b border-blue-300 hidden -mt-2">
-                        Untuk memastikan fungsi 'Cetak/Simpan PDF Sijil' berjaya, sila buka pautan kuiz ini <b>secara langsung</b> di Pelayar Penuh (Chrome/Safari) dan <b>BUKAN</b> Pelayar Dalaman (In-App Browser) seperti dalam WhatsApp atau Facebook.
+                        Untuk memastikan fungsi 'Cetak/Simpan PDF Sijil' berjaya, sila buka pautan kuiz ini **secara langsung** di Pelayar Penuh (Chrome/Safari) dan **BUKAN** Pelayar Dalaman (In-App Browser) seperti dalam WhatsApp atau Facebook.
                     </div>
                 </div>
                 <!-- AKHIR NOTA BARU MENGENAI CETAK SIJIL (DROPDOWN) -->
@@ -456,7 +456,7 @@
     <script>
         // Global State Variables
         const QUIZ_DURATION = 999999; // Set ke nilai yang sangat tinggi (praktikalnya 'infinite')
-        const CORRECT_PASSWORD = 'bijaksifir25';
+        const CORRECT_PASSWORD = 'KuizSifir5973';
         
         let audioContext = null;
         let currentSifir = 0;
@@ -1264,12 +1264,12 @@
                  // 90% - 100% (45-50 soalan betul)
                  finalTP = 3;
                  tpLabel = "Boleh Buat (Tepat)";
-                 tpDescription = `Skor di antara 90% - 100% jawapan betul. Murid boleh mengira fakta sifir dengan <b>tepat</b> dan <b>konsisten</b> dalam situasi rutin.`;
+                 tpDescription = `Skor di antara 90% - 100% jawapan betul. Murid boleh mengira fakta sifir dengan **tepat** dan **konsisten** dalam situasi rutin.`;
             } else if (finalPercentage >= 80) {
                  // 80% - 89% (40-44 soalan betul)
                  finalTP = 3;
                  tpLabel = "Boleh Buat (Asas)";
-                 tpDescription = `Skor di antara 80% - 89% jawapan betul. Murid boleh mengira fakta sifir dengan <b>tepat</b> tetapi mungkin masih lambat sedikit.`;
+                 tpDescription = `Skor di antara 80% - 89% jawapan betul. Murid boleh mengira fakta sifir dengan **tepat** tetapi mungkin masih lambat sedikit.`;
             } else if (finalPercentage >= 60) {
                  // 60% - 79%
                  finalTP = 2;
@@ -1288,11 +1288,11 @@
                      if (avgTime <= veryFast && finalPercentage >= 98) { // Sangat Pantas & Hampir Sempurna (49-50 Betul)
                         finalTP = 6;
                         tpLabel = "Cemerlang & Sangat Pantas (Fluent)";
-                        tpDescription = `Menguasai sifir dengan cermat, tepat (skor 98%+), cekap, dan <b>sangat pantas</b> (Purata Masa **< ${veryFast.toFixed(1)}s**). SANGAT DISYORKAN UNTUK LATIHAN LANJUTAN!`;
+                        tpDescription = `Menguasai sifir dengan cermat, tepat (skor 98%+), cekap, dan **sangat pantas** (Purata Masa **< ${veryFast.toFixed(1)}s**). SANGAT DISYORKAN UNTUK LATIHAN LANJUTAN!`;
                     } else if (avgTime <= veryFast) { // Pantas & Tepat
                         finalTP = 5;
                         tpLabel = "Sangat Mahir & Pantas";
-                        tpDescription = `Melaksanakan kemahiran sifir dengan cermat, tepat (skor 90%+), cekap, dan <b>pantas</b> (Purata Masa **< ${veryFast.toFixed(1)}s**). Boleh beralih ke kuiz yang lebih kompleks.`;
+                        tpDescription = `Melaksanakan kemahiran sifir dengan cermat, tepat (skor 90%+), cekap, dan **pantas** (Purata Masa **< ${veryFast.toFixed(1)}s**). Boleh beralih ke kuiz yang lebih kompleks.`;
                     } else if (avgTime <= fast) { // Cekap Masa (Selesai dalam had)
                         finalTP = 4;
                         tpLabel = "Mahir & Cekap Masa";
@@ -1307,8 +1307,8 @@
                  // Jika timer OFF, hadkan TP maksimum kepada 3, tanpa mengira markah 100%
                  finalTP = 3;
                  tpLabel = "Boleh Buat (Tepat, Tanpa Masa)";
-                 tpDescription = `Skor 90% ke atas. Murid boleh mengira fakta sifir dengan <b>tepat</b> dan <b>konsisten</b> tetapi kuiz dijalankan tanpa had <b>masa</b> soalan.`;
-		
+                 tpDescription = `Skor 90% ke atas. Murid boleh mengira fakta sifir dengan **tepat** dan **konsisten** tetapi kuiz dijalankan **tanpa had masa** soalan.`;
+            }
             
             return { finalTP, tpLabel, tpDescription, avgTime };
         }
@@ -1470,5 +1470,4 @@
 </body>
 
 </html>
-
 
