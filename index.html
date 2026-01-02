@@ -18,7 +18,6 @@
     .dark-mode .bg-gray-100 { background-color: #4a5568; }
     .dark-mode .bg-teal-50 { background-color: #283637; }
     .dark-mode .text-gray-600, .dark-mode .text-gray-700 { color: #cbd5e0 !important; }
-    .dark-mode select { background-color: #4a5568; color: white; border-color: #f472b6; }
     
     /* FIX: Pastikan teks input (nama pelajar) kekal hitam dalam mod gelap supaya nampak jelas */
     .dark-mode input { color: #1a202c !important; }
@@ -227,7 +226,7 @@
                         📄 Nota Cetak Sijil (Klik untuk baca)
                         <span id="cert-arrow" class="ml-2">▼</span>
                     </button>
-                    <div id="cert-note-content" class="text-xs italic text-blue-700 p-2 text-left bg-blue-50 rounded-lg border-x border-b border-blue-300 hidden -mt-2">
+                    <div id="cert-note-content" class="text-xs italic text-blue-700 p-2 text-left bg-blue-50 rounded-lg border-x border-b border-red-300 hidden -mt-2">
                         Untuk memastikan fungsi 'Cetak/Simpan PDF Sijil' berjaya, sila buka pautan kuiz ini **secara langsung** di Pelayar Penuh (Chrome/Safari) dan **BUKAN** Pelayar Dalaman (In-App Browser) seperti dalam WhatsApp atau Facebook.
                     </div>
                 </div>
@@ -598,7 +597,7 @@
                 return;
             }
             
-            window.speechSynthesis.cancel();
+            // window.speechSynthesis.cancel(); // Dibuang untuk elak cancel soalan pertama
 
             try {
                 const utterance = new SpeechSynthesisUtterance(textToRead);
@@ -786,11 +785,8 @@
                 return;
             }
             
-            // FIX: Aktifkan Audio Context & Mainkan TTS mula kuiz
             initAudio();
-            setTimeout(() => {
-                speakMalay("jom mulakan kuiz sifir");
-            }, 50);
+            speakMalay("Jom Mula");
 
             const selectionValue = document.getElementById('sifir-pilihan').value;
             const parts = selectionValue.split('-');
@@ -816,8 +812,13 @@
             document.getElementById('total-q-display').textContent = totalQuestions;
             
             showScreen('quiz-screen');
-            loadQuestion();
-            startTotalTimer();
+            
+            // FIX: Tambah delay 1000ms (1 saat) supaya ayat "Jom Mula" sempat keluar 
+            // sebelum soalan pertama disebut.
+            setTimeout(() => {
+                loadQuestion();
+                startTotalTimer();
+            }, 1000);
         }
 
         function loadQuestion() {
