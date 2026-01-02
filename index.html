@@ -946,15 +946,15 @@
                 speakMalay(correctAnswersPhrases[phraseIndex]);
                 phraseIndex = (phraseIndex + 1) % correctAnswersPhrases.length; 
                 
-                setTimeout(nextQuestion, 2225); 
+                setTimeout(nextQuestion, 3000); 
             } else {
                 feedback.textContent = `Salah! Jawapan: ${correct} ❌`;
                 feedback.className = 'h-6 text-sm font-semibold text-red-600';
                 playIncorrectSound();
                 speakMalay(`Salah! Jawapan adalah ${correct}`);
                 
-                // KEKALKAN DELAY 4 SAAT UNTUK JAWAPAN SALAH
-                setTimeout(nextQuestion, 4000); 
+                // KEKALKAN DELAY 5 SAAT UNTUK JAWAPAN SALAH
+                setTimeout(nextQuestion, 5000); 
             }
         }
 
@@ -1116,3 +1116,4 @@
     </script>
 </body>
 </html>
+
