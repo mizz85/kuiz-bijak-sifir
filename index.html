@@ -179,7 +179,6 @@
                     <p id="current-name-display" class="text-xs text-gray-600 italic mt-1 text-center"></p>
                 </div>
 
-                <!-- KAWALAN SUIS MASA BARU -->
                 <div class="flex items-center justify-between p-3 bg-gray-100 rounded-lg border border-gray-300">
                     <label for="timer-toggle" class="text-sm font-black text-gray-700">
                         ⏱️ Pemasa Soalan (Hidup/Mati)
@@ -189,9 +188,6 @@
                         <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-pink-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-pink-500"></div>
                     </label>
                 </div>
-                <!-- AKHIR KAWALAN SUIS MASA BARU -->
-                
-                <!-- KAWALAN SUIS AUDIO DIPISAHKAN -->
                 <div class="flex items-center justify-between p-3 bg-gray-100 rounded-lg border border-gray-300">
                     <label for="tone-toggle" class="text-sm font-black text-gray-700">
                         🔔 Audio Bunyi (Nada Betul/Salah & Bip Amaran)
@@ -211,9 +207,6 @@
                         <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-pink-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-pink-500"></div>
                     </label>
                 </div>
-                <!-- AKHIR KAWALAN SUIS AUDIO DIPISAHKAN -->
-                
-                <!-- NOTA MENGENAI TTS (DROPDOWN) - DIKEMASKINI -->
                 <div class="mt-2">
                     <button 
                         onclick="toggleNote('tts-note-content')" 
@@ -225,9 +218,6 @@
                         Kualiti fungsi suara bergantung pada pelayar (Chrome, dsb.) dan peranti yang digunakan. Jika suara TTS tidak seperti penutur Melayu yang fasih, anda disyorkan untuk **MATIKAN SUARA** (Off) bagi mengelakkan gangguan konsentrasi atau fokus.
                     </div>
                 </div>
-                <!-- AKHIR NOTA MENGENAI TTS (DROPDOWN) -->
-                
-                <!-- NOTA BARU MENGENAI CETAK SIJIL (DROPDOWN) - DIKEMASKINI -->
                 <div class="mt-2">
                     <button 
                         onclick="toggleNote('cert-note-content')" 
@@ -239,8 +229,6 @@
                         Untuk memastikan fungsi 'Cetak/Simpan PDF Sijil' berjaya, sila buka pautan kuiz ini **secara langsung** di Pelayar Penuh (Chrome/Safari) dan **BUKAN** Pelayar Dalaman (In-App Browser) seperti dalam WhatsApp atau Facebook.
                     </div>
                 </div>
-                <!-- AKHIR NOTA BARU MENGENAI CETAK SIJIL (DROPDOWN) -->
-                
                 <p class="text-gray-600 text-center text-sm">
                     Sila pilih jenis kuiz dan sifir yang ingin diuji.
                 </p>
@@ -278,7 +266,6 @@
                     </select>
                 </div>
                 
-                <!-- NEW: PROMOTION LINK - WARNA BUTANG BBM DIUBAH KEPADA UNGU -->
                 <div class="mt-4 p-4 bg-purple-100 rounded-lg border-2 border-purple-500 shadow-md transition duration-300 hover:bg-purple-200">
                     <p class="text-sm font-extrabold text-purple-800 mb-1 text-center">
                         📚 Ulangkaji Sifir & Bantuan Mengajar?
@@ -287,8 +274,6 @@
                         Klik Sini untuk Dapatkan BBM Digital Mizz!
                     </a>
                 </div>
-                <!-- END NEW: PROMOTION LINK -->
-
                 <button onclick="startQuizFlow()" id="start-button" class="w-full bg-pink-500 hover:bg-pink-600 text-white font-black text-base py-3 rounded-lg transition duration-150 shadow-lg hover:shadow-xl">
                     Mulakan Kuiz
                 </button>
@@ -430,17 +415,12 @@
                     Dikeluarkan pada <span id="cert-date">1 Januari 2024</span>
                 </p>
                 
-                <!-- NEW: Mesej Status Pemasa pada Sijil -->
                 <p id="cert-timer-note" class="text-sm font-extrabold text-red-700 mt-1 italic"></p>
-                <!-- END NEW -->
-                
-                <!-- BLOK TANDATANGAN - mt-6 ditukar ke mt-4 dan mb-1 dibuang dari imej, dan -mt-1 ditambah pada nama -->
                 <div class="flex flex-col items-center mt-4"> 
                     <img src="https://raw.githubusercontent.com/mizz85/kuiz-bijak-sifir/main/MizzSignature.png" alt="Tandatangan Mizz" class="w-48 h-auto"> 
                     <p class="text-lg font-bold text-gray-800 -mt-1">Mizz</p>
                     <p class="text-sm font-semibold text-teal-600">Ketua Projek Pembangunan Bijak Sifir</p>
                 </div>
-                <!-- AKHIR BLOK TANDATANGAN -->
                 </div>
         </div>
         <div id="cert-controls" class="w-full max-w-4xl p-4 mt-4 print:hidden flex flex-col space-y-2">
@@ -456,7 +436,7 @@
     <script>
         // Global State Variables
         const QUIZ_DURATION = 999999; // Set ke nilai yang sangat tinggi (praktikalnya 'infinite')
-        const CORRECT_PASSWORD = 'KuizSifir5973';
+        const CORRECT_PASSWORD = '2darab5=10';
         
         let audioContext = null;
         let currentSifir = 0;
@@ -581,9 +561,9 @@
                     }
                 });
             }
-            
+
             if (ttsToggle) {
-                 ttsToggle.addEventListener('change', (event) => {
+                ttsToggle.addEventListener('change', (event) => {
                     isTTSEnabled = event.target.checked;
                     localStorage.setItem(STORAGE_KEY_TTS, isTTSEnabled);
                     if (!isTTSEnabled) {
@@ -622,12 +602,13 @@
                 console.error("Pelayar tidak menyokong Web Speech API.");
                 return;
             }
-            window.speechSynthesis.cancel();
             
+            window.speechSynthesis.cancel();
+
             try {
                 const utterance = new SpeechSynthesisUtterance(textToRead);
                 utterance.lang = 'ms-MY';
-                utterance.rate = 1.0; 
+                utterance.rate = 1.0;
 
                 const voices = window.speechSynthesis.getVoices();
                 let malayVoice = voices.find(voice => 
@@ -643,9 +624,8 @@
                 }
 
                 window.speechSynthesis.speak(utterance);
-
             } catch (error) {
-                 console.error("Ralat TTS: Audio gagal dimainkan.", error);
+                console.error("Ralat TTS: Audio gagal dimainkan.", error);
             }
         }
 
@@ -658,37 +638,38 @@
                 }
             }
         }
-        
+
         document.getElementById('login-button').addEventListener('click', initAudio, { once: true });
         document.getElementById('password-input').addEventListener('keydown', (event) => {
             if (event.key === 'Enter') initAudio();
         }, { once: true });
 
-
         function playTone(frequency, duration, type = 'sine') {
             initAudio();
             if (!audioContext || !isToneEnabled) return; // SEMAKAN TONE/BUNYI
+
             const oscillator = audioContext.createOscillator();
             const gainNode = audioContext.createGain();
+
             oscillator.connect(gainNode);
             gainNode.connect(audioContext.destination);
-            
+
             oscillator.type = type;
             gainNode.gain.setValueAtTime(0.5, audioContext.currentTime);
             gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + duration);
-            
+
             oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
-            
+
             oscillator.start();
             oscillator.stop(audioContext.currentTime + duration);
         }
 
         function playCorrectSound() {
-            playTone(880, 0.15, 'sine'); 
+            playTone(880, 0.15, 'sine');
         }
 
         function playIncorrectSound() {
-            playTone(220, 0.3, 'triangle'); 
+            playTone(220, 0.3, 'triangle');
         }
 
         function playWarningBeep() {
@@ -698,10 +679,11 @@
         function startWarningBeeps() {
             if (!isToneEnabled) return; // SEMAKAN TONE/BUNYI
             if (warningBeepInterval) return;
+            
             warningBeepInterval = setInterval(() => {
                 // Hanya bip jika pemasa dihidupkan
-                if (isTimerEnabled && qTimeLeft <= 3 && qTimeLeft > 0) { 
-                   playWarningBeep();
+                if (isTimerEnabled && qTimeLeft <= 3 && qTimeLeft > 0) {
+                    playWarningBeep();
                 }
             }, 500);
         }
@@ -712,8 +694,8 @@
                 warningBeepInterval = null;
             }
         }
+
         // -----------------------------------------------------------------
-        
         // FUNGSI BARU: PENGESAN PELAYAR DALAMAN
         function isMobileInAppBrowser() {
             const ua = navigator.userAgent || navigator.vendor || window.opera;
@@ -724,11 +706,10 @@
             // Mengesan pelayar utama (Chrome, Safari, Firefox, Edge)
             const isMajorBrowser = /Chrome|Safari|Firefox|Edg/i.test(ua) && !/wv/i.test(ua);
             
-            // Anggap sebagai Pelayar Dalaman jika mengandungi tag In-App ATAU 
+            // Anggap sebagai Pelayar Dalaman jika mengandungi tag In-App ATAU
             // jika ia peranti Mobile tetapi bukan pelayar utama yang dijangka.
             return isInApp || (!isMajorBrowser && /Mobile/i.test(ua));
         }
-
 
         // --- Logik Akses Kata Laluan ---
         function checkPassword() {
@@ -740,15 +721,12 @@
                 feedback.classList.remove('text-red-600');
                 feedback.classList.add('text-lime-600');
                 
-                showScreen('selection-screen'); 
-                
+                showScreen('selection-screen');
                 loadSettingsLocally(); // Muatkan setting selepas login
                 document.getElementById('student-name-input').focus();
-                
                 speakMalay(`Selamat Datang ke Kuiz Bijak Sifir! Edukids by Mizz! Sila masukkan nama anda dan pilih jenis kuiz.`);
-
             } else {
-                playIncorrectSound(); 
+                playIncorrectSound();
                 feedback.textContent = 'Kata Laluan Salah. Sila cuba lagi.';
                 feedback.classList.remove('text-lime-600');
                 feedback.classList.add('text-red-600');
@@ -756,34 +734,33 @@
                 document.getElementById('password-input').focus();
             }
         }
+
         function handleLoginKey(event) {
             if (event.key === 'Enter') {
                 checkPassword();
             }
         }
-        
-        // --- Logik Kuiz ---
 
+        // --- Logik Kuiz ---
         function generateDistractors(correctAnswer) {
             const distractors = new Set();
             const maxAttempts = 10;
             let attempts = 0;
-            
+
             while (distractors.size < 3 && attempts < maxAttempts) {
                 attempts++;
                 let offset = Math.floor(Math.random() * 11) - 5; 
                 let distractor = correctAnswer + offset;
-
                 if (distractor > 0 && distractor !== correctAnswer && !distractors.has(distractor)) {
                     distractors.add(distractor);
                 }
             }
-            
+
             if (distractors.size < 3) {
-                 [1, -1, 10, correctAnswer % 10 === 0 ? -10 : 0].forEach(offset => {
+                [1, -1, 10, correctAnswer % 10 === 0 ? -10 : 0].forEach(offset => {
                     let d = correctAnswer + offset;
                     if (d > 0 && d !== correctAnswer && distractors.size < 3 && !distractors.has(d)) {
-                         distractors.add(d);
+                        distractors.add(d);
                     }
                 });
             }
@@ -793,657 +770,330 @@
 
         function generateQuestions(sifir, mode, count) {
             questions = [];
-            
             for (let i = 0; i < count; i++) {
                 let multiplier;
-                let factor = Math.floor(Math.random() * 12) + 1; 
-
+                let factor = Math.floor(Math.random() * 12) + 1;
+                
                 if (sifir === 0) {
-                    multiplier = Math.floor(Math.random() * 12) + 1; 
+                    multiplier = Math.floor(Math.random() * 12) + 1;
                 } else {
                     multiplier = sifir;
                 }
 
                 const correctAnswer = multiplier * factor;
-                const qText = `${multiplier} x ${factor}`;
-                const newQuestion = { q: qText, answer: correctAnswer, time: 0, answered: false }; 
+                const questionObj = {
+                    text: `${multiplier} x ${factor} = ?`,
+                    spoken: `${multiplier} darab ${factor}`,
+                    correctAnswer: correctAnswer
+                };
 
                 if (mode === 'objective') {
                     const distractors = generateDistractors(correctAnswer);
-                    let options = [...distractors, correctAnswer];
-                    shuffleArray(options); 
-
-                    newQuestion.options = options;
+                    const options = [correctAnswer, ...distractors];
+                    shuffleArray(options);
+                    questionObj.options = options;
                 }
 
-                questions.push(newQuestion);
+                questions.push(questionObj);
             }
         }
-
 
         function startQuizFlow() {
-            // Semak nama pelajar
-            if (!studentName.trim()) {
-                speakMalay('Sila masukkan nama pelajar terlebih dahulu.');
-                document.getElementById('student-name-input').focus();
-                
-                const startButton = document.getElementById('start-button');
-                startButton.textContent = 'Sila masukkan nama pelajar!';
-                startButton.classList.remove('bg-pink-500', 'hover:bg-pink-600');
-                startButton.classList.add('bg-red-500', 'hover:bg-red-600');
-                setTimeout(() => {
-                    startButton.textContent = 'Mulakan Kuiz';
-                    startButton.classList.remove('bg-red-500', 'hover:bg-red-600');
-                    startButton.classList.add('bg-pink-500', 'hover:bg-pink-600');
-                }, 1500);
-                return;
-            }
-
-
-            const selection = document.getElementById('sifir-pilihan').value.split('-');
-            currentSifir = parseInt(selection[0]);
-            currentMode = selection[1];
-            totalQuestions = parseInt(selection[2]); 
+            const selectionValue = document.getElementById('sifir-pilihan').value;
+            const parts = selectionValue.split('-');
             
-            // Tentukan jenis kuiz untuk logik TP
+            currentSifir = parseInt(parts[0]);
+            currentMode = parts[1];
+            totalQuestions = parseInt(parts[2]);
             isCombinedQuiz = (currentSifir === 0);
-            
-            // Tentukan Masa Soalan berdasarkan pilihan togol
-            if (!isTimerEnabled) {
-                // Jika timer dimatikan, tetapkan masa yang sangat panjang
-                questionDuration = 9999; 
-            } else if (isCombinedQuiz) {
-                // Kuiz Gabungan 50 soalan (Objektif 7s / Input 10s)
-                questionDuration = (currentMode === 'input') ? 10 : 7; 
-            } else if (currentMode === 'input') {
-                // Sifir Tunggal Input Jawapan 30 soalan
-                questionDuration = 10; 
-            } else {
-                // Sifir Tunggal Objektif 30 soalan
-                questionDuration = 7;
-            }
 
+            // Logik Durasi Soalan (Default: 7s untuk objektif, 10s untuk input)
+            if (currentMode === 'objective') {
+                questionDuration = 7;
+            } else {
+                questionDuration = 10;
+            }
 
             generateQuestions(currentSifir, currentMode, totalQuestions);
-
+            
             currentQIndex = 0;
             score = 0;
             totalTimeElapsed = 0;
+
+            document.getElementById('total-q-display').textContent = totalQuestions;
             
-            hentikanTimer(); 
-
-            document.getElementById('progress-bar').style.width = `0%`;
-            
-            // NEW: Hide timer display if timer is disabled
-            const qCountdownDisplay = document.getElementById('q-countdown-display');
-            if (isTimerEnabled) {
-                qCountdownDisplay.textContent = `${questionDuration}s`; 
-                qCountdownDisplay.classList.remove('hidden');
-            } else {
-                qCountdownDisplay.textContent = '∞'; // Simbol tak terhad
-                qCountdownDisplay.classList.remove('urgent-timer');
-                qCountdownDisplay.classList.remove('hidden'); // Show infinity symbol
-            }
-
-            document.getElementById('total-q-display').textContent = totalQuestions; 
-
             showScreen('quiz-screen');
+            loadQuestion();
+            startTotalTimer();
+        }
 
-            const inputModeEl = document.getElementById('input-mode');
-            const objectiveModeEl = document.getElementById('objective-mode');
+        function loadQuestion() {
+            const q = questions[currentQIndex];
+            document.getElementById('current-q-num').textContent = currentQIndex + 1;
+            document.getElementById('question-text').textContent = q.text;
+            
+            // Kemaskini Progress Bar
+            const progress = (currentQIndex / totalQuestions) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
 
             if (currentMode === 'input') {
-                inputModeEl.classList.remove('hidden');
-                objectiveModeEl.classList.add('hidden');
+                document.getElementById('input-mode').classList.remove('hidden');
+                document.getElementById('objective-mode').classList.add('hidden');
+                document.getElementById('answer-input').value = '';
                 document.getElementById('answer-input').focus();
-            } else { 
-                inputModeEl.classList.add('hidden');
-                objectiveModeEl.classList.remove('hidden');
-                document.getElementById('option-A').focus();
-            }
-
-            mulakanTotalTimer();
-
-            if (isTimerEnabled) {
-                speakMalay(`Jom mulakan Kuiz Sifir! Anda ada ${questionDuration} saat untuk setiap soalan.`);
             } else {
-                 speakMalay(`Jom mulakan Kuiz Sifir tanpa had masa!`);
-            }
-            
-            paparSoalan();
-        }
-        
-        function returnToSelection() {
-            hentikanTimer();
-            currentQIndex = 0;
-            score = 0;
-            totalTimeElapsed = 0;
-
-            speakMalay('Kuiz ditamatkan. Sila buat pilihan baharu.');
-            showScreen('selection-screen');
-        }
-
-        function startNewQuizSelection() {
-            // Tutup skrin sijil jika ada
-            closeCertificate(); 
-            
-            // Buang butang cetak lama dari DOM agar boleh dijana semula
-            const oldCertButton = document.getElementById('print-certificate-button');
-            if (oldCertButton) {
-                oldCertButton.remove();
+                document.getElementById('input-mode').classList.add('hidden');
+                document.getElementById('objective-mode').classList.remove('hidden');
+                
+                const buttons = ['A', 'B', 'C', 'D'];
+                buttons.forEach((btn, idx) => {
+                    const val = q.options[idx];
+                    const buttonEl = document.getElementById(`option-${btn}`);
+                    buttonEl.querySelector('span').textContent = val;
+                    buttonEl.dataset.value = val;
+                });
             }
 
-            speakMalay('Sila pilih jenis kuiz yang baru.');
-            showScreen('selection-screen'); 
+            document.getElementById('feedback').textContent = '';
+            
+            // TTS untuk soalan
+            speakMalay(q.spoken);
+
+            startQuestionTimer();
         }
 
-        function paparSoalan() {
-            hentikanQuestionTimer();
+        function startTotalTimer() {
+            totalTimeInterval = setInterval(() => {
+                totalTimeElapsed += 0.1;
+                document.getElementById('total-time-tracker').textContent = totalTimeElapsed.toFixed(1);
+            }, 100);
+        }
 
-            if (currentQIndex >= totalQuestions) { 
-                tamatkanKuiz();
+        function startQuestionTimer() {
+            clearInterval(qTimerInterval);
+            stopWarningBeeps();
+            
+            // Reset gaya visual pemasa
+            const timerDisplay = document.getElementById('q-countdown-display');
+            timerDisplay.classList.remove('urgent-timer');
+            
+            // Jika pemasa dimatikan, paparkan simbol ∞ (infinite)
+            if (!isTimerEnabled) {
+                timerDisplay.textContent = "∞";
                 return;
             }
 
-            const q = questions[currentQIndex];
-            document.getElementById('question-text').textContent = q.q + ' = ?';
-            document.getElementById('current-q-num').textContent = currentQIndex + 1;
-            document.getElementById('feedback').textContent = '';
-
-            if (currentMode === 'input') {
-                document.getElementById('answer-input').value = '';
-                document.getElementById('answer-input').focus();
-            } else { 
-                document.querySelectorAll('.objective-btn').forEach((btn, index) => {
-                    const optionValue = q.options[index];
-                    btn.classList.remove('bg-pink-600', 'bg-red-600', 'bg-teal-700');
-                    btn.classList.add('bg-teal-500', 'hover:bg-teal-600'); 
-                    
-                    btn.querySelector('span').textContent = optionValue;
-                    btn.setAttribute('data-value', optionValue);
-                    btn.disabled = false;
-                });
-            }
-            
-            mulakanQuestionTimer();
-        }
-        
-        // --- Pengurusan Masa Soalan (Countdown) ---
-
-        function mulakanQuestionTimer() {
-            if (!isTimerEnabled) {
-                // Jangan mulakan timer jika dimatikan
-                return; 
-            }
-            
-            // Logik Timer asal jika dihidupkan
-            qTimeLeft = questionDuration; 
-            const displayEl = document.getElementById('q-countdown-display');
-            displayEl.textContent = `${qTimeLeft}s`;
-            
-            displayEl.classList.remove('urgent-timer');
-            stopWarningBeeps(); 
+            qTimeLeft = questionDuration;
+            timerDisplay.textContent = `${qTimeLeft}s`;
 
             qTimerInterval = setInterval(() => {
                 qTimeLeft--;
-                displayEl.textContent = `${qTimeLeft}s`;
-                
-                if (qTimeLeft <= 3 && qTimeLeft > 0) {
-                    displayEl.classList.add('urgent-timer');
-                    if (!warningBeepInterval) { 
-                        startWarningBeeps(); // Mula bip amaran (jika dibenarkan)
-                    }
-                } else if (qTimeLeft <= 0) {
-                    hentikanQuestionTimer();
-                    semakJawapan(null, null, true); 
-                } else if (qTimeLeft > 3) {
-                    displayEl.classList.remove('urgent-timer');
+                timerDisplay.textContent = `${qTimeLeft}s`;
+
+                // Kesan Kecemasan (3s terakhir)
+                if (qTimeLeft <= 3) {
+                    timerDisplay.classList.add('urgent-timer');
+                    startWarningBeeps();
+                }
+
+                if (qTimeLeft <= 0) {
+                    clearInterval(qTimerInterval);
                     stopWarningBeeps();
+                    handleTimeout();
                 }
-            }, 1000); 
+            }, 1000);
         }
 
-        function hentikanQuestionTimer() {
-            clearInterval(qTimerInterval);
-            stopWarningBeeps();
-            qTimerInterval = null;
-        }
-        
-        // --- Pengurusan Masa Keseluruhan (250s Background Timer) ---
-        function mulakanTotalTimer() {
-            const initialTime = performance.now();
+        function handleTimeout() {
+            document.getElementById('feedback').textContent = 'Masa Tamat!';
+            document.getElementById('feedback').className = 'h-6 text-sm font-semibold text-red-600';
+            playIncorrectSound();
+            speakMalay("Masa tamat!");
             
-            clearInterval(totalTimeInterval);
-            
-            totalTimeInterval = setInterval(() => {
-                const now = performance.now();
-                totalTimeElapsed = (now - initialTime) / 1000;
-               
-                // Jika isTimerEnabled, gunakan QUIZ_DURATION asal, jika tidak, guna had yang sangat tinggi
-                const maxDuration = isTimerEnabled ? QUIZ_DURATION : 999999;
-                
-                if (totalTimeElapsed >= maxDuration) {
-                    // Hanya tamatkan kuiz jika had masa keseluruhan (jika ditetapkan) tercapai.
-                    // Dalam kes ini, QUIZ_DURATION diubah kepada 999999 jadi ia tidak akan tamat.
-                    // Namun logik ini dikekalkan untuk keselamatan.
-                    tamatkanKuiz(true); 
-                }
-            }, 100); 
-        }
-
-        function hentikanTotalTimer() {
-            clearInterval(totalTimeInterval);
-        }
-
-        function hentikanTimer() {
-             hentikanQuestionTimer();
-             hentikanTotalTimer();
+            setTimeout(nextQuestion, 1500);
         }
 
         function handleInputSubmission() {
-            const inputElement = document.getElementById('answer-input');
-            const submitButton = document.querySelector('#input-mode button');
-            inputElement.disabled = true;
-            submitButton.disabled = true;
+            const input = document.getElementById('answer-input').value.trim();
+            if (input === "") return;
+            
+            checkAnswer(parseInt(input));
+        }
 
-            const userAnswer = parseInt(inputElement.value.trim());
+        function handleObjectiveSubmission(button) {
+            const value = parseInt(button.dataset.value);
+            checkAnswer(value);
+        }
 
-            if (isNaN(userAnswer)) {
-                inputElement.disabled = false;
-                submitButton.disabled = false;
-                const feedbackEl = document.getElementById('feedback');
-                feedbackEl.textContent = 'Sila masukkan nombor yang sah.';
-                feedbackEl.className = 'h-6 text-sm font-semibold text-red-600';
-                return;
+        function checkAnswer(userAnswer) {
+            clearInterval(qTimerInterval);
+            stopWarningBeeps();
+
+            const correct = questions[currentQIndex].correctAnswer;
+            const feedback = document.getElementById('feedback');
+
+            if (userAnswer === correct) {
+                score++;
+                feedback.textContent = 'Betul! ✅';
+                feedback.className = 'h-6 text-sm font-semibold text-lime-600';
+                playCorrectSound();
+                // speakMalay("Betul!"); // Dimatikan supaya tidak bertindih dengan soalan seterusnya
+            } else {
+                feedback.textContent = `Salah! Jawapan: ${correct} ❌`;
+                feedback.className = 'h-6 text-sm font-semibold text-red-600';
+                playIncorrectSound();
+                speakMalay(`Salah! Jawapan adalah ${correct}`);
             }
-            semakJawapan(userAnswer);
+
+            setTimeout(nextQuestion, 1200);
         }
 
         function handleInputKey(event) {
             if (event.key === 'Enter') {
-                const submitButton = document.querySelector('#input-mode button');
-                if (!submitButton.disabled) {
-                    handleInputSubmission();
-                }
+                handleInputSubmission();
             }
         }
 
-        function handleObjectiveSubmission(button) {
-            const userAnswer = parseInt(button.getAttribute('data-value'));
-
-            document.querySelectorAll('.objective-btn').forEach(btn => btn.disabled = true);
-            
-            semakJawapan(userAnswer, button);
-        }
-
-
-        function semakJawapan(userAnswer, selectedButton = null, isTimeout = false) {
-            
-            hentikanQuestionTimer(); 
-            
-            const q = questions[currentQIndex];
-            
-            // Jika timer OFF, masa diambil adalah 0 (atau sangat kecil, diabaikan)
-            const timeTaken = isTimeout || !isTimerEnabled ? (isTimerEnabled ? questionDuration : 0.01) : (questionDuration - qTimeLeft); 
-            q.time = timeTaken; 
-            q.answered = true;
-
-            const feedbackEl = document.getElementById('feedback');
-            const correctAnswer = q.answer;
-            let isCorrect = false;
-
-            if (isTimeout) {
-                feedbackEl.textContent = `⏱️ Masa Tamat! Jawapan ialah ${correctAnswer}.`;
-                feedbackEl.className = 'h-6 text-sm font-semibold text-red-600';
-                playIncorrectSound();
-            } else if (userAnswer === correctAnswer) {
-                score++;
-                isCorrect = true;
-                feedbackEl.textContent = '✅ Betul!';
-                feedbackEl.className = 'h-6 text-sm font-semibold text-lime-600'; 
-                playCorrectSound(); 
-            } else {
-                feedbackEl.textContent = `❌ Salah. Jawapan ialah ${correctAnswer}.`;
-                feedbackEl.className = 'h-6 text-sm font-semibold text-red-600';
-                playIncorrectSound(); 
-            }
-
-            if (currentMode === 'objective') {
-                document.querySelectorAll('.objective-btn').forEach(btn => {
-                    const value = parseInt(btn.getAttribute('data-value'));
-                    btn.classList.remove('bg-teal-500', 'hover:-bg-teal-600');
-                    if (value === correctAnswer) {
-                        btn.classList.add('bg-pink-600'); 
-                    } else if (btn === selectedButton && !isCorrect) {
-                        btn.classList.add('bg-red-600'); 
-                    } else {
-                         btn.classList.add('bg-teal-700'); 
-                    }
-                });
-            }
-
-
+        function nextQuestion() {
             currentQIndex++;
-            
-            const progressPercent = (currentQIndex / totalQuestions) * 100; 
-            document.getElementById('progress-bar').style.width = `${progressPercent}%`;
-
-            setTimeout(() => {
-                if (currentMode === 'input') {
-                    document.getElementById('answer-input').disabled = false;
-                    document.querySelector('#input-mode button').disabled = false;
-                }
-                paparSoalan();
-            }, 700);
-        }
-        
-        // -----------------------------------------------------------------
-        // FUNGSI PENGUMUMAN KEPUTUSAN KUIZ (Audio Sijil)
-        // -----------------------------------------------------------------
-        function announceResults(score, finalTP, tpLabel) {
-            if (!isTTSEnabled) return; // SEMAKAN TTS
-            let resultMessage = "";
-            
-            // Hanya umumkan TP untuk kuiz gabungan (TP > 0)
-            if (finalTP > 0) { 
-                if (finalTP >= 5) {
-                    resultMessage = "TAHNIAH! Keputusan cemerlang! Anda memang bijak sifir dan sangat pantas! Anda mencapai Tahap Penguasaan lima ke atas!";
-                } else if (finalTP >= 3) {
-                    resultMessage = "Hebat! Anda telah menguasai sifir. Sila teruskan latihan untuk mencapai Tahap Penguasaan yang lebih tinggi.";
-                } else {
-                    resultMessage = "Anda telah mencuba. Jangan putus asa, mari cuba kuiz ini sekali lagi untuk tingkatkan markah dan kepantasan anda!";
-                }
-                const fullAnnouncement = `${resultMessage} Tahap Penguasaan anda adalah TP ${finalTP}. ${tpLabel}.`;
-                speakMalay(fullAnnouncement);
+            if (currentQIndex < totalQuestions) {
+                loadQuestion();
             } else {
-                // Untuk kuiz sifir tunggal (tanpa TP)
-                 if (score / totalQuestions >= 0.9) {
-                    resultMessage = "TAHNIAH! Sifir ini sudah dikuasai dengan cemerlang! Mari cuba sifir yang lain.";
-                 } else if (score / totalQuestions >= 0.7) {
-                    resultMessage = "Bagus! Anda hampir menguasai sifir ini. Sedikit lagi ulangkaji pasti akan menjadikan anda lebih mahir!";
-                 } else {
-                    resultMessage = "Teruskan latihan untuk sifir ini. Saya yakin anda boleh buat!";
-                 }
-                 speakMalay(resultMessage);
+                endQuiz();
             }
         }
+
+        function endQuiz() {
+            clearInterval(totalTimeInterval);
+            showScreen('result-screen');
+
+            const percentage = (score / totalQuestions) * 100;
+            const avgTime = (totalTimeElapsed / totalQuestions).toFixed(2);
+
+            // Papar Nama di skrin keputusan
+            document.getElementById('student-result-name').textContent = studentName || 'Pelajar Bijak';
+
+            const sifirTitle = isCombinedQuiz ? "Gabungan (1-12)" : `Sifir ${currentSifir}`;
+            document.getElementById('sifir-title-display').textContent = sifirTitle;
+
+            document.getElementById('final-score').textContent = `${score} / ${totalQuestions}`;
+            document.getElementById('final-percentage').textContent = `${percentage.toFixed(0)}%`;
+            document.getElementById('correct-count').textContent = score;
+            document.getElementById('incorrect-count').textContent = totalQuestions - score;
+            document.getElementById('average-time').textContent = avgTime;
+            
+            // Mesej Status Pemasa pada Keputusan
+            const timerStatusMsg = document.getElementById('timer-status-message');
+            if (isTimerEnabled) {
+                 timerStatusMsg.textContent = `(Ujian dijalankan dengan pemasa soalan diaktifkan)`;
+            } else {
+                 timerStatusMsg.textContent = `(Ujian dijalankan TANPA pemasa soalan)`;
+            }
+
+            // Logik Tahap Penguasaan (TP) - Mengikut DSKP (Ubahsuai untuk kuiz)
+            let tp = 1;
+            let label = "";
+            let description = "";
+
+            if (percentage >= 90) {
+                tp = 6;
+                label = "Cemerlang & Role Model";
+                description = "Murid berupaya menggunakan pengetahuan dan kemahiran matematik bagi menyelesaikan masalah harian yang bukan rutin secara kreatif dan inovatif serta boleh menjadi pembimbing kepada rakan lain.";
+            } else if (percentage >= 80) {
+                tp = 5;
+                label = "Sangat Baik (Mahir)";
+                description = "Murid berupaya menyelesaikan masalah harian yang rutin berkaitan sifir dengan menggunakan pelbagai strategi dan kemahiran.";
+            } else if (percentage >= 60) {
+                tp = 4;
+                label = "Baik (Berupaya)";
+                description = "Murid berupaya menyelesaikan masalah harian yang rutin berkaitan sifir secara sistematik dan berkesan.";
+            } else if (percentage >= 40) {
+                tp = 3;
+                label = "Memuaskan (Faham)";
+                description = "Murid memahami konsep asas pendaraban dan berupaya menentukan hasil darab bagi sifir yang diuji.";
+            } else if (percentage >= 20) {
+                tp = 2;
+                label = "Kurang Memuaskan";
+                description = "Murid mempunyai pengetahuan asas tentang konsep pendaraban namun masih memerlukan masa atau bantuan untuk mengingati sifir.";
+            } else {
+                tp = 1;
+                label = "Tahap Minimum";
+                description = "Murid mula menunjukkan minat dalam pembelajaran sifir tetapi memerlukan banyak bimbingan dan latihan asas.";
+            }
+
+            document.getElementById('final-tp').textContent = `TP ${tp}`;
+            document.getElementById('tp-label').textContent = label;
+            document.getElementById('tp-description').textContent = description;
+
+            // NEW: Logik Butang Cetak Sijil
+            updateCertificateButton(percentage, tp, avgTime, sifirTitle);
+
+            // Suara pengakhiran
+            const closingText = `Kuiz tamat! ${studentName}, anda mencapai Tahap Penguasaan ${tp}. Skor anda adalah ${score} per ${totalQuestions}. Tahniah!`;
+            speakMalay(closingText);
+        }
+
+        function returnToSelection() {
+            clearInterval(qTimerInterval);
+            clearInterval(totalTimeInterval);
+            stopWarningBeeps();
+            showScreen('selection-screen');
+        }
+
+        function startNewQuizSelection() {
+             showScreen('selection-screen');
+        }
+
+        // -----------------------------------------------------------------
+        // LOGIK SIJIL
         // -----------------------------------------------------------------
 
-        // Fungsi Papar Sijil
-        function displayCertificate(finalPercentage, finalTP, avgTime, quizTitle, timerNote) {
-            if (!studentName.trim()) {
-                // Guna custom modal UI untuk amaran kritikal di sini
-                // Mengikut arahan, gunakan alert() jika tiada custom modal UI, tetapi kita cuba elak
-                console.error('Sila masukkan nama pelajar untuk menjana sijil.');
-                return;
-            }
-            
-            // *** KOD AMARAN BARU DI SINI (In-App Browser Check) ***
-            if (isMobileInAppBrowser()) {
-                const message = 
-                    "⚠️ PERHATIAN PENTING: Anda mungkin menggunakan Pelayar Dalaman (seperti dalam WhatsApp, Facebook, dsb.).\n\n" +
-                    "Proses mencetak atau menyimpan sijil sebagai PDF sering GAGAL dalam pelayar ini.\n\n" +
-                    "TINDAKAN DISYORKAN:\n" +
-                    "1. Sila SALIN pautan kuiz ini.\n" +
-                    "2. BUKA SECARA LANGSUNG di aplikasi Pelayar Penuh (CHROME, SAFARI, dsb.) untuk cetakan yang sempurna.\n\n" +
-                    "Tekan 'OK' untuk teruskan dengan risiko gagal, atau 'Cancel' untuk buka di pelayar penuh dahulu.";
-                    
-                if (!confirm(message)) {
-                    return; // Hentikan proses cetakan jika pengguna memilih 'Cancel'
-                }
-            }
-            // *** AKHIR KOD AMARAN BARU ***
-
-            // Isikan data ke template sijil
-            document.getElementById('cert-student-name').textContent = studentName.toUpperCase();
-            document.getElementById('cert-quiz-title').textContent = quizTitle;
-            document.getElementById('cert-tp').textContent = `TP${finalTP}`;
-            document.getElementById('cert-score').textContent = `${finalPercentage.toFixed(1)}%`;
-            document.getElementById('cert-avg-time').textContent = avgTime.toFixed(2);
-            
-            // MESEJ TAMBAHAN PEMASA BARU
-            const noteEl = document.getElementById('cert-timer-note');
-            noteEl.textContent = timerNote;
-            noteEl.style.display = timerNote ? 'block' : 'none'; // Sembunyikan jika tiada nota
-            
-            // Tarikh Hari Ini
-            const today = new Date();
-            document.getElementById('cert-date').textContent = today.toLocaleDateString('ms-MY', { 
-                year: 'numeric', month: 'long', day: 'numeric' 
+        function displayCertificate(percentage, tp, avgTime, quizTitle, timerNote) {
+            document.getElementById('cert-student-name').textContent = studentName || '[NAMA PELAJAR]';
+            document.getElementById('cert-quiz-title').textContent = `Kuiz Bijak Sifir ${quizTitle}`;
+            document.getElementById('cert-tp').textContent = `TP ${tp}`;
+            document.getElementById('cert-score').textContent = `${percentage.toFixed(0)}%`;
+            document.getElementById('cert-avg-time').textContent = `${avgTime}s`;
+            document.getElementById('cert-date').textContent = new Date().toLocaleDateString('ms-MY', { 
+                day: 'numeric', month: 'long', year: 'numeric' 
             });
-
-            // Tukar paparan
-            document.getElementById('quiz-container-wrapper').classList.add('hidden');
-            document.getElementById('certificate-screen').classList.remove('hidden');
-            document.getElementById('certificate-screen').classList.add('flex'); // Untuk centering
             
-            // Pilihan: Umumkan sijil
-            speakMalay(`Tahniah ${studentName}! Sijil anda sedia untuk dicetak. Anda mencapai Tahap Penguasaan ${finalTP} dengan skor ${finalPercentage.toFixed(0)} peratus.`);
+            // NEW: Set Mesej Pemasa
+            document.getElementById('cert-timer-note').textContent = timerNote;
+
+            document.getElementById('certificate-screen').classList.remove('hidden');
+            document.getElementById('certificate-screen').classList.add('flex');
+            
+            // Berikan suara makluman mengenai sijil
+            speakMalay("Sijil anda telah dijana. Sila klik butang cetak untuk menyimpan sebagai P D F.");
         }
 
         function closeCertificate() {
-            // Butang cetak sementara di skrin keputusan
-            const oldCertButton = document.getElementById('print-certificate-button');
-            if (oldCertButton) {
-                // ** PEMBETULAN: Buang butang sepenuhnya dari DOM untuk membolehkan ia dijana semula **
-                oldCertButton.remove(); 
-            }
-            
             document.getElementById('certificate-screen').classList.add('hidden');
             document.getElementById('certificate-screen').classList.remove('flex');
-            document.getElementById('quiz-container-wrapper').classList.remove('hidden');
-            showScreen('result-screen'); // Kembali ke skrin keputusan
-        }
-        // END NEW: Fungsi Papar Sijil
-
-        // >>> LOGIK TP BARU MENGIKUT KRITERIA PERATUSAN (Hanya untuk Sifir Gabungan 50 Soalan)
-        function getTPDetails(accuracy, timeElapsed, totalAnswered) {
-            
-            if (!isCombinedQuiz) {
-                return { finalTP: 0, tpLabel: "Tiada", tpDescription: "Tiada penilaian TP untuk kuiz sifir tunggal.", avgTime: 0 };
-            }
-            
-            let finalTP = 1;
-            let tpLabel = "Tahu (Asas)";
-            let tpDescription = "Tahu fakta asas sifir, tetapi peratusan jawapan betul kurang daripada 60%. Murid memerlukan bimbingan intensif dan ulangkaji konsep.";
-            
-            const finalPercentage = (accuracy * 100);
-            
-            // Jika timer dimatikan, purata masa ditetapkan kepada 0.01s (untuk logik pengiraan)
-            const avgTime = totalAnswered > 0 ? timeElapsed / totalAnswered : 999; 
-            
-            const durationLimit = currentMode === 'input' ? 10 : 7; // Had masa soalan 7s/10s (standard)
-            
-            // Kriteria Kelajuan (Berbanding had 7s/10s)
-            const veryFast = durationLimit * 0.5; // Contoh: 3.5s (Objektif) atau 5.0s (Input)
-            const fast = durationLimit * 0.7;     // Contoh: 4.9s (Objektif) atau 7.0s (Input)
-            
-            // === TP 1, 2, 3 (Berdasarkan Kriteria Peratusan) ===
-            
-            if (finalPercentage >= 90) { 
-                 // 90% - 100% (45-50 soalan betul)
-                 finalTP = 3;
-                 tpLabel = "Boleh Buat (Tepat)";
-                 tpDescription = `Skor di antara 90% - 100% jawapan betul. Murid boleh mengira fakta sifir dengan **tepat** dan **konsisten** dalam situasi rutin.`;
-            } else if (finalPercentage >= 80) {
-                 // 80% - 89% (40-44 soalan betul)
-                 finalTP = 3;
-                 tpLabel = "Boleh Buat (Asas)";
-                 tpDescription = `Skor di antara 80% - 89% jawapan betul. Murid boleh mengira fakta sifir dengan **tepat** tetapi mungkin masih lambat sedikit.`;
-            } else if (finalPercentage >= 60) {
-                 // 60% - 79%
-                 finalTP = 2;
-                 tpLabel = "Tahu dan Faham (Konsep)";
-                 tpDescription = "Skor di antara 60% - 79% jawapan betul. Murid memahami konsep darab tetapi masih melakukan kesilapan pada fakta sifir yang lebih sukar. Perlu latihan fokus.";
-            } else {
-                 // Kurang dari 60%
-                 finalTP = 1;
-                 // Penerangan TP1 sudah ditetapkan di atas
-            }
-            
-            // Jika pemasa dimatikan, maks TP adalah TP3, tanpa kira kelajuan.
-            if (isTimerEnabled) {
-                // === Penyesuaian TP 4, 5, 6 (Berpandukan TP3 Tepat/Asas dan Kelajuan) ===
-                if (finalPercentage >= 90) { // Hanya tingkatkan TP jika TP3 Tepat dicapai
-                     if (avgTime <= veryFast && finalPercentage >= 98) { // Sangat Pantas & Hampir Sempurna (49-50 Betul)
-                        finalTP = 6;
-                        tpLabel = "Cemerlang & Sangat Pantas (Fluent)";
-                        tpDescription = `Menguasai sifir dengan cermat, tepat (skor 98%+), cekap, dan **sangat pantas** (Purata Masa **< ${veryFast.toFixed(1)}s**). SANGAT DISYORKAN UNTUK LATIHAN LANJUTAN!`;
-                    } else if (avgTime <= veryFast) { // Pantas & Tepat
-                        finalTP = 5;
-                        tpLabel = "Sangat Mahir & Pantas";
-                        tpDescription = `Melaksanakan kemahiran sifir dengan cermat, tepat (skor 90%+), cekap, dan **pantas** (Purata Masa **< ${veryFast.toFixed(1)}s**). Boleh beralih ke kuiz yang lebih kompleks.`;
-                    } else if (avgTime <= fast) { // Cekap Masa (Selesai dalam had)
-                        finalTP = 4;
-                        tpLabel = "Mahir & Cekap Masa";
-                        tpDescription = `Melaksanakan kemahiran sifir dengan cekap dan tepat dalam had masa kuiz (Purata Masa **< ${fast.toFixed(1)}s**).`;
-                    }
-                    // Jika peratusan 90%+ tetapi masa purata > fast, ia kekal di TP3 Tepat.
-                } else if (finalPercentage >= 80 && avgTime <= fast) {
-                     // Jika 80-89% dan cekap masa, ia kekal di TP3 Asas.
-                     finalTP = 3; 
-                }
-            } else if (finalTP > 3) {
-                 // Jika timer OFF, hadkan TP maksimum kepada 3, tanpa mengira markah 100%
-                 finalTP = 3;
-                 tpLabel = "Boleh Buat (Tepat, Tanpa Masa)";
-                 tpDescription = `Skor 90% ke atas. Murid boleh mengira fakta sifir dengan **tepat** dan **konsisten** tetapi kuiz dijalankan **tanpa had masa** soalan.`;
-            }
-            
-            return { finalTP, tpLabel, tpDescription, avgTime };
         }
 
-        function tamatkanKuiz(isTotalTimeout = false) {
-            hentikanTimer(); 
-
-            const answeredQuestions = questions.slice(0, currentQIndex);
-            const totalAnswered = answeredQuestions.length;
-            const totalTimeTaken = answeredQuestions.reduce((sum, q) => sum + q.time, 0);
-
-            const scorePercent = (score / totalQuestions);
-            
-            const finalPercentage = (score / totalQuestions) * 100;
-            const incorrectCount = totalAnswered - score;
-
-            let finalTP = 0; 
-            let tpLabel = "";
-            let tpMessage = "";
-            let tpDescription = "";
-            // ***************************************************************
-            // KEMASKINI LOGIK MESEJ STATUS PEMASA (untuk Paparan Skrin Keputusan & Sijil)
-            // ***************************************************************
-            let timerStatusMessage = isTimerEnabled ? "" : "NOTA: Kuiz ini diselesaikan tanpa had masa soalan.";
-            // ***************************************************************
-            let modeText = currentMode === 'objective' ? 'Objektif' : 'Input';
-            let totalScore = score;
-            let avgTime = totalAnswered > 0 ? totalTimeTaken / totalAnswered : 0;
-            
-            let tpDetails = null;
-
-            // --- Logik Tajuk Kuiz Di Skrin Keputusan ---
-            let quizTitleDisplay = '';
-            let certQuizTitle = ''; // Tajuk untuk Sijil
-            if (currentSifir === 0) {
-                 document.getElementById('quiz-result-title').querySelector('h2').textContent = 'Kuiz Bijak Sifir';
-                 quizTitleDisplay = `(1-12) Gabungan - ${modeText}`;
-                 certQuizTitle = `Kuiz Bijak Sifir Gabungan (1-12) ${modeText}`;
-            } else {
-                 document.getElementById('quiz-result-title').querySelector('h2').textContent = 'Kuiz Bijak Sifir';
-                 quizTitleDisplay = `Sifir ${currentSifir} - ${modeText}`;
-                 certQuizTitle = `Kuiz Sifir ${currentSifir} (Tunggal) ${modeText}`;
-            }
-            document.getElementById('sifir-title-display').textContent = quizTitleDisplay;
-            // --- Akhir Logik Tajuk Kuiz ---
-            
-            // --- Logik Paparan TP ---
-            const tpGroupEl = document.getElementById('tp-display-group');
-            if (isCombinedQuiz) {
-                tpGroupEl.classList.remove('tp-hidden');
-            } else {
-                tpGroupEl.classList.add('tp-hidden');
-            }
-            // --- Akhir Logik Paparan TP ---
-
-
-            if (isTotalTimeout) {
-                tpMessage = `❌ Had Masa Keseluruhan (250s) Kuiz ${modeText} Tamat! Kuiz terhenti pada soalan ${currentQIndex} dari ${totalQuestions}.`;
-                
-                if (isCombinedQuiz) {
-                    // Gunakan logik TP asas untuk kuiz gabungan yang terhenti
-                    const partialAccuracy = score / totalAnswered;
-                    if (partialAccuracy >= 0.8) {
-                        finalTP = 3; tpLabel = "Boleh Buat (Terhenti)"; tpDescription = "Kuiz terhenti kerana masa keseluruhan tamat. Anda tepat, tetapi perlu tingkatkan fokus untuk menyiapkan kuiz.";
-                    } else if (partialAccuracy >= 0.6) {
-                        finalTP = 2; tpLabel = "Faham (Terhenti)"; tpDescription = "Kuiz terhenti kerana masa keseluruhan tamat. Anda faham konsep, tetapi perlu tingkatkan kelajuan menjawab dan ketepatan.";
-                    } else {
-                        finalTP = 1; tpLabel = "Tahu (Terhenti)"; tpDescription = "Kuiz terhenti kerana masa keseluruhan tamat. Perlu ulangkaji fakta sifir anda dengan lebih tekun.";
-                    }
-                } else {
-                    tpMessage = `❌ Had Masa Kuiz ${modeText} Tamat.`;
-                }
-                
-                // Tambahkan mesej status timer jika timer OFF
-                 if (!isTimerEnabled) {
-                    timerStatusMessage = "NOTA: Kuiz ini diselesaikan tanpa had masa soalan.";
-                } else {
-                    timerStatusMessage = "";
-                }
-                
-                announceResults(totalScore, finalTP, tpLabel);
-
-            } else {
-                tpDetails = getTPDetails(scorePercent, totalTimeTaken, totalAnswered);
-                finalTP = tpDetails.finalTP;
-                tpLabel = tpDetails.tpLabel;
-                tpDescription = tpDetails.tpDescription;
-                
-                if (isCombinedQuiz) {
-                    tpMessage = `🎉 Tahniah! Anda menyelesaikan Kuiz ${modeText} ini dengan jayanya.`;
-                } else {
-                    tpMessage = `🎉 Kuiz Sifir ${currentSifir} Selesai!`;
-                }
-                
-                avgTime = tpDetails.avgTime;
-                
-                announceResults(totalScore, finalTP, tpLabel);
-            }
-            
-            showScreen('result-screen');
-            
-            // Memaparkan nama pelajar
-            document.getElementById('student-result-name').textContent = studentName || 'PELAJAR'; 
-
-            // Hanya paparkan TP jika ia kuiz gabungan (isCombinedQuiz)
-            if (isCombinedQuiz) {
-                document.getElementById('final-tp').textContent = `TP${finalTP}`;
-                document.getElementById('tp-label').textContent = tpLabel;
-                document.getElementById('tp-description').textContent = tpDescription;
-                document.getElementById('main-tp-message').textContent = tpMessage; // Mesej utama di bawah nama
-            } else {
-                 document.getElementById('main-tp-message').textContent = tpMessage; // Mesej keputusan sahaja untuk sifir tunggal
-            }
-            
-            // Paparkan mesej status timer
-            document.getElementById('timer-status-message').textContent = timerStatusMessage; 
-            
-            // ***************************************************************
-            // AMBIL MESEJ PEMASA UNTUK SIJIL
-            // ***************************************************************
-            const timerNoteForCert = timerStatusMessage; // Gunakan mesej status yang telah dikira
-            
-            document.getElementById('final-score').textContent = `${totalScore} / ${totalQuestions}`;
-            document.getElementById('final-percentage').textContent = `${finalPercentage.toFixed(1)}%`;
-
-            document.getElementById('correct-count').textContent = totalScore;
-            document.getElementById('incorrect-count').textContent = incorrectCount; 
-            document.getElementById('average-time').textContent = avgTime.toFixed(2);
-            
-            // Logik Butang Cetak Sijil
-            const certButtonId = 'print-certificate-button';
+        // NEW: Fungsi untuk menambah/mengemaskini butang cetak sijil
+        function updateCertificateButton(finalPercentage, finalTP, avgTime, certQuizTitle) {
+            const resultScreen = document.getElementById('result-screen');
+            const certButtonId = 'print-cert-button';
             let certButton = document.getElementById(certButtonId);
+
+            // Syarat layak dapat sijil: (Boleh diubah ikut keperluan)
+            // Cth: Perlu selesaikan kuiz (skor > 0) dan bukan timeout total.
+            const isTotalTimeout = (score === 0 && totalTimeElapsed > (totalQuestions * 5));
             
-            // Hanya benarkan sijil jika kuiz gabungan, bukan tamat masa, dan TP > 0
-            if (isCombinedQuiz && !isTotalTimeout && finalTP > 0) { 
+            // ***************************************************************
+            // NEW: Penentuan Mesej Pemasa untuk Sijil
+            // ***************************************************************
+            let timerNoteForCert = "";
+            if (isTimerEnabled) {
+                timerNoteForCert = "✓ Ujian ini diselesaikan dengan cabaran pemasa soalan.";
+            } else {
+                timerNoteForCert = "⚠ Ujian ini diselesaikan tanpa menggunakan pemasa soalan.";
+            }
+
+            if (resultScreen && !isTotalTimeout && finalTP > 0) { 
                 if (!certButton) {
                     // Tambah butang jika belum wujud (diletakkan sebelum butang Ulang Kuiz)
                     certButton = document.createElement('button');
@@ -1470,6 +1120,3 @@
 </body>
 
 </html>
-
-
-
