@@ -117,11 +117,10 @@
         #certificate-content .mt-6 { margin-top: 1rem !important; } /* Jarak antara tajuk sijil dan skor */
 
         /* TARGET SPACING TANDATANGAN */
-        #certificate-content .mt-4 { margin-top: 0.5rem !important; } /* Dikurangkan dari 0.75rem */
+        #certificate-content .mt-4 { margin-top: 0.5rem !important; margin-bottom: 0.5rem !important; } /* Dikurangkan */
         #certificate-content .w-48.h-auto { width: 3cm !important; } 
         #certificate-content .text-lg.font-bold { margin-top: -0.2rem !important; } 
         #certificate-content .text-sm.font-semibold { margin-top: 0.1rem !important; } 
-
 
         .print\:hidden {
             display: none !important;
@@ -465,6 +464,10 @@
         const STORAGE_KEY_TIMER = 'is_timer_enabled'; // NEW: Kunci untuk status pemasa
         const STORAGE_KEY_TONE = 'is_tone_enabled';
         const STORAGE_KEY_TTS = 'is_tts_enabled';
+
+        // VARIABEL UNTUK URUTAN AYAT BETUL
+        const correctAnswersPhrases = ["Awak Hebat!", "Tahniah, Terbaik!", "Awak Bijak!", "Betul, Hebat!"];
+        let phraseIndex = 0;
 
         // --- Utility function untuk menguruskan dropdown notis (BARU) ---
         function toggleNote(contentId) {
@@ -819,6 +822,7 @@
             currentQIndex = 0;
             score = 0;
             totalTimeElapsed = 0;
+            phraseIndex = 0; // Reset urutan ayat betul
 
             document.getElementById('total-q-display').textContent = totalQuestions;
             
@@ -937,15 +941,21 @@
                 feedback.textContent = 'Betul! ✅';
                 feedback.className = 'h-6 text-sm font-semibold text-lime-600';
                 playCorrectSound();
-                // speakMalay("Betul!"); // Dimatikan supaya tidak bertindih dengan soalan seterusnya
+                
+                // --- LOGIK BARU: AYAT PUJIAN BERGANTI-GANTI ---
+                speakMalay(correctAnswersPhrases[phraseIndex]);
+                phraseIndex = (phraseIndex + 1) % correctAnswersPhrases.length; 
+                
+                setTimeout(nextQuestion, 2225); 
             } else {
                 feedback.textContent = `Salah! Jawapan: ${correct} ❌`;
                 feedback.className = 'h-6 text-sm font-semibold text-red-600';
                 playIncorrectSound();
                 speakMalay(`Salah! Jawapan adalah ${correct}`);
+                
+                // KEKALKAN DELAY 4 SAAT UNTUK JAWAPAN SALAH
+                setTimeout(nextQuestion, 4000); 
             }
-
-            setTimeout(nextQuestion, 1200);
         }
 
         function handleInputKey(event) {
@@ -1073,19 +1083,13 @@
             document.getElementById('certificate-screen').classList.remove('flex');
         }
 
-        // NEW: Fungsi untuk menambah/mengemaskini butang cetak sijil
         function updateCertificateButton(finalPercentage, finalTP, avgTime, certQuizTitle) {
             const resultScreen = document.getElementById('result-screen');
             const certButtonId = 'print-cert-button';
             let certButton = document.getElementById(certButtonId);
 
-            // Syarat layak dapat sijil: (Boleh diubah ikut keperluan)
-            // Cth: Perlu selesaikan kuiz (skor > 0) dan bukan timeout total.
             const isTotalTimeout = (score === 0 && totalTimeElapsed > (totalQuestions * 5));
             
-            // ***************************************************************
-            // NEW: Penentuan Mesej Pemasa untuk Sijil
-            // ***************************************************************
             let timerNoteForCert = "";
             if (isTimerEnabled) {
                 timerNoteForCert = "✓ Ujian ini diselesaikan dengan cabaran pemasa soalan.";
@@ -1095,7 +1099,6 @@
 
             if (resultScreen && !isTotalTimeout && finalTP > 0) { 
                 if (!certButton) {
-                    // Tambah butang jika belum wujud (diletakkan sebelum butang Ulang Kuiz)
                     certButton = document.createElement('button');
                     certButton.id = certButtonId;
                     certButton.className = 'w-full bg-lime-500 hover:bg-lime-600 text-white font-black text-base py-3 rounded-lg transition duration-150 shadow-lg hover:shadow-xl mt-3';
@@ -1103,20 +1106,13 @@
                     document.getElementById('result-screen').insertBefore(certButton, repeatButton);
                 }
                 certButton.textContent = '🏅 Cetak Sijil Penghargaan';
-                // ***************************************************************
-                // HANTAR MESEJ PEMASA SEBAGAI ARGUMEN KE-5
-                // ***************************************************************
                 certButton.onclick = () => displayCertificate(finalPercentage, finalTP, avgTime, certQuizTitle, timerNoteForCert); 
 
-                // Paparkan butang di sini
                 certButton.classList.remove('hidden');
             } else if (certButton) {
-                // Sembunyikan butang jika tidak layak
                  certButton.classList.add('hidden');
             }
-            // END NEW: Logik Butang Cetak Sijil
         }
     </script>
 </body>
-
 </html>
