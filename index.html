@@ -9,33 +9,43 @@
 <style>
     /* Muatkan font 'Inter' */
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-    body { font-family: 'Inter', sans-serif; }
+    body { font-family: 'Inter', sans-serif; transition: background-color 0.3s, color 0.3s; }
     
-    /* Gaya Font Standard untuk Jenama - Dikekalkan sekiranya digunakan di tempat lain */
+    /* Gaya Dark Mode */
+    .dark-mode { background-color: #1a202c; color: #f7fafc; }
+    .dark-mode #quiz-container-wrapper { background-color: #2d3748; border-color: #f472b6; color: white; }
+    .dark-mode label { color: #e2e8f0 !important; }
+    .dark-mode .bg-gray-100 { background-color: #4a5568; }
+    .dark-mode .bg-teal-50 { background-color: #283637; }
+    .dark-mode .text-gray-600, .dark-mode .text-gray-700 { color: #cbd5e0 !important; }
+    .dark-mode select { background-color: #4a5568; color: white; border-color: #f472b6; }
+    
+    /* FIX: Pastikan teks input (nama pelajar) kekal hitam dalam mod gelap supaya nampak jelas */
+    .dark-mode input { color: #1a202c !important; }
+
+    /* Gaya Font Standard untuk Jenama */
     .brand-marykate {
         font-family: 'Inter', sans-serif; 
-        color: #ec4899; /* Pink 500 */
-        font-size: 0.875rem; /* Saiz dikurangkan ke text-sm */
+        color: #ec4899; 
+        font-size: 0.875rem; 
         line-height: 1.5rem;
-        font-weight: 900; /* Extra Black */
+        font-weight: 900; 
         text-transform: uppercase;
         letter-spacing: 0.05em;
     }
 
     .result-score {
-        /* Warna bayangan diselaraskan dengan warna Merah Jambu (Pink) */
         animation: pulse-score 1.5s infinite;
     }
     @keyframes pulse-score {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(236, 72, 153, 0.7); /* Pink 500 Shadow */ }
+        0 { transform: scale(1); }
+        50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(236, 72, 153, 0.7); }
         100% { transform: scale(1); }
     }
-    /* Style untuk pemasa soalan yang mendesak (3s terakhir) */
     .urgent-timer {
-        color: #fff; /* Teks putih */
-        background-color: #ef4444; /* Red 500 */
-        border-color: #fca5a5; /* Red 300 */
+        color: #fff; 
+        background-color: #ef4444; 
+        border-color: #fca5a5; 
         animation: urgent-pulse 0.5s infinite;
     }
     @keyframes urgent-pulse {
@@ -43,23 +53,18 @@
         50% { opacity: 0.7; }
     }
 
-    /* Benarkan scrolling pada skrin sijil jika kandungan panjang */
     #certificate-screen {
         overflow-y: auto; 
     }
 
-    /* Gaya baru untuk menyembunyikan elemen TP secara visual */
     .tp-hidden {
          display: none;
     }
 
-    /* Gaya untuk Cetakan Sijil (A4 PORTRAIT) - TELAH DIOPTIMALKAN UNTUK MUAT SATU HALAMAN */
     @media print {
-        
-        /* 1. KUNCI UTAMA: Tetapkan saiz halaman kepada A4 PORTRAIT dengan margin yang lebih ketat */
         @page {
             size: A4 portrait; 
-            margin: 0.5cm;     /* Margin diperketat kepada 0.5cm */
+            margin: 0.5cm;     
         }
 
         body {
@@ -86,38 +91,29 @@
         #certificate-content {
             box-shadow: none !important;
             border: none !important;
-            /* Saiz untuk A4 Portrait (21.0cm x 29.7cm) - padding diperketat lagi */
-            min-height: 28.7cm; /* Tinggi penuh A4 (29.7cm - 2*0.5cm margin) */
-            width: 20.0cm;      /* Lebar penuh A4 (21.0cm - 2*0.5cm margin) */
-            padding: 1.0cm 1cm !important; /* Padding dikurangkan lagi dari 1.5cm 1cm */
-            font-size: 0.85em; /* Saiz font asas dikurangkan sedikit lagi */
+            min-height: 28.7cm; 
+            width: 20.0cm;      
+            padding: 1.0cm 1cm !important; 
+            font-size: 0.85em; 
         }
         
-        /* Saiz font diselaraskan untuk muat pada satu halaman A4 Portrait */
-        #certificate-content .mx-auto.w-48 { 
-            width: 3.5cm !important; /* Logo dikurangkan */
-        } 
-        #certificate-content .text-5xl { font-size: 2rem !important; } /* Saiz TP/Skor dikurangkan */
-        #certificate-content .text-6xl { font-size: 3rem !important; } /* Saiz Nama dikurangkan */
-        #certificate-content .text-4xl { font-size: 1.75rem !important; } /* SIJIL PENGHARGAAN dikurangkan */
-        #certificate-content .text-2xl { font-size: 1.1rem !important; } /* Tajuk Kuiz dikurangkan */
-        #certificate-content .text-lg { font-size: 0.8rem !important; } /* teks biasa dikurangkan */
-        #certificate-content .text-sm { font-size: 0.75rem !important; } /* teks kecil dikurangkan */
+        #certificate-content .mx-auto.w-48 { width: 3.5cm !important; } 
+        #certificate-content .text-5xl { font-size: 2rem !important; } 
+        #certificate-content .text-6xl { font-size: 3rem !important; } 
+        #certificate-content .text-4xl { font-size: 1.75rem !important; } 
+        #certificate-content .text-2xl { font-size: 1.1rem !important; } 
+        #certificate-content .text-lg { font-size: 0.8rem !important; } 
+        #certificate-content .text-sm { font-size: 0.75rem !important; } 
         
-        /* KAWALAN JARAK MENEGAK YANG LEBIH AGGRESIF */
-        #certificate-content .pt-4 { padding-top: 0.4rem !important; } /* Dikurangkan lagi */
-        #certificate-content .my-4 { margin-top: 0.4rem !important; margin-bottom: 0.4rem !important; } /* Dikurangkan lagi */
-        #certificate-content .py-2 { padding-top: 0.2rem !important; padding-bottom: 0.2rem !important; } /* Dikurangkan lagi */
+        #certificate-content .pt-4 { padding-top: 0.4rem !important; } 
+        #certificate-content .my-4 { margin-top: 0.4rem !important; margin-bottom: 0.4rem !important; } 
+        #certificate-content .py-2 { padding-top: 0.2rem !important; padding-bottom: 0.2rem !important; } 
         #certificate-content .mt-2 { margin-top: 0.4rem !important; }
 
-        /* TARGET SPACING KELOMPOK SKOR/TP */
-        .flex-col .space-y-3 { 
-            margin-top: 0.6rem !important; /* Dikurangkan dari 0.8rem */
-        } 
-        #certificate-content .mt-6 { margin-top: 1rem !important; } /* Jarak antara tajuk sijil dan skor */
+        .flex-col .space-y-3 { margin-top: 0.6rem !important; } 
+        #certificate-content .mt-6 { margin-top: 1rem !important; } 
 
-        /* TARGET SPACING TANDATANGAN */
-        #certificate-content .mt-4 { margin-top: 0.5rem !important; margin-bottom: 0.5rem !important; } /* Dikurangkan */
+        #certificate-content .mt-4 { margin-top: 0.5rem !important; margin-bottom: 0.5rem !important; } 
         #certificate-content .w-48.h-auto { width: 3cm !important; } 
         #certificate-content .text-lg.font-bold { margin-top: -0.2rem !important; } 
         #certificate-content .text-sm.font-semibold { margin-top: 0.1rem !important; } 
@@ -157,13 +153,20 @@
                <p class="text-xs text-gray-500 text-center mt-3">
     Lupa atau Tiada Kata Laluan?
     <a href="https://wa.me/60198950339?text=Assalamualaikum/Hai.%20Saya%20memohon%20kata%20laluan%20untuk%20Kuiz%20Bijak%20Sifir.%20Nama%20saya%20[Nama%20Pelajar/Ibu%20Bapa]." target="_blank" class="font-bold text-pink-500 hover:text-pink-600 transition duration-150">
-        Minta Kata Laluan (WhatsApp Mizz).
+        Minta Kata Laluan (KLIK SINI 👈).
     </a>
 </p>
             </div>
             
             <div id="selection-screen" class="hidden space-y-4">
                 
+                <div class="flex items-center justify-between p-3 bg-indigo-100 rounded-lg border border-indigo-300">
+                    <label class="text-sm font-black text-indigo-900">
+                        🌙 Mod Malam / Cerah ☀️
+                    </label>
+                    <button onclick="toggleDarkMode()" class="px-4 py-1 bg-indigo-600 text-white rounded-md text-xs font-bold shadow-md">Tukar</button>
+                </div>
+
                 <div class="space-y-2 p-3 bg-teal-50 rounded-lg border border-teal-300">
                     <label for="student-name-input" class="block text-sm font-black text-teal-700">
                         Nama Pelajar:
@@ -327,7 +330,7 @@
 
                 <div id="feedback" class="h-6 text-sm font-semibold"></div>
 
-                <button onclick="returnToSelection()" class="w-full bg-gray-200 text-gray-700 hover:bg-gray-300 font-semibold text-sm py-2 rounded-lg transition duration-150 shadow-sm mt-4">
+                <button onclick="returnToSelection()" class="w-full bg-gray-200 text-black hover:bg-gray-300 font-extrabold text-sm py-2 rounded-lg transition duration-150 shadow-sm mt-4">
                     Kembali ke Pilihan Sifir
                 </button>
             </div>
@@ -434,8 +437,8 @@
 
     <script>
         // Global State Variables
-        const QUIZ_DURATION = 999999; // Set ke nilai yang sangat tinggi (praktikalnya 'infinite')
-        const CORRECT_PASSWORD = '2darab5=10';
+        const QUIZ_DURATION = 999999; 
+        const CORRECT_PASSWORD = '2x5=10';
         
         let audioContext = null;
         let currentSifir = 0;
@@ -444,10 +447,9 @@
         let isCombinedQuiz = true; 
         let questionDuration = 7; 
 
-        // STATE BARU UNTUK MASA & AUDIO DIPISAHKAN
-        let isTimerEnabled = true; // NEW: Untuk pemasa soalan (default: ON)
-        let isToneEnabled = true;  // Untuk nada (bunyi)
-        let isTTSEnabled = true;   // Untuk suara (Teks-ke-Ucapan)
+        let isTimerEnabled = true; 
+        let isToneEnabled = true;  
+        let isTTSEnabled = true;   
 
         let questions = [];
         let currentQIndex = 0;
@@ -461,15 +463,19 @@
         
         let studentName = '';
         const STORAGE_KEY_NAME = 'student_name_sifir'; 
-        const STORAGE_KEY_TIMER = 'is_timer_enabled'; // NEW: Kunci untuk status pemasa
+        const STORAGE_KEY_TIMER = 'is_timer_enabled'; 
         const STORAGE_KEY_TONE = 'is_tone_enabled';
         const STORAGE_KEY_TTS = 'is_tts_enabled';
 
-        // VARIABEL UNTUK URUTAN AYAT BETUL
         const correctAnswersPhrases = ["Awak Hebat!", "Tahniah, Terbaik!", "Awak Bijak!", "Betul, Hebat!"];
         let phraseIndex = 0;
 
-        // --- Utility function untuk menguruskan dropdown notis (BARU) ---
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            localStorage.setItem('dark_mode_enabled', isDark);
+        }
+
         function toggleNote(contentId) {
             const content = document.getElementById(contentId);
             const arrowId = contentId.includes('tts') ? 'tts-arrow' : 'cert-arrow';
@@ -483,12 +489,8 @@
                 arrow.textContent = '▼';
             }
         }
-        // --- Akhir Utility function untuk menguruskan dropdown notis ---
 
-        // --- Logik Local Storage ---
-        
         function loadSettingsLocally() {
-            // Muatkan Nama
             const storedName = localStorage.getItem(STORAGE_KEY_NAME);
             if (storedName) {
                 studentName = storedName;
@@ -497,29 +499,29 @@
             } else {
                  document.getElementById('current-name-display').textContent = `Nama belum disimpan.`;
             }
+
+            if (localStorage.getItem('dark_mode_enabled') === 'true') {
+                document.body.classList.add('dark-mode');
+            }
             
-            // Muatkan State Timer (Masa)
             const storedTimer = localStorage.getItem(STORAGE_KEY_TIMER);
             if (storedTimer !== null) {
                 isTimerEnabled = storedTimer === 'true';
             }
-            document.getElementById('timer-toggle').checked = isTimerEnabled; // NEW: Set toggle state
+            document.getElementById('timer-toggle').checked = isTimerEnabled; 
 
-            // Muatkan State Tone/Bunyi
             const storedTone = localStorage.getItem(STORAGE_KEY_TONE);
             if (storedTone !== null) {
                 isToneEnabled = storedTone === 'true';
             }
             document.getElementById('tone-toggle').checked = isToneEnabled;
 
-            // Muatkan State TTS/Suara
             const storedTTS = localStorage.getItem(STORAGE_KEY_TTS);
             if (storedTTS !== null) {
                 isTTSEnabled = storedTTS === 'true';
             }
             document.getElementById('tts-toggle').checked = isTTSEnabled;
 
-            // Hentikan TTS jika dimatikan semasa muat (untuk mengelakkan suara TTS sedia ada)
             if (!isTTSEnabled) {
                 window.speechSynthesis.cancel();
             }
@@ -539,15 +541,11 @@
         
         loadSettingsLocally(); 
         
-        // --- Akhir Logik Local Storage ---
-
-        // Logik Togol Audio & Timer
         document.addEventListener('DOMContentLoaded', () => {
             const toneToggle = document.getElementById('tone-toggle');
             const ttsToggle = document.getElementById('tts-toggle');
-            const timerToggle = document.getElementById('timer-toggle'); // NEW: Timer toggle
+            const timerToggle = document.getElementById('timer-toggle'); 
 
-            // NEW: Listener untuk Timer Toggle
             if (timerToggle) {
                  timerToggle.addEventListener('change', (event) => {
                     isTimerEnabled = event.target.checked;
@@ -560,7 +558,7 @@
                     isToneEnabled = event.target.checked;
                     localStorage.setItem(STORAGE_KEY_TONE, isToneEnabled);
                     if (!isToneEnabled) {
-                        stopWarningBeeps(); // Hentikan bip amaran jika bunyi dimatikan
+                        stopWarningBeeps(); 
                     }
                 });
             }
@@ -570,13 +568,12 @@
                     isTTSEnabled = event.target.checked;
                     localStorage.setItem(STORAGE_KEY_TTS, isTTSEnabled);
                     if (!isTTSEnabled) {
-                        window.speechSynthesis.cancel(); // Hentikan TTS sedia ada
+                        window.speechSynthesis.cancel(); 
                     }
                 });
             }
         });
 
-        // Helper function untuk menukar paparan skrin
         function showScreen(screenId) {
             const screens = ['login-screen', 'selection-screen', 'quiz-screen', 'result-screen'];
             screens.forEach(id => {
@@ -585,7 +582,6 @@
             document.getElementById(screenId).classList.remove('hidden');
         }
 
-        // Utility: Fisher-Yates shuffle
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -595,14 +591,10 @@
             }
         }
 
-        // -----------------------------------------------------------------
-        // FUNGSI TTS & Audio
-        // -----------------------------------------------------------------
         function speakMalay(textToRead) {
-            if (!isTTSEnabled) return; // SEMAKAN TTS
+            if (!isTTSEnabled) return; 
             
             if (!('speechSynthesis' in window)) {
-                console.error("Pelayar tidak menyokong Web Speech API.");
                 return;
             }
             
@@ -622,13 +614,11 @@
 
                 if (malayVoice) {
                     utterance.voice = malayVoice;
-                } else {
-                    console.warn("Suara Bahasa Melayu (ms-MY) tidak ditemui. Menggunakan suara lalai sistem.");
                 }
 
                 window.speechSynthesis.speak(utterance);
             } catch (error) {
-                console.error("Ralat TTS: Audio gagal dimainkan.", error);
+                console.error("Ralat TTS", error);
             }
         }
 
@@ -637,7 +627,7 @@
                 try {
                     audioContext = new (window.AudioContext || window.webkitAudioContext)();
                 } catch (e) {
-                    console.error("Web Audio API tidak boleh dimulakan:", e);
+                    console.error("Web Audio API ralat", e);
                 }
             }
         }
@@ -649,7 +639,7 @@
 
         function playTone(frequency, duration, type = 'sine') {
             initAudio();
-            if (!audioContext || !isToneEnabled) return; // SEMAKAN TONE/BUNYI
+            if (!audioContext || !isToneEnabled) return; 
 
             const oscillator = audioContext.createOscillator();
             const gainNode = audioContext.createGain();
@@ -680,11 +670,10 @@
         }
 
         function startWarningBeeps() {
-            if (!isToneEnabled) return; // SEMAKAN TONE/BUNYI
+            if (!isToneEnabled) return; 
             if (warningBeepInterval) return;
             
             warningBeepInterval = setInterval(() => {
-                // Hanya bip jika pemasa dihidupkan
                 if (isTimerEnabled && qTimeLeft <= 3 && qTimeLeft > 0) {
                     playWarningBeep();
                 }
@@ -698,23 +687,13 @@
             }
         }
 
-        // -----------------------------------------------------------------
-        // FUNGSI BARU: PENGESAN PELAYAR DALAMAN
         function isMobileInAppBrowser() {
             const ua = navigator.userAgent || navigator.vendor || window.opera;
-            
-            // Logik untuk mengesan In-App Browser (WhatsApp, Facebook, Line, dsb.)
             const isInApp = /FB_IAB|FBAV|Instagram|Line|KAKAOTALK|CriOS|WebView|wv/i.test(ua);
-            
-            // Mengesan pelayar utama (Chrome, Safari, Firefox, Edge)
             const isMajorBrowser = /Chrome|Safari|Firefox|Edg/i.test(ua) && !/wv/i.test(ua);
-            
-            // Anggap sebagai Pelayar Dalaman jika mengandungi tag In-App ATAU
-            // jika ia peranti Mobile tetapi bukan pelayar utama yang dijangka.
             return isInApp || (!isMajorBrowser && /Mobile/i.test(ua));
         }
 
-        // --- Logik Akses Kata Laluan ---
         function checkPassword() {
             const input = document.getElementById('password-input').value.trim();
             const feedback = document.getElementById('login-feedback');
@@ -725,7 +704,7 @@
                 feedback.classList.add('text-lime-600');
                 
                 showScreen('selection-screen');
-                loadSettingsLocally(); // Muatkan setting selepas login
+                loadSettingsLocally(); 
                 document.getElementById('student-name-input').focus();
                 speakMalay(`Selamat Datang ke Kuiz Bijak Sifir! Edukids by Mizz! Sila masukkan nama anda dan pilih jenis kuiz.`);
             } else {
@@ -744,7 +723,6 @@
             }
         }
 
-        // --- Logik Kuiz ---
         function generateDistractors(correctAnswer) {
             const distractors = new Set();
             const maxAttempts = 10;
@@ -802,6 +780,18 @@
         }
 
         function startQuizFlow() {
+            if (!studentName || studentName.trim() === "") {
+                alert("Sila masukkan Nama Pelajar terlebih dahulu sebelum memulakan kuiz.");
+                document.getElementById('student-name-input').focus();
+                return;
+            }
+            
+            // FIX: Aktifkan Audio Context & Mainkan TTS mula kuiz
+            initAudio();
+            setTimeout(() => {
+                speakMalay("jom mulakan kuiz sifir");
+            }, 50);
+
             const selectionValue = document.getElementById('sifir-pilihan').value;
             const parts = selectionValue.split('-');
             
@@ -810,11 +800,10 @@
             totalQuestions = parseInt(parts[2]);
             isCombinedQuiz = (currentSifir === 0);
 
-            // Logik Durasi Soalan (Default: 7s untuk objektif, 10s untuk input)
             if (currentMode === 'objective') {
-                questionDuration = 7;
+                questionDuration = isTTSEnabled ? 7 : 5; 
             } else {
-                questionDuration = 10;
+                questionDuration = isTTSEnabled ? 10 : 7; 
             }
 
             generateQuestions(currentSifir, currentMode, totalQuestions);
@@ -822,7 +811,7 @@
             currentQIndex = 0;
             score = 0;
             totalTimeElapsed = 0;
-            phraseIndex = 0; // Reset urutan ayat betul
+            phraseIndex = 0; 
 
             document.getElementById('total-q-display').textContent = totalQuestions;
             
@@ -836,7 +825,6 @@
             document.getElementById('current-q-num').textContent = currentQIndex + 1;
             document.getElementById('question-text').textContent = q.text;
             
-            // Kemaskini Progress Bar
             const progress = (currentQIndex / totalQuestions) * 100;
             document.getElementById('progress-bar').style.width = `${progress}%`;
 
@@ -859,10 +847,7 @@
             }
 
             document.getElementById('feedback').textContent = '';
-            
-            // TTS untuk soalan
             speakMalay(q.spoken);
-
             startQuestionTimer();
         }
 
@@ -877,11 +862,9 @@
             clearInterval(qTimerInterval);
             stopWarningBeeps();
             
-            // Reset gaya visual pemasa
             const timerDisplay = document.getElementById('q-countdown-display');
             timerDisplay.classList.remove('urgent-timer');
             
-            // Jika pemasa dimatikan, paparkan simbol ∞ (infinite)
             if (!isTimerEnabled) {
                 timerDisplay.textContent = "∞";
                 return;
@@ -894,7 +877,6 @@
                 qTimeLeft--;
                 timerDisplay.textContent = `${qTimeLeft}s`;
 
-                // Kesan Kecemasan (3s terakhir)
                 if (qTimeLeft <= 3) {
                     timerDisplay.classList.add('urgent-timer');
                     startWarningBeeps();
@@ -914,13 +896,13 @@
             playIncorrectSound();
             speakMalay("Masa tamat!");
             
-            setTimeout(nextQuestion, 1500);
+            const gap = isTTSEnabled ? 1500 : 800;
+            setTimeout(nextQuestion, gap);
         }
 
         function handleInputSubmission() {
             const input = document.getElementById('answer-input').value.trim();
             if (input === "") return;
-            
             checkAnswer(parseInt(input));
         }
 
@@ -942,19 +924,19 @@
                 feedback.className = 'h-6 text-sm font-semibold text-lime-600';
                 playCorrectSound();
                 
-                // --- LOGIK BARU: AYAT PUJIAN BERGANTI-GANTI ---
                 speakMalay(correctAnswersPhrases[phraseIndex]);
                 phraseIndex = (phraseIndex + 1) % correctAnswersPhrases.length; 
                 
-                setTimeout(nextQuestion, 3000); 
+                const gap = isTTSEnabled ? 2225 : 800;
+                setTimeout(nextQuestion, gap); 
             } else {
                 feedback.textContent = `Salah! Jawapan: ${correct} ❌`;
                 feedback.className = 'h-6 text-sm font-semibold text-red-600';
                 playIncorrectSound();
                 speakMalay(`Salah! Jawapan adalah ${correct}`);
                 
-                // KEKALKAN DELAY 5 SAAT UNTUK JAWAPAN SALAH
-                setTimeout(nextQuestion, 5000); 
+                const gap = isTTSEnabled ? 4000 : 2000;
+                setTimeout(nextQuestion, gap); 
             }
         }
 
@@ -980,7 +962,6 @@
             const percentage = (score / totalQuestions) * 100;
             const avgTime = (totalTimeElapsed / totalQuestions).toFixed(2);
 
-            // Papar Nama di skrin keputusan
             document.getElementById('student-result-name').textContent = studentName || 'Pelajar Bijak';
 
             const sifirTitle = isCombinedQuiz ? "Gabungan (1-12)" : `Sifir ${currentSifir}`;
@@ -992,7 +973,6 @@
             document.getElementById('incorrect-count').textContent = totalQuestions - score;
             document.getElementById('average-time').textContent = avgTime;
             
-            // Mesej Status Pemasa pada Keputusan
             const timerStatusMsg = document.getElementById('timer-status-message');
             if (isTimerEnabled) {
                  timerStatusMsg.textContent = `(Ujian dijalankan dengan pemasa soalan diaktifkan)`;
@@ -1000,7 +980,6 @@
                  timerStatusMsg.textContent = `(Ujian dijalankan TANPA pemasa soalan)`;
             }
 
-            // Logik Tahap Penguasaan (TP) - Dikemas kini mengikut DSKP
             let tp = 1;
             let label = "";
             let description = "";
@@ -1035,15 +1014,14 @@
             document.getElementById('tp-label').textContent = label;
             document.getElementById('tp-description').textContent = description;
 
-            // NEW: Logik Butang Cetak Sijil
             updateCertificateButton(percentage, tp, avgTime, sifirTitle);
 
-            // Suara pengakhiran
             const closingText = `Kuiz tamat! ${studentName}, anda mencapai Tahap Penguasaan ${tp}. Skor anda adalah ${score} per ${totalQuestions}. Tahniah!`;
             speakMalay(closingText);
         }
 
         function returnToSelection() {
+            speakMalay("kembali ke pilihan sifir");
             clearInterval(qTimerInterval);
             clearInterval(totalTimeInterval);
             stopWarningBeeps();
@@ -1053,10 +1031,6 @@
         function startNewQuizSelection() {
              showScreen('selection-screen');
         }
-
-        // -----------------------------------------------------------------
-        // LOGIK SIJIL
-        // -----------------------------------------------------------------
 
         function displayCertificate(percentage, tp, avgTime, quizTitle, timerNote) {
             document.getElementById('cert-student-name').textContent = studentName || '[NAMA PELAJAR]';
@@ -1068,13 +1042,10 @@
                 day: 'numeric', month: 'long', year: 'numeric' 
             });
             
-            // NEW: Set Mesej Pemasa
             document.getElementById('cert-timer-note').textContent = timerNote;
-
             document.getElementById('certificate-screen').classList.remove('hidden');
             document.getElementById('certificate-screen').classList.add('flex');
             
-            // Berikan suara makluman mengenai sijil
             speakMalay("Sijil anda telah dijana. Sila klik butang cetak untuk menyimpan sebagai P D F.");
         }
 
@@ -1107,7 +1078,6 @@
                 }
                 certButton.textContent = '🏅 Cetak Sijil Penghargaan';
                 certButton.onclick = () => displayCertificate(finalPercentage, finalTP, avgTime, certQuizTitle, timerNoteForCert); 
-
                 certButton.classList.remove('hidden');
             } else if (certButton) {
                  certButton.classList.add('hidden');
@@ -1116,4 +1086,3 @@
     </script>
 </body>
 </html>
-
