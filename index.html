@@ -10,7 +10,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
     <script>
-      
+      // SILA GANTIKAN DENGAN CONFIG ANDA SENDIRI DARI FIREBASE CONSOLE
       const firebaseConfig = {
         apiKey: "AIzaSyCSATzmCHxxNSZScilBbbgkSpYpnkOaz6Y",
         authDomain: "kuiz-bijak-sifir.firebaseapp.com",
@@ -20,9 +20,9 @@
         appId: "1:244585156500:web:0c8396616ca9e4a7d84981"
       };
 
-     
+      // Initialize Firebase
       firebase.initializeApp(firebaseConfig);
-	
+	  // --- KOD ID UNIK AUTOMATIK ---
 if (!localStorage.getItem('user_unique_id')) {
     const uniqueId = 'UID-' + Math.random().toString(36).substr(2, 9).toUpperCase();
     localStorage.setItem('user_unique_id', uniqueId);
@@ -33,11 +33,11 @@ const deviceUUID = localStorage.getItem('user_unique_id');
     </script>
     
 <style>
-    
+    /* Muatkan font 'Inter' */
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
     body { font-family: 'Inter', sans-serif; transition: background-color 0.3s, color 0.3s; }
     
-   
+    /* Gaya Dark Mode */
     .dark-mode { background-color: #1a202c; color: #f7fafc; }
     .dark-mode #quiz-container-wrapper { background-color: #2d3748; border-color: #f472b6; color: white; }
     .dark-mode label { color: #e2e8f0 !important; }
@@ -45,10 +45,10 @@ const deviceUUID = localStorage.getItem('user_unique_id');
     .dark-mode .bg-teal-50 { background-color: #283637; }
     .dark-mode .text-gray-600, .dark-mode .text-gray-700 { color: #cbd5e0 !important; }
     
-   
+    /* FIX: Pastikan teks input (nama pelajar) kekal hitam dalam mod gelap supaya nampak jelas */
     .dark-mode input { color: #1a202c !important; }
 
-    
+    /* Gaya Font Standard untuk Jenama */
     .brand-marykate {
         font-family: 'Inter', sans-serif; 
         color: #ec4899; 
@@ -178,7 +178,7 @@ const deviceUUID = localStorage.getItem('user_unique_id');
                <p class="text-xs text-gray-500 text-center mt-3">
     Lupa atau Tiada Kata Laluan?
     <a href="https://wa.me/60198950339?text=Assalamualaikum/Hai.%20Saya%20memohon%20kata%20laluan%20untuk%20Kuiz%20Bijak%20Sifir.%20Nama%20saya%20[Nama%20Pelajar/Ibu%20Bapa]." target="_blank" class="font-bold text-pink-500 hover:text-pink-600 transition duration-150">
-        Minta Kata Laluan (KLIK SINI 👈)
+        Minta Kata Laluan (KLIK SINI 👈).
     </a>
 </p>
             </div>
@@ -368,7 +368,7 @@ const deviceUUID = localStorage.getItem('user_unique_id');
                 </div>
 
                 <div id="student-result-name" class="text-xl font-extrabold text-pink-600 mb-3 -mt-2">
-                   
+                    [Nama Pelajar Akan Dipaparkan Di Sini]
                 </div>
                 
                 <p id="main-tp-message" class="text-base font-semibold text-gray-700"></p>
@@ -383,7 +383,7 @@ const deviceUUID = localStorage.getItem('user_unique_id');
                     <div class="p-3 bg-pink-100 rounded-lg border border-pink-400 text-left">
                         <p class="text-sm font-bold text-pink-700 mb-1">Penerangan Tahap:</p>
                         <p id="tp-description" class="text-sm text-gray-800 italic">
-                           
+                            [Penerangan terperinci mengikut DSKP akan dipaparkan di sini.]
                         </p>
                     </div>
                 </div>
@@ -505,7 +505,811 @@ const deviceUUID = localStorage.getItem('user_unique_id');
         </div>
 
     <script>
-        const _0x54e7ee=_0xd15f;(function(_0x18f749,_0x53201a){const _0x3caea1=_0xd15f,_0x39a85d=_0x18f749();while(!![]){try{const _0x3cdc3b=-parseInt(_0x3caea1(0x1d3))/0x1+parseInt(_0x3caea1(0x213))/0x2*(-parseInt(_0x3caea1(0x1f5))/0x3)+-parseInt(_0x3caea1(0x1f2))/0x4+-parseInt(_0x3caea1(0x29c))/0x5+parseInt(_0x3caea1(0x1d6))/0x6+parseInt(_0x3caea1(0x24f))/0x7*(parseInt(_0x3caea1(0x23e))/0x8)+parseInt(_0x3caea1(0x1ee))/0x9;if(_0x3cdc3b===_0x53201a)break;else _0x39a85d['push'](_0x39a85d['shift']());}catch(_0x3c12b0){_0x39a85d['push'](_0x39a85d['shift']());}}}(_0x2d52,0x8983b));const _0x223d8b=(function(){let _0x3daae2=!![];return function(_0x18b6ba,_0x365295){const _0x2ea25c=_0x3daae2?function(){const _0x3bfff3=_0xd15f;if(_0x365295){const _0x5c6851=_0x365295[_0x3bfff3(0x2b3)](_0x18b6ba,arguments);return _0x365295=null,_0x5c6851;}}:function(){};return _0x3daae2=![],_0x2ea25c;};}()),_0x356ca0=_0x223d8b(this,function(){const _0x2149c3=_0xd15f;return _0x356ca0[_0x2149c3(0x265)]()[_0x2149c3(0x1e1)](_0x2149c3(0x291))[_0x2149c3(0x265)]()[_0x2149c3(0x26b)](_0x356ca0)[_0x2149c3(0x1e1)](_0x2149c3(0x291));});_0x356ca0();const _0x1c7713=(function(){let _0x24ec2e=!![];return function(_0x1654ca,_0x21015a){const _0x435a1c=_0x24ec2e?function(){const _0x4564ff=_0xd15f;if(_0x21015a){const _0x55f2ac=_0x21015a[_0x4564ff(0x2b3)](_0x1654ca,arguments);return _0x21015a=null,_0x55f2ac;}}:function(){};return _0x24ec2e=![],_0x435a1c;};}()),_0x5aa515=_0x1c7713(this,function(){const _0x517eb3=_0xd15f,_0x25fed1=function(){const _0x4d5ac8=_0xd15f;let _0x34cc97;try{_0x34cc97=Function(_0x4d5ac8(0x24d)+_0x4d5ac8(0x298)+');')();}catch(_0x332ff1){_0x34cc97=window;}return _0x34cc97;},_0x347c8e=_0x25fed1(),_0x44fae0=_0x347c8e[_0x517eb3(0x1da)]=_0x347c8e['console']||{},_0x22df2d=[_0x517eb3(0x289),_0x517eb3(0x295),_0x517eb3(0x24b),_0x517eb3(0x286),'exception',_0x517eb3(0x267),_0x517eb3(0x1ec)];for(let _0x3550f2=0x0;_0x3550f2<_0x22df2d['length'];_0x3550f2++){const _0x9d1419=_0x1c7713['constructor'][_0x517eb3(0x1e8)]['bind'](_0x1c7713),_0x556929=_0x22df2d[_0x3550f2],_0x355177=_0x44fae0[_0x556929]||_0x9d1419;_0x9d1419[_0x517eb3(0x1fc)]=_0x1c7713[_0x517eb3(0x1df)](_0x1c7713),_0x9d1419[_0x517eb3(0x265)]=_0x355177[_0x517eb3(0x265)][_0x517eb3(0x1df)](_0x355177),_0x44fae0[_0x556929]=_0x9d1419;}});_0x5aa515();const QUIZ_DURATION=0xf423f,CORRECT_PASSWORD=_0x54e7ee(0x248);function _0x2d52(){const _0x1cbed8=['Murid\x20berupaya\x20menyelesaikan\x20masalah\x20harian\x20yang\x20rutin\x20berkaitan\x20sifir\x20dengan\x20menggunakan\x20pelbagai\x20strategi\x20dan\x20kemahiran.','student-name-input','Kata\x20Laluan\x20Salah.\x20Sila\x20cuba\x20lagi.','apply','currentTime','final-percentage','Sifir\x20','login-button','speak','dark-mode','orderBy','getVoices','948551ctUFqV','login-screen','h-6\x20text-sm\x20font-semibold\x20text-red-600','6386910dtouoL','Sila\x20masukkan\x20Nama\x20Pelajar\x20terlebih\x20dahulu\x20sebelum\x20memulakan\x20kuiz.','h-6\x20text-sm\x20font-semibold\x20text-lime-600','random','console','cert-tp','dark_mode_enabled','voice','body','bind','incorrect-count','search','querySelector','width','key','\x20=\x20?','w-full\x20bg-lime-500\x20hover:bg-lime-600\x20text-white\x20font-black\x20text-base\x20py-3\x20rounded-lg\x20transition\x20duration-150\x20shadow-lg\x20hover:shadow-xl\x20mt-3','print-cert-button','prototype','Web\x20Audio\x20API\x20ralat','average-time','high-score-display','trace','cancel','18489960QSZSxz','Murid\x20berupaya\x20menyelesaikan\x20masalah\x20harian\x20yang\x20rutin\x20berkaitan\x20sifir\x20secara\x20sistematik\x20dan\x20berkesan.','options','#result-screen\x20button:last-child','4391860vcQoLz','(Ujian\x20dijalankan\x20dengan\x20pemasa\x20soalan\x20diaktifkan)','add','413151SZdquC','FieldValue','is_tts_enabled','toLowerCase','className','Nama','change','__proto__','square','q-countdown-display','timer-status-message','collection','Kurang\x20Memuaskan','text-red-600','connect','Gabungan\x20(1-12)-objective-50','AudioContext','\x20darab\x20','firestore','click','get','Selamat\x20Datang\x20ke\x20Kuiz\x20Bijak\x20Sifir!','Gabungan\x20(1-12)','Sijil\x20anda\x20telah\x20dijana.','Baik\x20(Berupaya)','Salah!\x20Jawapan:\x20','result-screen','selection-screen','frequency','createOscillator','8LnsULp','textContent','current-name-display','exponentialRampToValueAtTime','.\x20Skor\x20anda\x20adalah\x20','Baru','<p\x20class=\x22text-gray-400\x20text-center\x20italic\x22>Tiada\x20rekod\x20ditemui.</p>','true','urgent-timer','question-text','destination','limit','.\x20Tahniah!','cert-avg-time','tts-toggle','includes','style','triangle','Salah!\x20Jawapan\x20adalah\x20','ms-MY','⚠\x20Ujian\x20ini\x20diselesaikan\x20tanpa\x20menggunakan\x20pemasa\x20soalan.','input','tts-arrow','dataset','melayu','insertBefore','tp-label','Kuiz\x20tamat!\x20','Gabungan\x20(1-12)-input-50','option-','Betul,\x20Hebat!','desc','Murid\x20memahami\x20konsep\x20asas\x20pendaraban\x20dan\x20berupaya\x20menentukan\x20hasil\x20darab\x20bagi\x20sifir\x20yang\x20diuji.','tp-description','catch','progress-bar','then','where','setValueAtTime','sine','is_tone_enabled','webkitAudioContext','Cemerlang\x20&\x20Role\x20Model','2801648YIIuJE','addEventListener','student-result-name','focus','onclick','hidden',',\x20anda\x20mencapai\x20Tahap\x20Penguasaan\x20','speechSynthesis','Markah','\x20-\x20','2x5=10','createGain','Nama\x20belum\x20disimpan.','info','toggle','return\x20(function()\x20','Skor','21xCKaXX','border-teal-400','data','cert-date','TP\x20','tone-toggle','min','cert-timer-note','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22flex\x20justify-between\x20border-b\x20border-gray-100\x20py-1\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22text-[10px]\x20font-medium\x20text-gray-700\x20truncate\x20w-20\x22>','gain','type','</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22font-bold\x20text-teal-600\x22>','cert-arrow','size','Murid\x20mempunyai\x20pengetahuan\x20asas\x20tentang\x20konsep\x20pendaraban\x20namun\x20masih\x20memerlukan\x20masa\x20atau\x20bantuan\x20untuk\x20mengingati\x20sifir.','lang','numeric','Masa\x20Tamat!','total-q-display','\x20per\x20','empty','Enter','toString','flex','table','span','Tahap\x20Penguasaan:\x20','total-time-tracker','constructor','from','serverTimestamp','long','split','\x20x\x20','objective','getItem','Murid\x20berupaya\x20menggunakan\x20pengetahuan\x20dan\x20kemahiran\x20matematik\x20bagi\x20menyelesaikan\x20masalah\x20harian\x20yang\x20bukan\x20rutin\x20secara\x20kreatif\x20dan\x20inovatif\x20serta\x20boleh\x20menjadi\x20pembimbing\x20kepada\x20rakan\x20lain.','name','password-input','has','✓\x20Ujian\x20ini\x20diselesaikan\x20dengan\x20cabaran\x20pemasa\x20soalan.','max','createElement','contains','leaderboard-objektif','checked','input-mode','toLocaleDateString','length','timer-toggle','Masa','remove','cert-score','trim','certificate-screen','error','spoken','text-lime-600','log','forEach','history-list','Sangat\x20Baik\x20(Mahir)','classList','cert-student-name','find','toFixed','(((.+)+)+)+$','Tahap\x20Minimum','value','malay','warn','sifir-pilihan','answer-input','{}.constructor(\x22return\x20this\x22)(\x20)','feedback','innerHTML','text','5044500USqjNM','push','TajukKuiz','login-feedback','Tahniah,\x20Terbaik!','\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22text-[10px]\x20font-bold\x20text-gray-600\x22>','objective-mode','sifir-title-display','student_name_sifir','target','leaderboard-subjektif','Pelajar\x20Bijak','setItem','DOMContentLoaded','Masa\x20tamat!','Murid\x20mula\x20menunjukkan\x20minat\x20dalam\x20pembelajaran\x20sifir\x20tetapi\x20memerlukan\x20banyak\x20bimbingan\x20dan\x20latihan\x20asas.','[NAMA\x20PELAJAR]','getElementById','floor','correctAnswer'];_0x2d52=function(){return _0x1cbed8;};return _0x2d52();}let audioContext=null,currentSifir=0x0,currentMode=_0x54e7ee(0x228),totalQuestions=0x32,isCombinedQuiz=!![],questionDuration=0x7,isTimerEnabled=!![],isToneEnabled=!![],isTTSEnabled=!![],questions=[],currentQIndex=0x0,score=0x0,totalTimeElapsed=0x0,totalTimeInterval=null,qTimerInterval=null,qTimeLeft=0x7,warningBeepInterval=null,studentName='';const STORAGE_KEY_NAME=_0x54e7ee(0x2a4),STORAGE_KEY_TIMER='is_timer_enabled',STORAGE_KEY_TONE=_0x54e7ee(0x23b),STORAGE_KEY_TTS=_0x54e7ee(0x1f7),correctAnswersPhrases=['Awak\x20Hebat!',_0x54e7ee(0x2a0),'Awak\x20Bijak!',_0x54e7ee(0x231)];let phraseIndex=0x0;function toggleDarkMode(){const _0x40b257=_0x54e7ee;document[_0x40b257(0x1de)][_0x40b257(0x28d)][_0x40b257(0x24c)](_0x40b257(0x1d0));const _0x4667f8=document[_0x40b257(0x1de)]['classList'][_0x40b257(0x27a)](_0x40b257(0x1d0));localStorage[_0x40b257(0x2a8)](_0x40b257(0x1dc),_0x4667f8);}function toggleNote(_0x4de5ed){const _0x35126f=_0x54e7ee,_0x525069=document['getElementById'](_0x4de5ed),_0x46538d=_0x4de5ed['includes'](_0x35126f(0x232))?_0x35126f(0x25b):_0x35126f(0x229),_0x415978=document[_0x35126f(0x2ad)](_0x46538d);_0x525069[_0x35126f(0x28d)][_0x35126f(0x27a)](_0x35126f(0x243))?(_0x525069[_0x35126f(0x28d)][_0x35126f(0x282)](_0x35126f(0x243)),_0x415978['textContent']='▲'):(_0x525069['classList'][_0x35126f(0x1f4)]('hidden'),_0x415978[_0x35126f(0x214)]='▼');}function loadSettingsLocally(){const _0x40bb7b=_0x54e7ee,_0x3a8ed4=localStorage[_0x40bb7b(0x272)](STORAGE_KEY_NAME);_0x3a8ed4?(studentName=_0x3a8ed4,document[_0x40bb7b(0x2ad)](_0x40bb7b(0x2b1))['value']=studentName,document[_0x40bb7b(0x2ad)]('current-name-display')[_0x40bb7b(0x214)]='Nama\x20yang\x20disimpan:\x20'+studentName):document[_0x40bb7b(0x2ad)]('current-name-display')[_0x40bb7b(0x214)]=_0x40bb7b(0x24a);localStorage[_0x40bb7b(0x272)]('dark_mode_enabled')===_0x40bb7b(0x21a)&&document['body']['classList'][_0x40bb7b(0x1f4)](_0x40bb7b(0x1d0));const _0x161b94=localStorage[_0x40bb7b(0x272)](STORAGE_KEY_TIMER);if(_0x161b94!==null)isTimerEnabled=_0x161b94==='true';document[_0x40bb7b(0x2ad)](_0x40bb7b(0x280))[_0x40bb7b(0x27c)]=isTimerEnabled;const _0x42613a=localStorage[_0x40bb7b(0x272)](STORAGE_KEY_TONE);if(_0x42613a!==null)isToneEnabled=_0x42613a===_0x40bb7b(0x21a);document[_0x40bb7b(0x2ad)](_0x40bb7b(0x254))[_0x40bb7b(0x27c)]=isToneEnabled;const _0x3cc196=localStorage[_0x40bb7b(0x272)](STORAGE_KEY_TTS);if(_0x3cc196!==null)isTTSEnabled=_0x3cc196==='true';document[_0x40bb7b(0x2ad)](_0x40bb7b(0x221))['checked']=isTTSEnabled;if(!isTTSEnabled)window['speechSynthesis'][_0x40bb7b(0x1ed)]();}function updateAndSaveName(_0x2cfa16){const _0x189734=_0x54e7ee,_0x55bede=_0x2cfa16['value'][_0x189734(0x284)]();studentName=_0x55bede,localStorage[_0x189734(0x2a8)](STORAGE_KEY_NAME,_0x55bede),_0x55bede?document[_0x189734(0x2ad)](_0x189734(0x215))['textContent']='Nama\x20yang\x20disimpan:\x20'+_0x55bede:document[_0x189734(0x2ad)](_0x189734(0x215))[_0x189734(0x214)]=_0x189734(0x24a);}loadSettingsLocally(),document['addEventListener'](_0x54e7ee(0x2a9),()=>{const _0x1ba443=_0x54e7ee,_0x5bc665=document[_0x1ba443(0x2ad)](_0x1ba443(0x254)),_0x85a73e=document[_0x1ba443(0x2ad)]('tts-toggle'),_0x5441da=document[_0x1ba443(0x2ad)]('timer-toggle');_0x5441da&&_0x5441da[_0x1ba443(0x23f)](_0x1ba443(0x1fb),_0x1c1d49=>{const _0x2e0454=_0x1ba443;isTimerEnabled=_0x1c1d49[_0x2e0454(0x2a5)]['checked'],localStorage[_0x2e0454(0x2a8)](STORAGE_KEY_TIMER,isTimerEnabled);}),_0x5bc665&&_0x5bc665[_0x1ba443(0x23f)](_0x1ba443(0x1fb),_0x509435=>{const _0x4e8161=_0x1ba443;isToneEnabled=_0x509435[_0x4e8161(0x2a5)][_0x4e8161(0x27c)],localStorage[_0x4e8161(0x2a8)](STORAGE_KEY_TONE,isToneEnabled);if(!isToneEnabled)stopWarningBeeps();}),_0x85a73e&&_0x85a73e[_0x1ba443(0x23f)]('change',_0x1a0206=>{const _0x14f87=_0x1ba443;isTTSEnabled=_0x1a0206[_0x14f87(0x2a5)][_0x14f87(0x27c)],localStorage[_0x14f87(0x2a8)](STORAGE_KEY_TTS,isTTSEnabled);if(!isTTSEnabled)window[_0x14f87(0x245)]['cancel']();});});function showScreen(_0xa0b98f){const _0x2e3ced=_0x54e7ee,_0x474222=[_0x2e3ced(0x1d4),_0x2e3ced(0x210),'quiz-screen',_0x2e3ced(0x20f)];_0x474222[_0x2e3ced(0x28a)](_0x4aec2a=>{const _0x15e222=_0x2e3ced;document['getElementById'](_0x4aec2a)[_0x15e222(0x28d)][_0x15e222(0x1f4)](_0x15e222(0x243));}),document[_0x2e3ced(0x2ad)](_0xa0b98f)[_0x2e3ced(0x28d)][_0x2e3ced(0x282)](_0x2e3ced(0x243));}function shuffleArray(_0x1d4725){const _0x176634=_0x54e7ee;for(let _0x3284a7=_0x1d4725['length']-0x1;_0x3284a7>0x0;_0x3284a7--){const _0x4e73e3=Math[_0x176634(0x2ae)](Math[_0x176634(0x1d9)]()*(_0x3284a7+0x1));[_0x1d4725[_0x3284a7],_0x1d4725[_0x4e73e3]]=[_0x1d4725[_0x4e73e3],_0x1d4725[_0x3284a7]];}}function speakMalay(_0x19df5d){const _0xd7084c=_0x54e7ee;if(!isTTSEnabled)return;if(!(_0xd7084c(0x245)in window))return;try{const _0x22d73e=new SpeechSynthesisUtterance(_0x19df5d);_0x22d73e[_0xd7084c(0x25e)]='ms-MY',_0x22d73e['rate']=0x1;const _0xb7c31e=window['speechSynthesis'][_0xd7084c(0x1d2)]();let _0x9066fb=_0xb7c31e[_0xd7084c(0x28f)](_0x45fa4a=>_0x45fa4a[_0xd7084c(0x25e)]===_0xd7084c(0x226)||_0x45fa4a[_0xd7084c(0x274)][_0xd7084c(0x1f8)]()[_0xd7084c(0x222)](_0xd7084c(0x294))||_0x45fa4a[_0xd7084c(0x274)]['toLowerCase']()[_0xd7084c(0x222)](_0xd7084c(0x22b)));if(_0x9066fb)_0x22d73e[_0xd7084c(0x1dd)]=_0x9066fb;window[_0xd7084c(0x245)][_0xd7084c(0x1cf)](_0x22d73e);}catch(_0xcc34bb){console[_0xd7084c(0x286)]('TTS\x20Error',_0xcc34bb);}}function initAudio(){const _0x69ae73=_0x54e7ee;if(!audioContext)try{audioContext=new(window[(_0x69ae73(0x205))]||window[(_0x69ae73(0x23c))])();}catch(_0xffbc87){console[_0x69ae73(0x286)](_0x69ae73(0x1e9),_0xffbc87);}}document[_0x54e7ee(0x2ad)](_0x54e7ee(0x2b7))['addEventListener'](_0x54e7ee(0x208),initAudio,{'once':!![]}),document[_0x54e7ee(0x2ad)](_0x54e7ee(0x275))[_0x54e7ee(0x23f)]('keydown',_0x384e6c=>{const _0x47eabc=_0x54e7ee;if(_0x384e6c[_0x47eabc(0x1e4)]===_0x47eabc(0x264))initAudio();},{'once':!![]});function playTone(_0x216876,_0x2417c5,_0x4f67dd=_0x54e7ee(0x23a)){const _0x3255f9=_0x54e7ee;initAudio();if(!audioContext||!isToneEnabled)return;const _0x26fa5c=audioContext[_0x3255f9(0x212)](),_0x4b3c42=audioContext[_0x3255f9(0x249)]();_0x26fa5c[_0x3255f9(0x203)](_0x4b3c42),_0x4b3c42[_0x3255f9(0x203)](audioContext[_0x3255f9(0x21d)]),_0x26fa5c[_0x3255f9(0x259)]=_0x4f67dd,_0x4b3c42[_0x3255f9(0x258)][_0x3255f9(0x239)](0.5,audioContext[_0x3255f9(0x2b4)]),_0x4b3c42[_0x3255f9(0x258)][_0x3255f9(0x216)](0.001,audioContext[_0x3255f9(0x2b4)]+_0x2417c5),_0x26fa5c[_0x3255f9(0x211)][_0x3255f9(0x239)](_0x216876,audioContext[_0x3255f9(0x2b4)]),_0x26fa5c['start'](),_0x26fa5c['stop'](audioContext[_0x3255f9(0x2b4)]+_0x2417c5);}function playCorrectSound(){playTone(0x370,0.15,'sine');}function playIncorrectSound(){const _0x16b74a=_0x54e7ee;playTone(0xdc,0.3,_0x16b74a(0x224));}function playWarningBeep(){const _0x1cd38d=_0x54e7ee;playTone(0x320,0.1,_0x1cd38d(0x1fd));}function startWarningBeeps(){if(!isToneEnabled)return;if(warningBeepInterval)return;warningBeepInterval=setInterval(()=>{isTimerEnabled&&qTimeLeft<=0x3&&qTimeLeft>0x0&&playWarningBeep();},0x1f4);}function stopWarningBeeps(){warningBeepInterval&&(clearInterval(warningBeepInterval),warningBeepInterval=null);}function checkPassword(){const _0x5aab38=_0x54e7ee,_0x158fc9=document[_0x5aab38(0x2ad)](_0x5aab38(0x275))[_0x5aab38(0x293)]['trim'](),_0x5c43d6=document['getElementById'](_0x5aab38(0x29f));_0x158fc9===CORRECT_PASSWORD?(_0x5c43d6[_0x5aab38(0x214)]='Log\x20Masuk\x20Berjaya!',_0x5c43d6[_0x5aab38(0x28d)]['remove'](_0x5aab38(0x202)),_0x5c43d6['classList'][_0x5aab38(0x1f4)](_0x5aab38(0x288)),showScreen(_0x5aab38(0x210)),loadSettingsLocally(),document[_0x5aab38(0x2ad)](_0x5aab38(0x2b1))[_0x5aab38(0x241)](),speakMalay(_0x5aab38(0x20a))):(playIncorrectSound(),_0x5c43d6['textContent']=_0x5aab38(0x2b2),_0x5c43d6[_0x5aab38(0x28d)][_0x5aab38(0x282)]('text-lime-600'),_0x5c43d6[_0x5aab38(0x28d)][_0x5aab38(0x1f4)](_0x5aab38(0x202)),document['getElementById']('password-input')[_0x5aab38(0x293)]='',document[_0x5aab38(0x2ad)](_0x5aab38(0x275))[_0x5aab38(0x241)]());}function handleLoginKey(_0x3bf072){const _0x5d547c=_0x54e7ee;if(_0x3bf072[_0x5d547c(0x1e4)]===_0x5d547c(0x264))checkPassword();}function generateDistractors(_0x4776c1){const _0x4360ed=_0x54e7ee,_0x180281=new Set(),_0x140fda=0xa;let _0x26d43e=0x0;while(_0x180281[_0x4360ed(0x25c)]<0x3&&_0x26d43e<_0x140fda){_0x26d43e++;let _0x384bfd=Math[_0x4360ed(0x2ae)](Math[_0x4360ed(0x1d9)]()*0xb)-0x5,_0x48374f=_0x4776c1+_0x384bfd;_0x48374f>0x0&&_0x48374f!==_0x4776c1&&!_0x180281['has'](_0x48374f)&&_0x180281[_0x4360ed(0x1f4)](_0x48374f);}return _0x180281[_0x4360ed(0x25c)]<0x3&&[0x1,-0x1,0xa,_0x4776c1%0xa===0x0?-0xa:0x0][_0x4360ed(0x28a)](_0x429ed8=>{const _0x20f849=_0x4360ed;let _0x54cddd=_0x4776c1+_0x429ed8;_0x54cddd>0x0&&_0x54cddd!==_0x4776c1&&_0x180281['size']<0x3&&!_0x180281[_0x20f849(0x276)](_0x54cddd)&&_0x180281[_0x20f849(0x1f4)](_0x54cddd);}),Array[_0x4360ed(0x26c)](_0x180281)['slice'](0x0,0x3);}function generateQuestions(_0x34cac7,_0x1bd58f,_0x38bebb){const _0x1aeb05=_0x54e7ee;questions=[];for(let _0x49ef7d=0x0;_0x49ef7d<_0x38bebb;_0x49ef7d++){let _0x38cc14,_0x2be841=Math[_0x1aeb05(0x2ae)](Math['random']()*0xc)+0x1;_0x34cac7===0x0?_0x38cc14=Math[_0x1aeb05(0x2ae)](Math['random']()*0xc)+0x1:_0x38cc14=_0x34cac7;const _0x2b6bee=_0x38cc14*_0x2be841,_0x2ba2d5={'text':_0x38cc14+_0x1aeb05(0x270)+_0x2be841+_0x1aeb05(0x1e5),'spoken':_0x38cc14+_0x1aeb05(0x206)+_0x2be841,'correctAnswer':_0x2b6bee};if(_0x1bd58f===_0x1aeb05(0x271)){const _0x2464b6=generateDistractors(_0x2b6bee),_0x29728d=[_0x2b6bee,..._0x2464b6];shuffleArray(_0x29728d),_0x2ba2d5[_0x1aeb05(0x1f0)]=_0x29728d;}questions[_0x1aeb05(0x29d)](_0x2ba2d5);}}function startQuizFlow(){const _0x2ed834=_0x54e7ee;if(!studentName||studentName[_0x2ed834(0x284)]()===''){alert(_0x2ed834(0x1d7)),document[_0x2ed834(0x2ad)](_0x2ed834(0x2b1))['focus']();return;}initAudio(),speakMalay('Jom\x20Mula');const _0x1a1330=document[_0x2ed834(0x2ad)](_0x2ed834(0x296))[_0x2ed834(0x293)],_0x537212=_0x1a1330[_0x2ed834(0x26f)]('-');currentSifir=parseInt(_0x537212[0x0]),currentMode=_0x537212[0x1],totalQuestions=parseInt(_0x537212[0x2]),isCombinedQuiz=currentSifir===0x0,currentMode===_0x2ed834(0x271)?questionDuration=isTTSEnabled?0x7:0x5:questionDuration=isTTSEnabled?0xa:0x7,generateQuestions(currentSifir,currentMode,totalQuestions),currentQIndex=0x0,score=0x0,totalTimeElapsed=0x0,phraseIndex=0x0,document[_0x2ed834(0x2ad)](_0x2ed834(0x261))[_0x2ed834(0x214)]=totalQuestions,showScreen('quiz-screen'),setTimeout(()=>{loadQuestion(),startTotalTimer();},0x3e8);}function loadQuestion(){const _0x2557b9=_0x54e7ee,_0x3972ae=questions[currentQIndex];document['getElementById']('current-q-num')['textContent']=currentQIndex+0x1,document[_0x2557b9(0x2ad)](_0x2557b9(0x21c))['textContent']=_0x3972ae[_0x2557b9(0x29b)];const _0x5d1cb1=currentQIndex/totalQuestions*0x64;document[_0x2557b9(0x2ad)](_0x2557b9(0x236))[_0x2557b9(0x223)][_0x2557b9(0x1e3)]=_0x5d1cb1+'%';if(currentMode===_0x2557b9(0x228))document[_0x2557b9(0x2ad)]('input-mode')[_0x2557b9(0x28d)][_0x2557b9(0x282)](_0x2557b9(0x243)),document[_0x2557b9(0x2ad)](_0x2557b9(0x2a2))[_0x2557b9(0x28d)][_0x2557b9(0x1f4)](_0x2557b9(0x243)),document['getElementById'](_0x2557b9(0x297))['value']='',document[_0x2557b9(0x2ad)](_0x2557b9(0x297))[_0x2557b9(0x241)]();else{document[_0x2557b9(0x2ad)](_0x2557b9(0x27d))['classList'][_0x2557b9(0x1f4)](_0x2557b9(0x243)),document[_0x2557b9(0x2ad)](_0x2557b9(0x2a2))[_0x2557b9(0x28d)]['remove'](_0x2557b9(0x243));const _0x1cb5e4=['A','B','C','D'];_0x1cb5e4[_0x2557b9(0x28a)]((_0x116792,_0x3c23c9)=>{const _0x3b8e10=_0x2557b9,_0x42b0c5=_0x3972ae[_0x3b8e10(0x1f0)][_0x3c23c9],_0x16e00d=document[_0x3b8e10(0x2ad)](_0x3b8e10(0x230)+_0x116792);_0x16e00d[_0x3b8e10(0x1e2)](_0x3b8e10(0x268))[_0x3b8e10(0x214)]=_0x42b0c5,_0x16e00d[_0x3b8e10(0x22a)]['value']=_0x42b0c5;});}document[_0x2557b9(0x2ad)](_0x2557b9(0x299))['textContent']='',speakMalay(_0x3972ae[_0x2557b9(0x287)]),startQuestionTimer();}function startTotalTimer(){totalTimeInterval=setInterval(()=>{const _0x57cdb3=_0xd15f;totalTimeElapsed+=0.1,document['getElementById'](_0x57cdb3(0x26a))[_0x57cdb3(0x214)]=totalTimeElapsed['toFixed'](0x1);},0x64);}function startQuestionTimer(){const _0x5bc5ac=_0x54e7ee;clearInterval(qTimerInterval),stopWarningBeeps();const _0x3409c6=document[_0x5bc5ac(0x2ad)](_0x5bc5ac(0x1fe));_0x3409c6['classList'][_0x5bc5ac(0x282)]('urgent-timer');if(!isTimerEnabled){_0x3409c6[_0x5bc5ac(0x214)]='∞';return;}qTimeLeft=questionDuration,_0x3409c6[_0x5bc5ac(0x214)]=qTimeLeft+'s',qTimerInterval=setInterval(()=>{const _0x4fd968=_0x5bc5ac;qTimeLeft--,_0x3409c6[_0x4fd968(0x214)]=qTimeLeft+'s',qTimeLeft<=0x3&&(_0x3409c6[_0x4fd968(0x28d)][_0x4fd968(0x1f4)](_0x4fd968(0x21b)),startWarningBeeps()),qTimeLeft<=0x0&&(clearInterval(qTimerInterval),stopWarningBeeps(),handleTimeout());},0x3e8);}function handleTimeout(){const _0x5ebdb5=_0x54e7ee;document[_0x5ebdb5(0x2ad)](_0x5ebdb5(0x299))[_0x5ebdb5(0x214)]=_0x5ebdb5(0x260),document[_0x5ebdb5(0x2ad)](_0x5ebdb5(0x299))[_0x5ebdb5(0x1f9)]=_0x5ebdb5(0x1d5),playIncorrectSound(),speakMalay(_0x5ebdb5(0x2aa));const _0x42eb99=isTTSEnabled?0x5dc:0x320;setTimeout(nextQuestion,_0x42eb99);}function handleInputSubmission(){const _0x5f3472=_0x54e7ee,_0x2227a2=document['getElementById'](_0x5f3472(0x297))['value'][_0x5f3472(0x284)]();if(_0x2227a2==='')return;checkAnswer(parseInt(_0x2227a2));}function _0xd15f(_0x2a23e6,_0x519fb1){_0x2a23e6=_0x2a23e6-0x1cf;const _0x36d084=_0x2d52();let _0x5aa515=_0x36d084[_0x2a23e6];return _0x5aa515;}function handleObjectiveSubmission(_0x1fd1c5){const _0x2cf02f=_0x54e7ee,_0x4b0eaf=parseInt(_0x1fd1c5[_0x2cf02f(0x22a)][_0x2cf02f(0x293)]);checkAnswer(_0x4b0eaf);}function checkAnswer(_0x365136){const _0x10b4c1=_0x54e7ee;clearInterval(qTimerInterval),stopWarningBeeps();const _0xc0da1f=questions[currentQIndex][_0x10b4c1(0x2af)],_0x3417b3=document[_0x10b4c1(0x2ad)]('feedback');if(_0x365136===_0xc0da1f){score++,_0x3417b3[_0x10b4c1(0x214)]='Betul!\x20✅',_0x3417b3[_0x10b4c1(0x1f9)]=_0x10b4c1(0x1d8),playCorrectSound(),speakMalay(correctAnswersPhrases[phraseIndex]),phraseIndex=(phraseIndex+0x1)%correctAnswersPhrases[_0x10b4c1(0x27f)];const _0x241a92=isTTSEnabled?0x8b1:0x320;setTimeout(nextQuestion,_0x241a92);}else{_0x3417b3[_0x10b4c1(0x214)]=_0x10b4c1(0x20e)+_0xc0da1f+'\x20❌',_0x3417b3[_0x10b4c1(0x1f9)]=_0x10b4c1(0x1d5),playIncorrectSound(),speakMalay(_0x10b4c1(0x225)+_0xc0da1f);const _0x563bc2=isTTSEnabled?0xfa0:0x7d0;setTimeout(nextQuestion,_0x563bc2);}}function handleInputKey(_0x3631dc){const _0x4a502e=_0x54e7ee;if(_0x3631dc[_0x4a502e(0x1e4)]===_0x4a502e(0x264))handleInputSubmission();}function nextQuestion(){currentQIndex++,currentQIndex<totalQuestions?loadQuestion():endQuiz();}function endQuiz(){const _0x4a8527=_0x54e7ee;clearInterval(totalTimeInterval),showScreen('result-screen');const _0x1f0086=score/totalQuestions*0x64,_0x1d5712=(totalTimeElapsed/totalQuestions)[_0x4a8527(0x290)](0x2);document[_0x4a8527(0x2ad)](_0x4a8527(0x240))[_0x4a8527(0x214)]=studentName||_0x4a8527(0x2ac);const _0x2b2d84=isCombinedQuiz?_0x4a8527(0x20b):_0x4a8527(0x2b6)+currentSifir;document[_0x4a8527(0x2ad)](_0x4a8527(0x2a3))['textContent']=_0x2b2d84,document[_0x4a8527(0x2ad)]('final-score')['textContent']=score+'\x20/\x20'+totalQuestions,document[_0x4a8527(0x2ad)](_0x4a8527(0x2b5))[_0x4a8527(0x214)]=_0x1f0086[_0x4a8527(0x290)](0x0)+'%',document['getElementById']('correct-count')['textContent']=score,document['getElementById'](_0x4a8527(0x1e0))[_0x4a8527(0x214)]=totalQuestions-score,document[_0x4a8527(0x2ad)](_0x4a8527(0x1ea))[_0x4a8527(0x214)]=_0x1d5712;const _0x6d44db=document['getElementById'](_0x4a8527(0x1ff));isTimerEnabled?_0x6d44db[_0x4a8527(0x214)]=_0x4a8527(0x1f3):_0x6d44db[_0x4a8527(0x214)]=_0x4a8527(0x227);let _0x4ae640=0x1,_0x25c098='',_0x2c760d='';if(_0x1f0086>=0x5a)_0x4ae640=0x6,_0x25c098=_0x4a8527(0x23d),_0x2c760d=_0x4a8527(0x273);else{if(_0x1f0086>=0x50)_0x4ae640=0x5,_0x25c098=_0x4a8527(0x28c),_0x2c760d=_0x4a8527(0x1ef);else{if(_0x1f0086>=0x3c)_0x4ae640=0x4,_0x25c098=_0x4a8527(0x20d),_0x2c760d=_0x4a8527(0x2b0);else{if(_0x1f0086>=0x28)_0x4ae640=0x3,_0x25c098='Memuaskan\x20(Faham)',_0x2c760d=_0x4a8527(0x233);else _0x1f0086>=0x14?(_0x4ae640=0x2,_0x25c098=_0x4a8527(0x201),_0x2c760d=_0x4a8527(0x25d)):(_0x4ae640=0x1,_0x25c098=_0x4a8527(0x292),_0x2c760d=_0x4a8527(0x2ab));}}}document['getElementById']('final-tp')[_0x4a8527(0x214)]=_0x4a8527(0x253)+_0x4ae640,document['getElementById'](_0x4a8527(0x22d))[_0x4a8527(0x214)]=_0x25c098,document['getElementById'](_0x4a8527(0x234))[_0x4a8527(0x214)]=_0x2c760d,updateCertificateButton(_0x1f0086,_0x4ae640,_0x1d5712,_0x2b2d84);const _0x131076=_0x4a8527(0x22e)+studentName+_0x4a8527(0x244)+_0x4ae640+_0x4a8527(0x217)+score+_0x4a8527(0x262)+totalQuestions+_0x4a8527(0x21f);speakMalay(_0x131076),saveScoreToFirebase(studentName,score,_0x1f0086,_0x4ae640,_0x1d5712,_0x2b2d84);}function saveScoreToFirebase(_0x1c9d21,_0x4651e6,_0x2d8779,_0x3b70df,_0x438ac3,_0x185301){const _0x4c5e93=_0x54e7ee,_0x5cbe93=document[_0x4c5e93(0x2ad)](_0x4c5e93(0x280))[_0x4c5e93(0x27c)];if(!_0x5cbe93){loadHistory(_0x1c9d21);return;}if(!_0x1c9d21)return;const _0x41690b={'Nama':_0x1c9d21,'Skor':_0x4651e6,'Markah':_0x2d8779,'TP':_0x3b70df,'PurataMasa':parseFloat(_0x438ac3),'TajukKuiz':_0x185301,'DeviceID':deviceUUID,'Masa':firebase[_0x4c5e93(0x207)][_0x4c5e93(0x1f6)][_0x4c5e93(0x26d)]()};db[_0x4c5e93(0x200)](_0x4c5e93(0x24e))['add'](_0x41690b)[_0x4c5e93(0x237)](()=>{loadHistory(_0x1c9d21);})[_0x4c5e93(0x235)](_0x1cf471=>{const _0x30cdea=_0x4c5e93;console[_0x30cdea(0x286)]('Ralat\x20simpan\x20skor:\x20',_0x1cf471);});}function loadHistory(_0x482237){const _0x11fbb0=_0x54e7ee;db[_0x11fbb0(0x200)](_0x11fbb0(0x24e))[_0x11fbb0(0x238)](_0x11fbb0(0x1fa),'==',_0x482237)['orderBy'](_0x11fbb0(0x281),_0x11fbb0(0x232))[_0x11fbb0(0x21e)](0xa)[_0x11fbb0(0x209)]()['then'](_0x42aadf=>{const _0x24c8bc=_0x11fbb0;let _0xfd0014='',_0x4f047c=[];if(_0x42aadf['empty']){document['getElementById'](_0x24c8bc(0x28b))['innerHTML']=_0x24c8bc(0x219);return;}_0x42aadf[_0x24c8bc(0x28a)](_0x4a0eca=>{const _0x37ffaf=_0x24c8bc,_0x40792f=_0x4a0eca[_0x37ffaf(0x251)](),_0x1e8856=_0x40792f[_0x37ffaf(0x246)]||0x0;_0x4f047c['push'](_0x1e8856);const _0x1526b0=_0x40792f[_0x37ffaf(0x281)]?_0x40792f[_0x37ffaf(0x281)]['toDate']()[_0x37ffaf(0x27e)](_0x37ffaf(0x226)):_0x37ffaf(0x218);_0xfd0014+=_0x37ffaf(0x257)+_0x1526b0+_0x37ffaf(0x247)+_0x40792f[_0x37ffaf(0x29e)]+_0x37ffaf(0x25a)+_0x1e8856[_0x37ffaf(0x290)](0x0)+'%</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20';});if(_0x4f047c[_0x24c8bc(0x27f)]>0x0){const _0x16343b=document['getElementById'](_0x24c8bc(0x1eb)),_0x752e90=document[_0x24c8bc(0x2ad)]('low-score-display');if(_0x16343b)_0x16343b[_0x24c8bc(0x214)]=Math[_0x24c8bc(0x278)](..._0x4f047c)[_0x24c8bc(0x290)](0x0)+'%';if(_0x752e90)_0x752e90[_0x24c8bc(0x214)]=Math[_0x24c8bc(0x255)](..._0x4f047c)[_0x24c8bc(0x290)](0x0)+'%';}document['getElementById'](_0x24c8bc(0x28b))[_0x24c8bc(0x29a)]=_0xfd0014;});}function loadLeaderboard(){const _0xf18fdf=_0x54e7ee,_0x5517e5=[_0xf18fdf(0x204),_0xf18fdf(0x22f)];_0x5517e5[_0xf18fdf(0x28a)](_0x39e329=>{const _0x366578=_0xf18fdf,_0x2e0e57=_0x39e329['includes'](_0x366578(0x228))?'Gabungan\x20(Subjektif)':'Gabungan\x20(Objektif)',_0x225d28=_0x39e329[_0x366578(0x222)]('input')?_0x366578(0x2a6):_0x366578(0x27b),_0x4fd524=document[_0x366578(0x2ad)](_0x225d28);if(!_0x4fd524)return;db[_0x366578(0x200)](_0x366578(0x24e))[_0x366578(0x238)](_0x366578(0x29e),'==','Gabungan\x20(1-12)')[_0x366578(0x1d1)](_0x366578(0x246),'desc')[_0x366578(0x1d1)]('Masa',_0x366578(0x232))[_0x366578(0x21e)](0x5)[_0x366578(0x209)]()[_0x366578(0x237)](_0x28afa1=>{const _0xd5cc7f=_0x366578;let _0xc37a60='',_0x43cf91=0x1;_0x28afa1[_0xd5cc7f(0x263)]?_0xc37a60='<p\x20class=\x22text-gray-400\x20text-[10px]\x20italic\x20text-center\x22>Tiada\x20rekod.</p>':_0x28afa1[_0xd5cc7f(0x28a)](_0x5dbfbf=>{const _0x46281d=_0xd5cc7f,_0x3ce640=_0x5dbfbf[_0x46281d(0x251)]();_0xc37a60+='\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22flex\x20justify-between\x20items-center\x20bg-white\x20p-1\x20mb-1\x20rounded\x20shadow-sm\x20border-l-2\x20'+(_0x43cf91===0x1?'border-yellow-400':_0x46281d(0x250))+_0x46281d(0x2a1)+_0x43cf91+'.\x20'+_0x3ce640['Nama']+'</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22text-[10px]\x20font-black\x20text-teal-600\x22>'+_0x3ce640['Markah'][_0x46281d(0x290)](0x0)+'%</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20',_0x43cf91++;}),_0x4fd524['innerHTML']=_0xc37a60;});});}function returnToSelection(){clearInterval(qTimerInterval),clearInterval(totalTimeInterval),stopWarningBeeps(),showScreen('selection-screen');}function startNewQuizSelection(){const _0x507884=_0x54e7ee;showScreen(_0x507884(0x210));}function displayCertificate(_0x322b21,_0x4ada2a,_0x3f08d1,_0x526add,_0x2f5a71){const _0x6ed70=_0x54e7ee;document['getElementById'](_0x6ed70(0x28e))[_0x6ed70(0x214)]=studentName||_0x6ed70(0x2a7),document[_0x6ed70(0x2ad)]('cert-quiz-title')[_0x6ed70(0x214)]='Kuiz\x20Bijak\x20Sifir\x20'+_0x526add,document[_0x6ed70(0x2ad)](_0x6ed70(0x1db))[_0x6ed70(0x214)]=_0x6ed70(0x269)+_0x4ada2a,document['getElementById'](_0x6ed70(0x283))[_0x6ed70(0x214)]=_0x322b21[_0x6ed70(0x290)](0x0)+'%',document[_0x6ed70(0x2ad)](_0x6ed70(0x220))[_0x6ed70(0x214)]=_0x3f08d1+'s',document['getElementById'](_0x6ed70(0x252))[_0x6ed70(0x214)]=new Date()[_0x6ed70(0x27e)](_0x6ed70(0x226),{'day':_0x6ed70(0x25f),'month':_0x6ed70(0x26e),'year':_0x6ed70(0x25f)}),document[_0x6ed70(0x2ad)](_0x6ed70(0x256))[_0x6ed70(0x214)]=_0x2f5a71,document['getElementById']('certificate-screen')[_0x6ed70(0x28d)][_0x6ed70(0x282)](_0x6ed70(0x243)),document['getElementById'](_0x6ed70(0x285))[_0x6ed70(0x28d)]['add'](_0x6ed70(0x266)),speakMalay(_0x6ed70(0x20c));}function closeCertificate(){const _0x546b44=_0x54e7ee;document[_0x546b44(0x2ad)](_0x546b44(0x285))['classList']['add'](_0x546b44(0x243)),document[_0x546b44(0x2ad)](_0x546b44(0x285))[_0x546b44(0x28d)][_0x546b44(0x282)](_0x546b44(0x266));}function updateCertificateButton(_0x3ce0d9,_0x2168a5,_0xb3fd02,_0x44abed){const _0x4cd6fd=_0x54e7ee,_0x32ac36=document['getElementById'](_0x4cd6fd(0x20f)),_0x315485=_0x4cd6fd(0x1e7);let _0xa2fc23=document[_0x4cd6fd(0x2ad)](_0x315485);const _0xec59a5=score===0x0&&totalTimeElapsed>totalQuestions*0x5;let _0x2fb040='';isTimerEnabled?_0x2fb040=_0x4cd6fd(0x277):_0x2fb040='⚠\x20Ujian\x20ini\x20diselesaikan\x20tanpa\x20menggunakan\x20pemasa\x20soalan.';if(_0x32ac36&&!_0xec59a5&&_0x2168a5>0x0){if(!_0xa2fc23){_0xa2fc23=document[_0x4cd6fd(0x279)]('button'),_0xa2fc23['id']=_0x315485,_0xa2fc23[_0x4cd6fd(0x1f9)]=_0x4cd6fd(0x1e6);const _0x36d049=document[_0x4cd6fd(0x1e2)](_0x4cd6fd(0x1f1));document[_0x4cd6fd(0x2ad)]('result-screen')[_0x4cd6fd(0x22c)](_0xa2fc23,_0x36d049);}_0xa2fc23[_0x4cd6fd(0x214)]='🏅\x20Cetak\x20Sijil\x20Penghargaan',_0xa2fc23[_0x4cd6fd(0x242)]=()=>displayCertificate(_0x3ce0d9,_0x2168a5,_0xb3fd02,_0x44abed,_0x2fb040),_0xa2fc23[_0x4cd6fd(0x28d)][_0x4cd6fd(0x282)](_0x4cd6fd(0x243));}else _0xa2fc23&&_0xa2fc23[_0x4cd6fd(0x28d)][_0x4cd6fd(0x1f4)](_0x4cd6fd(0x243));}
+        // Global State Variables
+        const QUIZ_DURATION = 999999; 
+        const CORRECT_PASSWORD = '2x5=10';
+        
+        let audioContext = null;
+        let currentSifir = 0;
+        let currentMode = 'input'; 
+        let totalQuestions = 50; 
+        let isCombinedQuiz = true; 
+        let questionDuration = 7; 
+
+        let isTimerEnabled = true; 
+        let isToneEnabled = true;  
+        let isTTSEnabled = true;   
+
+        let questions = [];
+        let currentQIndex = 0;
+        let score = 0;
+        let totalTimeElapsed = 0; 
+        
+        let totalTimeInterval = null; 
+        let qTimerInterval = null;    
+        let qTimeLeft = 7; 
+        let warningBeepInterval = null; 
+        
+        let studentName = '';
+        const STORAGE_KEY_NAME = 'student_name_sifir'; 
+        const STORAGE_KEY_TIMER = 'is_timer_enabled'; 
+        const STORAGE_KEY_TONE = 'is_tone_enabled';
+        const STORAGE_KEY_TTS = 'is_tts_enabled';
+
+        const correctAnswersPhrases = ["Awak Hebat!", "Tahniah, Terbaik!", "Awak Bijak!", "Betul, Hebat!"];
+        let phraseIndex = 0;
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            localStorage.setItem('dark_mode_enabled', isDark);
+        }
+
+        function toggleNote(contentId) {
+            const content = document.getElementById(contentId);
+            const arrowId = contentId.includes('tts') ? 'tts-arrow' : 'cert-arrow';
+            const arrow = document.getElementById(arrowId);
+
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                arrow.textContent = '▲';
+            } else {
+                content.classList.add('hidden');
+                arrow.textContent = '▼';
+            }
+        }
+
+        function loadSettingsLocally() {
+            const storedName = localStorage.getItem(STORAGE_KEY_NAME);
+            if (storedName) {
+                studentName = storedName;
+                document.getElementById('student-name-input').value = studentName;
+                document.getElementById('current-name-display').textContent = `Nama yang disimpan: ${studentName}`;
+            } else {
+                 document.getElementById('current-name-display').textContent = `Nama belum disimpan.`;
+            }
+
+            if (localStorage.getItem('dark_mode_enabled') === 'true') {
+                document.body.classList.add('dark-mode');
+            }
+            
+            const storedTimer = localStorage.getItem(STORAGE_KEY_TIMER);
+            if (storedTimer !== null) {
+                isTimerEnabled = storedTimer === 'true';
+            }
+            document.getElementById('timer-toggle').checked = isTimerEnabled; 
+
+            const storedTone = localStorage.getItem(STORAGE_KEY_TONE);
+            if (storedTone !== null) {
+                isToneEnabled = storedTone === 'true';
+            }
+            document.getElementById('tone-toggle').checked = isToneEnabled;
+
+            const storedTTS = localStorage.getItem(STORAGE_KEY_TTS);
+            if (storedTTS !== null) {
+                isTTSEnabled = storedTTS === 'true';
+            }
+            document.getElementById('tts-toggle').checked = isTTSEnabled;
+
+            if (!isTTSEnabled) {
+                window.speechSynthesis.cancel();
+            }
+        }
+
+        function updateAndSaveName(event) {
+            const name = event.target.value.trim();
+            studentName = name;
+            localStorage.setItem(STORAGE_KEY_NAME, name);
+            
+            if (name) {
+                document.getElementById('current-name-display').textContent = `Nama yang disimpan: ${name}`;
+            } else {
+                 document.getElementById('current-name-display').textContent = `Nama belum disimpan.`;
+            }
+        }
+        
+        loadSettingsLocally(); 
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const toneToggle = document.getElementById('tone-toggle');
+            const ttsToggle = document.getElementById('tts-toggle');
+            const timerToggle = document.getElementById('timer-toggle'); 
+
+            if (timerToggle) {
+                 timerToggle.addEventListener('change', (event) => {
+                    isTimerEnabled = event.target.checked;
+                    localStorage.setItem(STORAGE_KEY_TIMER, isTimerEnabled);
+                });
+            }
+
+            if (toneToggle) {
+                toneToggle.addEventListener('change', (event) => {
+                    isToneEnabled = event.target.checked;
+                    localStorage.setItem(STORAGE_KEY_TONE, isToneEnabled);
+                    if (!isToneEnabled) {
+                        stopWarningBeeps(); 
+                    }
+                });
+            }
+
+            if (ttsToggle) {
+                ttsToggle.addEventListener('change', (event) => {
+                    isTTSEnabled = event.target.checked;
+                    localStorage.setItem(STORAGE_KEY_TTS, isTTSEnabled);
+                    if (!isTTSEnabled) {
+                        window.speechSynthesis.cancel(); 
+                    }
+                });
+            }
+        });
+
+        function showScreen(screenId) {
+            const screens = ['login-screen', 'selection-screen', 'quiz-screen', 'result-screen'];
+            screens.forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
+            document.getElementById(screenId).classList.remove('hidden');
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                const temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+            }
+        }
+
+        function speakMalay(textToRead) {
+            if (!isTTSEnabled) return; 
+            
+            if (!('speechSynthesis' in window)) {
+                return;
+            }
+            
+            // window.speechSynthesis.cancel(); // Dibuang untuk elak cancel soalan pertama
+
+            try {
+                const utterance = new SpeechSynthesisUtterance(textToRead);
+                utterance.lang = 'ms-MY';
+                utterance.rate = 1.0;
+
+                const voices = window.speechSynthesis.getVoices();
+                let malayVoice = voices.find(voice => 
+                    voice.lang === 'ms-MY' || 
+                    voice.name.toLowerCase().includes('malay') || 
+                    voice.name.toLowerCase().includes('melayu')
+                );
+
+                if (malayVoice) {
+                    utterance.voice = malayVoice;
+                }
+
+                window.speechSynthesis.speak(utterance);
+            } catch (error) {
+                console.error("Ralat TTS", error);
+            }
+        }
+
+        function initAudio() {
+            if (!audioContext) {
+                try {
+                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                } catch (e) {
+                    console.error("Web Audio API ralat", e);
+                }
+            }
+        }
+
+        document.getElementById('login-button').addEventListener('click', initAudio, { once: true });
+        document.getElementById('password-input').addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') initAudio();
+        }, { once: true });
+
+        function playTone(frequency, duration, type = 'sine') {
+            initAudio();
+            if (!audioContext || !isToneEnabled) return; 
+
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+
+            oscillator.type = type;
+            gainNode.gain.setValueAtTime(0.5, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + duration);
+
+            oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+
+            oscillator.start();
+            oscillator.stop(audioContext.currentTime + duration);
+        }
+
+        function playCorrectSound() {
+            playTone(880, 0.15, 'sine');
+        }
+
+        function playIncorrectSound() {
+            playTone(220, 0.3, 'triangle');
+        }
+
+        function playWarningBeep() {
+            playTone(800, 0.1, 'square');
+        }
+
+        function startWarningBeeps() {
+            if (!isToneEnabled) return; 
+            if (warningBeepInterval) return;
+            
+            warningBeepInterval = setInterval(() => {
+                if (isTimerEnabled && qTimeLeft <= 3 && qTimeLeft > 0) {
+                    playWarningBeep();
+                }
+            }, 500);
+        }
+
+        function stopWarningBeeps() {
+            if (warningBeepInterval) {
+                clearInterval(warningBeepInterval);
+                warningBeepInterval = null;
+            }
+        }
+
+        function isMobileInAppBrowser() {
+            const ua = navigator.userAgent || navigator.vendor || window.opera;
+            const isInApp = /FB_IAB|FBAV|Instagram|Line|KAKAOTALK|CriOS|WebView|wv/i.test(ua);
+            const isMajorBrowser = /Chrome|Safari|Firefox|Edg/i.test(ua) && !/wv/i.test(ua);
+            return isInApp || (!isMajorBrowser && /Mobile/i.test(ua));
+        }
+
+        function checkPassword() {
+            const input = document.getElementById('password-input').value.trim();
+            const feedback = document.getElementById('login-feedback');
+            
+            if (input === CORRECT_PASSWORD) {
+                feedback.textContent = 'Log Masuk Berjaya!';
+                feedback.classList.remove('text-red-600');
+                feedback.classList.add('text-lime-600');
+                
+                showScreen('selection-screen');
+                loadSettingsLocally(); 
+                document.getElementById('student-name-input').focus();
+                speakMalay(`Selamat Datang ke Kuiz Bijak Sifir! Edukids by Mizz! Sila masukkan nama anda dan pilih jenis kuiz.`);
+            } else {
+                playIncorrectSound();
+                feedback.textContent = 'Kata Laluan Salah. Sila cuba lagi.';
+                feedback.classList.remove('text-lime-600');
+                feedback.classList.add('text-red-600');
+                document.getElementById('password-input').value = '';
+                document.getElementById('password-input').focus();
+            }
+        }
+
+        function handleLoginKey(event) {
+            if (event.key === 'Enter') {
+                checkPassword();
+            }
+        }
+
+        function generateDistractors(correctAnswer) {
+            const distractors = new Set();
+            const maxAttempts = 10;
+            let attempts = 0;
+
+            while (distractors.size < 3 && attempts < maxAttempts) {
+                attempts++;
+                let offset = Math.floor(Math.random() * 11) - 5; 
+                let distractor = correctAnswer + offset;
+                if (distractor > 0 && distractor !== correctAnswer && !distractors.has(distractor)) {
+                    distractors.add(distractor);
+                }
+            }
+
+            if (distractors.size < 3) {
+                [1, -1, 10, correctAnswer % 10 === 0 ? -10 : 0].forEach(offset => {
+                    let d = correctAnswer + offset;
+                    if (d > 0 && d !== correctAnswer && distractors.size < 3 && !distractors.has(d)) {
+                        distractors.add(d);
+                    }
+                });
+            }
+
+            return Array.from(distractors).slice(0, 3);
+        }
+
+        function generateQuestions(sifir, mode, count) {
+            questions = [];
+            for (let i = 0; i < count; i++) {
+                let multiplier;
+                let factor = Math.floor(Math.random() * 12) + 1;
+                
+                if (sifir === 0) {
+                    multiplier = Math.floor(Math.random() * 12) + 1;
+                } else {
+                    multiplier = sifir;
+                }
+
+                const correctAnswer = multiplier * factor;
+                const questionObj = {
+                    text: `${multiplier} x ${factor} = ?`,
+                    spoken: `${multiplier} darab ${factor}`,
+                    correctAnswer: correctAnswer
+                };
+
+                if (mode === 'objective') {
+                    const distractors = generateDistractors(correctAnswer);
+                    const options = [correctAnswer, ...distractors];
+                    shuffleArray(options);
+                    questionObj.options = options;
+                }
+
+                questions.push(questionObj);
+            }
+        }
+
+        function startQuizFlow() {
+            if (!studentName || studentName.trim() === "") {
+                alert("Sila masukkan Nama Pelajar terlebih dahulu sebelum memulakan kuiz.");
+                document.getElementById('student-name-input').focus();
+                return;
+            }
+            
+            initAudio();
+            speakMalay("Jom Mula");
+
+            const selectionValue = document.getElementById('sifir-pilihan').value;
+            const parts = selectionValue.split('-');
+            
+            currentSifir = parseInt(parts[0]);
+            currentMode = parts[1];
+            totalQuestions = parseInt(parts[2]);
+            isCombinedQuiz = (currentSifir === 0);
+
+            if (currentMode === 'objective') {
+                questionDuration = isTTSEnabled ? 7 : 5; 
+            } else {
+                questionDuration = isTTSEnabled ? 10 : 7; 
+            }
+
+            generateQuestions(currentSifir, currentMode, totalQuestions);
+            
+            currentQIndex = 0;
+            score = 0;
+            totalTimeElapsed = 0;
+            phraseIndex = 0; 
+
+            document.getElementById('total-q-display').textContent = totalQuestions;
+            
+            showScreen('quiz-screen');
+            
+            // FIX: Tambah delay 1000ms (1 saat) supaya ayat "Jom Mula" sempat keluar 
+            // sebelum soalan pertama disebut.
+            setTimeout(() => {
+                loadQuestion();
+                startTotalTimer();
+            }, 1000);
+        }
+
+        function loadQuestion() {
+            const q = questions[currentQIndex];
+            document.getElementById('current-q-num').textContent = currentQIndex + 1;
+            document.getElementById('question-text').textContent = q.text;
+            
+            const progress = (currentQIndex / totalQuestions) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+
+            if (currentMode === 'input') {
+                document.getElementById('input-mode').classList.remove('hidden');
+                document.getElementById('objective-mode').classList.add('hidden');
+                document.getElementById('answer-input').value = '';
+                document.getElementById('answer-input').focus();
+            } else {
+                document.getElementById('input-mode').classList.add('hidden');
+                document.getElementById('objective-mode').classList.remove('hidden');
+                
+                const buttons = ['A', 'B', 'C', 'D'];
+                buttons.forEach((btn, idx) => {
+                    const val = q.options[idx];
+                    const buttonEl = document.getElementById(`option-${btn}`);
+                    buttonEl.querySelector('span').textContent = val;
+                    buttonEl.dataset.value = val;
+                });
+            }
+
+            document.getElementById('feedback').textContent = '';
+            speakMalay(q.spoken);
+            startQuestionTimer();
+        }
+
+        function startTotalTimer() {
+            totalTimeInterval = setInterval(() => {
+                totalTimeElapsed += 0.1;
+                document.getElementById('total-time-tracker').textContent = totalTimeElapsed.toFixed(1);
+            }, 100);
+        }
+
+        function startQuestionTimer() {
+            clearInterval(qTimerInterval);
+            stopWarningBeeps();
+            
+            const timerDisplay = document.getElementById('q-countdown-display');
+            timerDisplay.classList.remove('urgent-timer');
+            
+            if (!isTimerEnabled) {
+                timerDisplay.textContent = "∞";
+                return;
+            }
+
+            qTimeLeft = questionDuration;
+            timerDisplay.textContent = `${qTimeLeft}s`;
+
+            qTimerInterval = setInterval(() => {
+                qTimeLeft--;
+                timerDisplay.textContent = `${qTimeLeft}s`;
+
+                if (qTimeLeft <= 3) {
+                    timerDisplay.classList.add('urgent-timer');
+                    startWarningBeeps();
+                }
+
+                if (qTimeLeft <= 0) {
+                    clearInterval(qTimerInterval);
+                    stopWarningBeeps();
+                    handleTimeout();
+                }
+            }, 1000);
+        }
+
+        function handleTimeout() {
+            document.getElementById('feedback').textContent = 'Masa Tamat!';
+            document.getElementById('feedback').className = 'h-6 text-sm font-semibold text-red-600';
+            playIncorrectSound();
+            speakMalay("Masa tamat!");
+            
+            const gap = isTTSEnabled ? 1500 : 800;
+            setTimeout(nextQuestion, gap);
+        }
+
+        function handleInputSubmission() {
+            const input = document.getElementById('answer-input').value.trim();
+            if (input === "") return;
+            checkAnswer(parseInt(input));
+        }
+
+        function handleObjectiveSubmission(button) {
+            const value = parseInt(button.dataset.value);
+            checkAnswer(value);
+        }
+
+        function checkAnswer(userAnswer) {
+            clearInterval(qTimerInterval);
+            stopWarningBeeps();
+
+            const correct = questions[currentQIndex].correctAnswer;
+            const feedback = document.getElementById('feedback');
+
+            if (userAnswer === correct) {
+                score++;
+                feedback.textContent = 'Betul! ✅';
+                feedback.className = 'h-6 text-sm font-semibold text-lime-600';
+                playCorrectSound();
+                
+                speakMalay(correctAnswersPhrases[phraseIndex]);
+                phraseIndex = (phraseIndex + 1) % correctAnswersPhrases.length; 
+                
+                const gap = isTTSEnabled ? 2225 : 800;
+                setTimeout(nextQuestion, gap); 
+            } else {
+                feedback.textContent = `Salah! Jawapan: ${correct} ❌`;
+                feedback.className = 'h-6 text-sm font-semibold text-red-600';
+                playIncorrectSound();
+                speakMalay(`Salah! Jawapan adalah ${correct}`);
+                
+                const gap = isTTSEnabled ? 4000 : 2000;
+                setTimeout(nextQuestion, gap); 
+            }
+        }
+
+        function handleInputKey(event) {
+            if (event.key === 'Enter') {
+                handleInputSubmission();
+            }
+        }
+
+        function nextQuestion() {
+            currentQIndex++;
+            if (currentQIndex < totalQuestions) {
+                loadQuestion();
+            } else {
+                endQuiz();
+            }
+        }
+
+        function endQuiz() {
+            clearInterval(totalTimeInterval);
+            showScreen('result-screen');
+
+            const percentage = (score / totalQuestions) * 100;
+            const avgTime = (totalTimeElapsed / totalQuestions).toFixed(2);
+
+            document.getElementById('student-result-name').textContent = studentName || 'Pelajar Bijak';
+
+            const sifirTitle = isCombinedQuiz ? "Gabungan (1-12)" : `Sifir ${currentSifir}`;
+            document.getElementById('sifir-title-display').textContent = sifirTitle;
+
+            document.getElementById('final-score').textContent = `${score} / ${totalQuestions}`;
+            document.getElementById('final-percentage').textContent = `${percentage.toFixed(0)}%`;
+            document.getElementById('correct-count').textContent = score;
+            document.getElementById('incorrect-count').textContent = totalQuestions - score;
+            document.getElementById('average-time').textContent = avgTime;
+            
+            const timerStatusMsg = document.getElementById('timer-status-message');
+            if (isTimerEnabled) {
+                 timerStatusMsg.textContent = `(Ujian dijalankan dengan pemasa soalan diaktifkan)`;
+            } else {
+                 timerStatusMsg.textContent = `(Ujian dijalankan TANPA pemasa soalan)`;
+            }
+
+            let tp = 1;
+            let label = "";
+            let description = "";
+
+            if (percentage >= 90) {
+                tp = 6;
+                label = "Cemerlang & Role Model";
+                description = "Murid berupaya menggunakan pengetahuan dan kemahiran matematik bagi menyelesaikan masalah harian yang bukan rutin secara kreatif dan inovatif serta boleh menjadi pembimbing kepada rakan lain.";
+            } else if (percentage >= 80) {
+                tp = 5;
+                label = "Sangat Baik (Mahir)";
+                description = "Murid berupaya menyelesaikan masalah harian yang rutin berkaitan sifir dengan menggunakan pelbagai strategi dan kemahiran.";
+            } else if (percentage >= 60) {
+                tp = 4;
+                label = "Baik (Berupaya)";
+                description = "Murid berupaya menyelesaikan masalah harian yang rutin berkaitan sifir secara sistematik dan berkesan.";
+            } else if (percentage >= 40) {
+                tp = 3;
+                label = "Memuaskan (Faham)";
+                description = "Murid memahami konsep asas pendaraban dan berupaya menentukan hasil darab bagi sifir yang diuji.";
+            } else if (percentage >= 20) {
+                tp = 2;
+                label = "Kurang Memuaskan";
+                description = "Murid mempunyai pengetahuan asas tentang konsep pendaraban namun masih memerlukan masa atau bantuan untuk mengingati sifir.";
+            } else {
+                tp = 1;
+                label = "Tahap Minimum";
+                description = "Murid mula menunjukkan minat dalam pembelajaran sifir tetapi memerlukan banyak bimbingan dan latihan asas.";
+            }
+
+            document.getElementById('final-tp').textContent = `TP ${tp}`;
+            document.getElementById('tp-label').textContent = label;
+            document.getElementById('tp-description').textContent = description;
+
+            updateCertificateButton(percentage, tp, avgTime, sifirTitle);
+
+            const closingText = `Kuiz tamat! ${studentName}, anda mencapai Tahap Penguasaan ${tp}. Skor anda adalah ${score} per ${totalQuestions}. Tahniah!`;
+            speakMalay(closingText);
+
+            // SIMPAN SKOR KE FIREBASE (Ditambah)
+            saveScoreToFirebase(studentName, score, percentage, tp, avgTime, sifirTitle);
+        }
+
+ // --- FUNGSI FIREBASE (SUDAH DIBETULKAN EJAAN) ---
+function saveScoreToFirebase(name, score, percent, tp, time, title) {
+    const isTimerOn = document.getElementById('timer-toggle').checked;
+    
+    if (!isTimerOn) {
+        console.log("Mod Tanpa Masa: Skor tidak disimpan.");
+        loadHistory(name);
+        return;
+    }
+
+    if (!name) return;
+
+    const dataSkor = {
+        Nama: name,
+        Skor: score,
+        Markah: percent,
+        TP: tp,
+        PurataMasa: parseFloat(time),
+        TajukKuiz: title,
+        DeviceID: deviceUUID, // <--- TAMBAH BARIS INI SAHAJA
+        Masa: firebase.firestore.FieldValue.serverTimestamp()
+    };
+
+    // Guna "Skor" bukan "scores"
+    db.collection("Skor").add(dataSkor).then(() => {
+        console.log("Skor Berjaya Disimpan!");
+        loadHistory(name); 
+    }).catch((error) => {
+        console.error("Ralat simpan skor: ", error);
+    });
+}
+
+function loadHistory(name) {
+    // Carian berdasarkan Indeks yang anda buat (Nama & Masa)
+    db.collection("Skor")
+        .where("Nama", "==", name)
+        .orderBy("Masa", "desc")
+        .limit(10)
+        .get()
+        .then((querySnapshot) => {
+            let historyHtml = "";
+            let scoresArray = [];
+
+            if (querySnapshot.empty) {
+                document.getElementById('history-list').innerHTML = '<p class="text-gray-400 text-center italic">Tiada rekod ditemui.</p>';
+                return;
+            }
+
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                // Ambil nilai Markah untuk paparan
+                const nMarkah = data.Markah || 0;
+                scoresArray.push(nMarkah);
+                
+                // Tukar Masa kepada format tarikh Malaysia
+                const dateStr = data.Masa ? data.Masa.toDate().toLocaleDateString('ms-MY') : 'Baru';
+                
+                historyHtml += `<div class="flex justify-between border-b border-gray-100 py-1">
+                    <span>${dateStr} - ${data.TajukKuiz}</span>
+                    <span class="font-bold text-teal-600">${nMarkah.toFixed(0)}%</span>
+                </div>`;
+            });
+
+            // Kemaskini bahagian skor tertinggi dan terendah
+            if (scoresArray.length > 0) {
+                const highEl = document.getElementById('high-score-display');
+                const lowEl = document.getElementById('low-score-display');
+                if (highEl) highEl.textContent = Math.max(...scoresArray).toFixed(0) + "%";
+                if (lowEl) lowEl.textContent = Math.min(...scoresArray).toFixed(0) + "%";
+            }
+            
+            document.getElementById('history-list').innerHTML = historyHtml;
+        })
+        .catch((err) => {
+            console.error("Ralat muat sejarah:", err);
+            document.getElementById('history-list').innerHTML = '<p class="text-red-400 text-center italic">Gagal memuat sejarah.</p>';
+        });
+}
+
+function loadLeaderboard(tajukKuiz) {
+    // 1. KEMASKINI PAPAN MATA GABUNGAN (Dua Lajur: Objektif & Subjektif)
+    const categories = ["Gabungan (Objektif)", "Gabungan (Subjektif)"];
+    
+    categories.forEach(cat => {
+        const elementId = cat.includes("Objektif") ? "leaderboard-objektif" : "leaderboard-subjektif";
+        const container = document.getElementById(elementId);
+        if (!container) return;
+
+        db.collection("Skor")
+            .where("TajukKuiz", "==", cat)
+            .orderBy("Markah", "desc")
+            .orderBy("Masa", "desc")
+            .limit(5)
+            .get()
+            .then((querySnapshot) => {
+                let html = "";
+                let rank = 1;
+                if (querySnapshot.empty) {
+                    html = '<p class="text-gray-400 text-[10px] italic text-center">Tiada rekod.</p>';
+                } else {
+                    querySnapshot.forEach((doc) => {
+                        const d = doc.data();
+                        html += `
+                        <div class="flex justify-between items-center bg-white p-1 mb-1 rounded shadow-sm border-l-2 ${rank === 1 ? 'border-yellow-400' : 'border-teal-400'}">
+                            <span class="text-[10px] font-medium text-gray-700 truncate w-20">${rank}. ${d.Nama}</span>
+                            <span class="text-[10px] font-bold text-teal-600">${d.Markah.toFixed(0)}%</span>
+                        </div>`;
+                        rank++;
+                    });
+                }
+                container.innerHTML = html;
+            });
+    });
+
+    // 2. KEMASKINI PAPAN MATA KATEGORI SEMASA (Contoh: Sifir 2, Sifir 5 dll)
+    const leaderboardSection = document.getElementById('leaderboard-section');
+    const leaderboardList = document.getElementById('leaderboard-list');
+    
+    if (leaderboardSection && tajukKuiz) {
+        document.getElementById('current-category-label').textContent = tajukKuiz;
+        db.collection("Skor")
+            .where("TajukKuiz", "==", tajukKuiz)
+            .orderBy("Markah", "desc")
+            .limit(5)
+            .get()
+            .then((querySnapshot) => {
+                let leaderHtml = "";
+                let rank = 1;
+                if (querySnapshot.empty) {
+                    leaderHtml = '<p class="text-gray-400 text-center italic text-xs">Belum ada rekod.</p>';
+                } else {
+                    querySnapshot.forEach((doc) => {
+                        const d = doc.data();
+                        const medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : '👤';
+                        leaderHtml += `
+                            <div class="flex justify-between items-center bg-white p-2 rounded-lg shadow-sm border border-orange-200">
+                                <span class="font-bold text-gray-700 text-xs">${medal} ${rank}. ${d.Nama}</span>
+                                <span class="font-black text-orange-600 text-sm">${d.Markah.toFixed(0)}%</span>
+                            </div>`;
+                        rank++;
+                    });
+                }
+                leaderboardList.innerHTML = leaderHtml;
+                
+                // Sembunyikan papan mata umum jika kategori adalah Gabungan (sebab gabungan dah ada kotak khas)
+                if(tajukKuiz.includes("Gabungan")) {
+                    leaderboardSection.classList.add('hidden');
+                } else {
+                    leaderboardSection.classList.remove('hidden');
+                }
+            });
+    }
+}
+
+function returnToSelection() {
+    speakMalay("kembali ke pilihan sifir");
+    clearInterval(qTimerInterval);
+    clearInterval(totalTimeInterval);
+    stopWarningBeeps();
+    showScreen('selection-screen');
+}
+
+function startNewQuizSelection() {
+     showScreen('selection-screen');
+}
+        function displayCertificate(percentage, tp, avgTime, quizTitle, timerNote) {
+            document.getElementById('cert-student-name').textContent = studentName || '[NAMA PELAJAR]';
+            document.getElementById('cert-quiz-title').textContent = `Kuiz Bijak Sifir ${quizTitle}`;
+            document.getElementById('cert-tp').textContent = `TP ${tp}`;
+            document.getElementById('cert-score').textContent = `${percentage.toFixed(0)}%`;
+            document.getElementById('cert-avg-time').textContent = `${avgTime}s`;
+            document.getElementById('cert-date').textContent = new Date().toLocaleDateString('ms-MY', { 
+                day: 'numeric', month: 'long', year: 'numeric' 
+            });
+            
+            document.getElementById('cert-timer-note').textContent = timerNote;
+            document.getElementById('certificate-screen').classList.remove('hidden');
+            document.getElementById('certificate-screen').classList.add('flex');
+            
+            speakMalay("Sijil anda telah dijana. Sila klik butang cetak untuk menyimpan sebagai P D F.");
+        }
+
+        function closeCertificate() {
+            document.getElementById('certificate-screen').classList.add('hidden');
+            document.getElementById('certificate-screen').classList.remove('flex');
+        }
+
+        function updateCertificateButton(finalPercentage, finalTP, avgTime, certQuizTitle) {
+            const resultScreen = document.getElementById('result-screen');
+            const certButtonId = 'print-cert-button';
+            let certButton = document.getElementById(certButtonId);
+
+            const isTotalTimeout = (score === 0 && totalTimeElapsed > (totalQuestions * 5));
+            
+            let timerNoteForCert = "";
+            if (isTimerEnabled) {
+                timerNoteForCert = "✓ Ujian ini diselesaikan dengan cabaran pemasa soalan.";
+            } else {
+                timerNoteForCert = "⚠ Ujian ini diselesaikan tanpa menggunakan pemasa soalan.";
+            }
+
+            if (resultScreen && !isTotalTimeout && finalTP > 0) { 
+                if (!certButton) {
+                    certButton = document.createElement('button');
+                    certButton.id = certButtonId;
+                    certButton.className = 'w-full bg-lime-500 hover:bg-lime-600 text-white font-black text-base py-3 rounded-lg transition duration-150 shadow-lg hover:shadow-xl mt-3';
+                    const repeatButton = document.querySelector('#result-screen button:last-child');
+                    document.getElementById('result-screen').insertBefore(certButton, repeatButton);
+                }
+                certButton.textContent = '🏅 Cetak Sijil Penghargaan';
+                certButton.onclick = () => displayCertificate(finalPercentage, finalTP, avgTime, certQuizTitle, timerNoteForCert); 
+                certButton.classList.remove('hidden');
+            } else if (certButton) {
+                 certButton.classList.add('hidden');
+            }
+        }
     </script>
 	<div id="leaderboard-section" class="hidden mt-6 p-4 bg-gradient-to-r from-yellow-50 to-orange-50 rounded-xl border-2 border-yellow-400 shadow-inner">
     <h3 class="text-lg font-black text-orange-700 uppercase mb-3 text-center flex items-center justify-center">
